@@ -1,83 +1,90 @@
-import argparse
-import logging
-from tap import TAPManager
-import os
-import time
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+import random
+import string
+import datetime
+from tap import TAPManager
+import time
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
+from logger import LoggerManager
 import os
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 
-# Define colors for different log levels
-LOG_COLORS = {
-    'ERROR': '\033[91m',  # Red
-    'DEBUG': '\033[94m',  # Blue
-    'INFO': '\033[92m',  # Green
-    'WARNING': '\033[93m',  # Yellow
-    'CRITICAL': '\033[95m',  # Purple
-    'RESET': '\033[0m'  # Reset
-}
-
-
-class ColoredFormatter(logging.Formatter):
-    """Custom logging formatter that applies colors based on log level."""
-
-    def format(self, record):
-        log_message = super().format(record)
-        return f"{LOG_COLORS.get(record.levelname, LOG_COLORS['RESET'])}{log_message}{LOG_COLORS['RESET']}"
-
-
-def setup_console_logging():
-    """Set up console logging with colors."""
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.DEBUG)
-    formatter = ColoredFormatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    console_handler.setFormatter(formatter)
-    logging.getLogger().addHandler(console_handler)
-    logging.getLogger().setLevel(logging.DEBUG)
-
 
 class MicrosoftSignIn:
-    def __init__(self, mode="production"):
+    """Handles the Microsoft sign-in process."""
+
+    def __init__(self, driver_manager, mode="production"):
         self.mode = mode
         self.tap_manager = TAPManager()
-        self.driver = self.setup_driver()
+        self.driver = driver_manager.driver
         self.logger = None
         with open("makeCredential.js", "r") as file:
             self.js_template = file.read()
 
-    def setup_driver(self):
-        """Setup and return a selenium driver based on the mode."""
-        options = webdriver.ChromeOptions()
-        if self.mode == "production":
-            options.add_argument("--headless")
-        options.page_load_strategy = 'eager'
-        return webdriver.Chrome(options=options)
+    def generate_security_key_name(self, user_id):
+        """
+        Generates a security key name string in the following format:
 
-    def setup_logger(self, email):
-        """Setup and return a logger for the email."""
-        if not os.path.exists('logs'):
-            os.makedirs('logs')
+        [Prefix]-[ShortenedCustomerID]-[RandomString]-[Date]
 
-        logger = logging.getLogger(email)
-        logger.setLevel(logging.DEBUG)
-        fh = logging.FileHandler(f'logs/{email}.log')
-        fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        fh.setFormatter(formatter)
-        logger.addHandler(fh)
-        return logger
+        - Prefix: A constant string "IDM" that identifies the key as belonging to IDmelon.
+        - ShortenedCustomerID: The last 8 characters of the user's MongoDB ID.
+        - RandomString: A 6 characters long random alphanumeric string.
+        - Date: The date the key was generated, in the format YYYYMMDD.
+
+        Example:
+        IDM-1A2B3C4D-A1B2C3-20230917
+
+        Where:
+        - "IDM" stands for IDmelon.
+        - "1A2B3C4D" is the shortened MongoDB ID (last 8 characters).
+        - "A1B2C3" is the random alphanumeric string.
+        - "20230917" is the date (September 17, 2023).
+
+        :param user_id: The user's MongoDB ID.
+        :return: The generated security key name string.
+        """
+        # Extract the last 8 characters of the MongoDB ID
+        shortened_customer_id = user_id[-8:]
+
+        # Generate a random alphanumeric string of 6 characters
+        random_string = ''.join(random.choices(
+            string.ascii_uppercase + string.digits, k=6))
+
+        # Get the current date in YYYYMMDD format
+        date_str = datetime.datetime.now().strftime('%Y%m%d')
+
+        # Construct the name string
+        name_str = f"IDM-{shortened_customer_id}-{random_string}-{date_str}"
+
+        return name_str
+
+    def fill_security_key_name(self, user_id):
+        try:
+            # Generate the security key name
+            security_key_name = self.generate_security_key_name(user_id)
+
+            self.logger.info(
+                f"Filling in security key name: {security_key_name}")
+
+            # Locate the input field by its tag name and type attribute and fill it with the generated name string
+            name_input = WebDriverWait(self.driver, 30).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, '//*[contains(@id, "TextField")]'))
+            )
+            name_input.send_keys(security_key_name)
+
+        except Exception as e:
+            self.logger.error(f"Error filling security key name: {str(e)}")
+            raise
 
     def register_security_key(self, email, tap=None, user_id=None, issuer_id=None):
         """Try to register a security key."""
-        self.logger = self.setup_logger(email)
+        self.logger = LoggerManager.setup_logger(email)
         if self.mode == "debug" and not tap:
             tap = self.tap_manager.retrieve_TAP(user_id, issuer_id)
         try:
@@ -85,11 +92,12 @@ class MicrosoftSignIn:
         except Exception as e:
             self.logger.error(
                 f"Error registering security key for {email}: {str(e)}")
-            self.capture_logs_and_screenshots(email)
+            LoggerManager.capture_screenshot(self.driver, email)
+            LoggerManager.capture_browser_logs(self.driver, email)
 
     def navigate_and_fill_details(self, email, tap, user_id):
         """Navigate to the Microsoft sign-in page and fill in the required details."""
-        logging.info("Navigating to Microsoft sign-in page...")
+        self.logger.info("Navigating to Microsoft sign-in page...")
         self.driver.get("https://mysignins.microsoft.com/")
         WebDriverWait(self.driver, 5).until(
             EC.url_changes("https://mysignins.microsoft.com/"))
@@ -97,35 +105,77 @@ class MicrosoftSignIn:
         self.click_next()
         self.enter_tap(tap)
         self.click_sign_in()
+        # Wait for the element with class 'mectrl_profilepic' to ensure the full DOM is rendered
+        WebDriverWait(self.driver, 30).until(
+            EC.presence_of_element_located(
+                (By.CLASS_NAME, 'mectrl_profilepic'))
+        )
         self.navigate_to_security_info()
         self.click_add_sign_in_method()
         self.select_security_key()
         self.click_add_button()
         self.click_usb_device_button()
-        self.click_add_button()
-        # self.inject_js_into_page(user_id)
+        self.click_next_to_add_sk()
+        self.inject_js_into_page(user_id)
+        self.fill_security_key_name(user_id)
+        self.click_last_next_button()
+        time.sleep(5)
+
+    def click_next_to_add_sk(self):
+        """Click the next button."""
+        try:
+            self.logger.info("Clicking the next button...")
+
+            # Using XPath to target the button with the text "Next"
+            next_button = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(
+                    (By.XPATH, "//button[contains(@class, 'ms-Button--primary') and .//span[text()='Next']]"))
+            )
+            next_button.click()
+        except Exception as e:
+            self.logger.error(f"Error clicking next button: {str(e)}")
+            raise
+
+    def execute_cdp_cmd(self, cmd: str, params: dict = None):
+        if params is None:
+            params = {}
+        resource = f"/session/{self.driver.session_id}/chromium/send_command_and_get_result"
+        url = self.driver.command_executor._url + resource
+        body = {"cmd": cmd, "params": params}
+
+        json_body = json.dumps(body)  # Convert body to JSON string
+        response = self.driver.command_executor._request(
+            "POST", url, json_body
+        )  # Pass JSON string as body
+        return response.get("value")
 
     def inject_js_into_page(self, user_id):
         """Replace values in the JS template and inject it into the current page."""
 
-        def prepare_js_code():
-            """Inner function to replace placeholders in the JS template with actual values."""
-            replaced_js = self.js_template.replace("{microsoft_obr_url}", os.getenv(
-                "AUTHNAPI_URL") + os.getenv("AUTHNAPI_OBR_PATH"))
-            replaced_js = replaced_js.replace(
-                "{api_key}", os.getenv("API_KEY"))
-            return replaced_js.replace("{user_id}", user_id)
+        js_code = self.js_template.format(
+            os.getenv(
+                "AUTHNAPI_URL") + os.getenv("AUTHNAPI_OBR_PATH"), os.getenv("PASSKEY_OBR_API_KEY"), user_id
+        )
 
-        js_code = prepare_js_code()
-        result = self.driver.execute_script(
-            js_code + "; alert('saalm')")  # Modified this line
-        # assert result == "INJECTED_SUCCESSFULLY", "JS code injection failed!"  # Assertion to check successful injection
-        logging.info("JS code injected successfully.")  # Logging statement
+        try:
+            result = self.execute_cdp_cmd(
+                "Page.addScriptToEvaluateOnNewDocument",
+                {"source": js_code},
+            )
+
+            if result:
+                self.logger.info("JS code injected successfully.")
+            else:
+                self.logger.warning("JS code injection might have failed.")
+
+        except Exception as e:
+            self.logger.error(f"Error during JS injection: {str(e)}")
+            raise
 
     def click_add_button(self):
         """Click the 'Add' button."""
         try:
-            logging.info("Clicking the 'Add' button...")
+            self.logger.info("Clicking the 'Add' button...")
 
             # Use WebDriverWait with XPath to identify the 'Add' button
             add_button = WebDriverWait(self.driver, 15).until(
@@ -142,7 +192,7 @@ class MicrosoftSignIn:
     def select_security_key(self):
         """Select 'Security key' from the dropdown."""
         try:
-            logging.info("Clicking the dropdown to expand...")
+            self.logger.info("Clicking the dropdown to expand...")
 
             # Click on the dropdown to expand it
             dropdown = WebDriverWait(self.driver, 15).until(
@@ -155,7 +205,7 @@ class MicrosoftSignIn:
             # You can adjust this based on the site's responsiveness
             time.sleep(2)
 
-            logging.info(
+            self.logger.info(
                 "Selecting 'Security key' from the expanded dropdown...")
 
             # Click on the 'Security key' option
@@ -173,7 +223,7 @@ class MicrosoftSignIn:
     def click_usb_device_button(self):
         """Click the 'USB device' button."""
         try:
-            logging.info("Clicking the 'USB device' button...")
+            self.logger.info("Clicking the 'USB device' button...")
 
             # Use WebDriverWait with XPath to identify the 'USB device' button
             usb_button = WebDriverWait(self.driver, 15).until(
@@ -190,7 +240,7 @@ class MicrosoftSignIn:
     def click_add_sign_in_method(self):
         """Click the 'Add sign-in method' link."""
         try:
-            logging.info("Clicking the 'Add sign-in method' link...")
+            self.logger.info("Clicking the 'Add sign-in method' link...")
 
             # Use WebDriverWait with a simpler XPath targeting the label text
             add_method_link = WebDriverWait(self.driver, 15).until(
@@ -208,7 +258,8 @@ class MicrosoftSignIn:
     def navigate_to_security_info(self):
         """Directly navigate to the security info page."""
         try:
-            logging.info("Navigating directly to the security info page...")
+            self.logger.info(
+                "Navigating directly to the security info page...")
             self.driver.get("https://mysignins.microsoft.com/security-info")
         except Exception as e:
             self.logger.error(
@@ -218,7 +269,7 @@ class MicrosoftSignIn:
     def click_sign_in(self):
         """Click the sign in button."""
         try:
-            logging.info("Clicking the sign in button...")
+            self.logger.info("Clicking the sign in button...")
 
             # Use WebDriverWait with XPath to identify the sign in button
             sign_in_button = WebDriverWait(self.driver, 10).until(
@@ -235,7 +286,7 @@ class MicrosoftSignIn:
     def fill_email(self, email):
         """Fill the email field."""
         try:
-            logging.info(f"Filling in email: {email}")
+            self.logger.info(f"Filling in email: {email}")
             email_input = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(
                     (By.XPATH, "//input[@type='email' and @name='loginfmt']"))
@@ -245,10 +296,25 @@ class MicrosoftSignIn:
             self.logger.error(f"Error filling email: {str(e)}")
             raise
 
+    def click_last_next_button(self):
+        """Click the last 'Next' button that finalize the security key creation."""
+        try:
+            self.logger.info("Clicking the 'Next' button...")
+
+            # Using XPath to target the button with the text "Next" and specific class names
+            next_button = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(
+                    (By.XPATH, "//button[@type='button' and contains(@class, 'ms-Button') and contains(@class, 'ms-Button--primary') and .//span[text()='Next']]"))
+            )
+            next_button.click()
+        except Exception as e:
+            self.logger.error(f"Error clicking 'Next' button: {str(e)}")
+            raise
+
     def click_next(self):
         """Click the next button."""
         try:
-            logging.info("Clicking the next button...")
+            self.logger.info("Clicking the next button...")
             next_button = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(
                     (By.XPATH, "//input[@type='submit' and @value='Next' and contains(@class, 'button_primary')]"))
@@ -261,7 +327,7 @@ class MicrosoftSignIn:
     def enter_tap(self, tap):
         """Enter the Temporary Access Pass."""
         try:
-            logging.info(f"Entering Temporary Access Pass: {tap}")
+            self.logger.info(f"Entering Temporary Access Pass: {tap}")
 
             # Use WebDriverWait with the name attribute to identify the TAP input field
             tap_input = WebDriverWait(self.driver, 10).until(
@@ -273,61 +339,3 @@ class MicrosoftSignIn:
         except Exception as e:
             self.logger.error(f"Error entering TAP: {str(e)}")
             raise
-
-    def capture_logs_and_screenshots(self, email):
-        """Capture screenshots and logs for debugging purposes."""
-        self.capture_screenshot(email)
-        self.capture_browser_logs(email)
-
-    def capture_screenshot(self, email):
-        """Capture a screenshot."""
-        try:
-            timestamp = time.strftime("%Y%m%d-%H%M%S")
-            self.driver.save_screenshot(f'screenshots/{email}_{timestamp}.png')
-        except Exception as e:
-            self.logger.error(f"Error capturing screenshot: {str(e)}")
-
-    def capture_browser_logs(self, email):
-        """Capture browser logs."""
-        try:
-            browser_logs = self.driver.get_log('browser')
-            with open(f'logs/{email}_browser_logs.txt', 'w') as f:
-                for entry in browser_logs:
-                    f.write(str(entry))
-        except Exception as e:
-            self.logger.error(f"Error capturing browser logs: {str(e)}")
-
-    def close(self):
-        """Close the selenium driver."""
-        time.sleep(3000)
-        self.driver.quit()
-
-
-def main():
-    setup_console_logging()
-    logging.info("Starting the automation script...")
-
-    parser = argparse.ArgumentParser(
-        description="Automate Microsoft Sign-In to register a security key.")
-    parser.add_argument("--mode", choices=["debug", "production"], default="production",
-                        help="Mode in which to run the script. Default is production.")
-    parser.add_argument("--email", type=str, required=True,
-                        help="Email to be used for sign-in.")
-    parser.add_argument(
-        "--tap", type=str, help="Temporary Access Pass. Optional in debug mode. Will receive from Microsoft if not provided in debug mode.")
-    parser.add_argument("--userId", type=str, required=True,
-                        help="The user to register the credential/security-key for, Required in debug mode.")
-    parser.add_argument("--issuerId", type=str, required=True,
-                        help="The user/admin who requests/issues the request. Required in debug mode.")
-    args = parser.parse_args()
-
-    ms_signin = MicrosoftSignIn(mode=args.mode)
-    ms_signin.register_security_key(
-        email=args.email, tap=args.tap, user_id=args.userId, issuer_id=args.issuerId)
-    ms_signin.close()
-
-    logging.info("Automation script finished.")
-
-
-if __name__ == "__main__":
-    main()

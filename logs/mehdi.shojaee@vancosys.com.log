@@ -1,1006 +1,850 @@
-2023-09-11 20:21:42,175 - mehdi.shojaee@vancosys.com - ERROR - Error clicking security info link: Message: 
+2023-09-24 01:53:46,258 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 01:54:00,469 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 01:54:02,303 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 01:54:03,013 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: RjpE=ka4
+2023-09-24 01:54:04,145 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 01:54:10,570 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 01:54:12,238 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 01:54:22,358 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 01:54:25,033 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 01:54:25,179 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 01:54:25,449 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 01:54:25,594 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: replace() argument 2 must be str, not None
+2023-09-24 01:58:34,743 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 01:58:44,640 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 01:58:46,506 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 01:58:46,603 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: %jL*^uaK
+2023-09-24 01:58:48,345 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 01:58:53,604 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 01:58:55,421 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 01:59:04,576 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 01:59:07,213 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 01:59:07,342 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 01:59:07,602 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 01:59:07,746 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: replace() argument 2 must be str, not None
+2023-09-24 02:08:55,740 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 02:13:41,650 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 02:14:50,559 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 02:14:50,578 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: chrome not reachable
+  (Session info: chrome=100.0.4896.127)
 Stacktrace:
-#0 0x56477bb47ad3 <unknown>
-#1 0x56477b8a7568 <unknown>
-#2 0x56477b8ddc46 <unknown>
-#3 0x56477b8dde01 <unknown>
-#4 0x56477b910a64 <unknown>
-#5 0x56477b8fb61d <unknown>
-#6 0x56477b90e824 <unknown>
-#7 0x56477b8fb4e3 <unknown>
-#8 0x56477b8d0d1a <unknown>
-#9 0x56477b8d1e75 <unknown>
-#10 0x56477bb75efd <unknown>
-#11 0x56477bb8f19b <unknown>
-#12 0x56477bb77c65 <unknown>
-#13 0x56477bb8fec8 <unknown>
-#14 0x56477bb6b360 <unknown>
-#15 0x56477bbaba68 <unknown>
-#16 0x56477bbabbe8 <unknown>
-#17 0x56477bbc57fd <unknown>
-#18 0x7f7642f78609 <unknown>
+#0 0x561b581a7ad3 <unknown>
+#1 0x561b57f073ff <unknown>
+#2 0x561b57ef5b94 <unknown>
+#3 0x561b57ef65a9 <unknown>
+#4 0x561b57ef8302 <unknown>
+#5 0x561b57ef06f6 <unknown>
+#6 0x561b57f08972 <unknown>
+#7 0x561b57f6dea1 <unknown>
+#8 0x561b57f5b4e3 <unknown>
+#9 0x561b57f30d1a <unknown>
+#10 0x561b57f31e75 <unknown>
+#11 0x561b581d5efd <unknown>
+#12 0x561b581ef19b <unknown>
+#13 0x561b581d7c65 <unknown>
+#14 0x561b581efec8 <unknown>
+#15 0x561b581cb360 <unknown>
+#16 0x561b5820ba68 <unknown>
+#17 0x561b5820bbe8 <unknown>
+#18 0x561b582257fd <unknown>
+#19 0x7fac1f028609 <unknown>
 
-2023-09-11 20:21:42,175 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
+2023-09-24 02:18:23,341 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 02:19:41,647 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 02:19:42,825 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 02:19:42,978 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: 5Zy=ZHk9
+2023-09-24 02:19:44,776 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 02:19:54,639 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 02:19:56,013 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 02:20:07,915 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 02:20:10,581 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 02:20:10,713 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 02:20:10,963 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 02:20:11,204 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 02:21:31,323 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 02:22:44,246 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 02:22:46,519 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 02:22:47,241 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: X4H&U2W6
+2023-09-24 02:22:48,449 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 02:22:58,697 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 02:23:00,341 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 02:23:09,962 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 02:23:13,133 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 02:23:13,265 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 02:23:13,478 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 02:23:13,856 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 02:32:09,229 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 02:33:19,997 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 02:33:21,160 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 02:33:21,808 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: -U=H&J4Z
+2023-09-24 02:33:22,884 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 02:33:28,355 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 02:33:29,909 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 02:33:40,190 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 02:33:42,829 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 02:33:42,912 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 02:33:43,090 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 02:33:43,226 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 02:33:43,337 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 02:38:19,581 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 02:39:47,584 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 02:39:48,857 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 02:39:49,563 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: L^TUctVV
+2023-09-24 02:39:50,687 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 02:39:56,629 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 02:39:57,737 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 02:40:08,589 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 02:40:11,228 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 02:40:11,367 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 02:40:11,567 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 02:40:11,737 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 02:40:25,030 - mehdi.shojaee@vancosys.com - WARNING - JS code injection might have failed.
+2023-09-24 02:56:25,301 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 02:56:33,525 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 02:56:35,195 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 02:56:35,338 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: AS6Rnzwg
+2023-09-24 02:56:36,467 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 02:56:54,625 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: chrome not reachable
+  (Session info: chrome=100.0.4896.127)
 Stacktrace:
-#0 0x56477bb47ad3 <unknown>
-#1 0x56477b8a7568 <unknown>
-#2 0x56477b8ddc46 <unknown>
-#3 0x56477b8dde01 <unknown>
-#4 0x56477b910a64 <unknown>
-#5 0x56477b8fb61d <unknown>
-#6 0x56477b90e824 <unknown>
-#7 0x56477b8fb4e3 <unknown>
-#8 0x56477b8d0d1a <unknown>
-#9 0x56477b8d1e75 <unknown>
-#10 0x56477bb75efd <unknown>
-#11 0x56477bb8f19b <unknown>
-#12 0x56477bb77c65 <unknown>
-#13 0x56477bb8fec8 <unknown>
-#14 0x56477bb6b360 <unknown>
-#15 0x56477bbaba68 <unknown>
-#16 0x56477bbabbe8 <unknown>
-#17 0x56477bbc57fd <unknown>
-#18 0x7f7642f78609 <unknown>
+#0 0x55e6dd1e8ad3 <unknown>
+#1 0x55e6dcf483ff <unknown>
+#2 0x55e6dcf36b94 <unknown>
+#3 0x55e6dcf375a9 <unknown>
+#4 0x55e6dcf39302 <unknown>
+#5 0x55e6dcf316f6 <unknown>
+#6 0x55e6dcf49972 <unknown>
+#7 0x55e6dcfaeea1 <unknown>
+#8 0x55e6dcf9c4e3 <unknown>
+#9 0x55e6dcf71d1a <unknown>
+#10 0x55e6dcf72e75 <unknown>
+#11 0x55e6dd216efd <unknown>
+#12 0x55e6dd23019b <unknown>
+#13 0x55e6dd218c65 <unknown>
+#14 0x55e6dd230ec8 <unknown>
+#15 0x55e6dd20c360 <unknown>
+#16 0x55e6dd24ca68 <unknown>
+#17 0x55e6dd24cbe8 <unknown>
+#18 0x55e6dd2667fd <unknown>
+#19 0x7f3e42103609 <unknown>
 
-2023-09-11 20:28:10,302 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: 'MicrosoftSignIn' object has no attribute 'click_sign_in'
-2023-09-11 20:46:12,767 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-
-2023-09-11 20:51:13,290 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' link: Message: 
+2023-09-24 02:59:01,915 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 02:59:09,083 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 02:59:10,872 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 02:59:10,965 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: &LMfVqZ$
+2023-09-24 02:59:12,576 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 02:59:17,308 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 02:59:18,219 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 02:59:28,820 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 02:59:31,461 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 02:59:31,572 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 02:59:31,747 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 02:59:31,859 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 02:59:43,354 - mehdi.shojaee@vancosys.com - WARNING - JS code injection might have failed.
+2023-09-24 03:01:52,933 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 03:02:01,280 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 03:02:03,053 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 03:02:03,682 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: GU*=5C46
+2023-09-24 03:02:04,808 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 03:02:34,397 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: chrome not reachable
+  (Session info: chrome=100.0.4896.127)
 Stacktrace:
-#0 0x5639661bbad3 <unknown>
-#1 0x563965f1b568 <unknown>
-#2 0x563965f51c46 <unknown>
-#3 0x563965f51e01 <unknown>
-#4 0x563965f84a64 <unknown>
-#5 0x563965f6f61d <unknown>
-#6 0x563965f82824 <unknown>
-#7 0x563965f6f4e3 <unknown>
-#8 0x563965f44d1a <unknown>
-#9 0x563965f45e75 <unknown>
-#10 0x5639661e9efd <unknown>
-#11 0x56396620319b <unknown>
-#12 0x5639661ebc65 <unknown>
-#13 0x563966203ec8 <unknown>
-#14 0x5639661df360 <unknown>
-#15 0x56396621fa68 <unknown>
-#16 0x56396621fbe8 <unknown>
-#17 0x5639662397fd <unknown>
-#18 0x7f949977a609 <unknown>
+#0 0x55668c8f4ad3 <unknown>
+#1 0x55668c6543ff <unknown>
+#2 0x55668c642b94 <unknown>
+#3 0x55668c6435a9 <unknown>
+#4 0x55668c645302 <unknown>
+#5 0x55668c63d6f6 <unknown>
+#6 0x55668c655972 <unknown>
+#7 0x55668c6baea1 <unknown>
+#8 0x55668c6a84e3 <unknown>
+#9 0x55668c67dd1a <unknown>
+#10 0x55668c67ee75 <unknown>
+#11 0x55668c922efd <unknown>
+#12 0x55668c93c19b <unknown>
+#13 0x55668c924c65 <unknown>
+#14 0x55668c93cec8 <unknown>
+#15 0x55668c918360 <unknown>
+#16 0x55668c958a68 <unknown>
+#17 0x55668c958be8 <unknown>
+#18 0x55668c9727fd <unknown>
+#19 0x7f04e91bc609 <unknown>
 
-2023-09-11 20:51:13,298 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x5639661bbad3 <unknown>
-#1 0x563965f1b568 <unknown>
-#2 0x563965f51c46 <unknown>
-#3 0x563965f51e01 <unknown>
-#4 0x563965f84a64 <unknown>
-#5 0x563965f6f61d <unknown>
-#6 0x563965f82824 <unknown>
-#7 0x563965f6f4e3 <unknown>
-#8 0x563965f44d1a <unknown>
-#9 0x563965f45e75 <unknown>
-#10 0x5639661e9efd <unknown>
-#11 0x56396620319b <unknown>
-#12 0x5639661ebc65 <unknown>
-#13 0x563966203ec8 <unknown>
-#14 0x5639661df360 <unknown>
-#15 0x56396621fa68 <unknown>
-#16 0x56396621fbe8 <unknown>
-#17 0x5639662397fd <unknown>
-#18 0x7f949977a609 <unknown>
-
-2023-09-11 21:17:14,821 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' link: Message: 
-Stacktrace:
-#0 0x55a595760ad3 <unknown>
-#1 0x55a5954c0568 <unknown>
-#2 0x55a5954f6c46 <unknown>
-#3 0x55a5954f6e01 <unknown>
-#4 0x55a595529a64 <unknown>
-#5 0x55a59551461d <unknown>
-#6 0x55a595527824 <unknown>
-#7 0x55a5955144e3 <unknown>
-#8 0x55a5954e9d1a <unknown>
-#9 0x55a5954eae75 <unknown>
-#10 0x55a59578eefd <unknown>
-#11 0x55a5957a819b <unknown>
-#12 0x55a595790c65 <unknown>
-#13 0x55a5957a8ec8 <unknown>
-#14 0x55a595784360 <unknown>
-#15 0x55a5957c4a68 <unknown>
-#16 0x55a5957c4be8 <unknown>
-#17 0x55a5957de7fd <unknown>
-#18 0x7fc208d35609 <unknown>
-
-2023-09-11 21:17:14,822 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x55a595760ad3 <unknown>
-#1 0x55a5954c0568 <unknown>
-#2 0x55a5954f6c46 <unknown>
-#3 0x55a5954f6e01 <unknown>
-#4 0x55a595529a64 <unknown>
-#5 0x55a59551461d <unknown>
-#6 0x55a595527824 <unknown>
-#7 0x55a5955144e3 <unknown>
-#8 0x55a5954e9d1a <unknown>
-#9 0x55a5954eae75 <unknown>
-#10 0x55a59578eefd <unknown>
-#11 0x55a5957a819b <unknown>
-#12 0x55a595790c65 <unknown>
-#13 0x55a5957a8ec8 <unknown>
-#14 0x55a595784360 <unknown>
-#15 0x55a5957c4a68 <unknown>
-#16 0x55a5957c4be8 <unknown>
-#17 0x55a5957de7fd <unknown>
-#18 0x7fc208d35609 <unknown>
-
-2023-09-11 21:43:33,364 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' link: Message: 
-Stacktrace:
-#0 0x5640834c9ad3 <unknown>
-#1 0x564083229568 <unknown>
-#2 0x56408325fc46 <unknown>
-#3 0x56408325fe01 <unknown>
-#4 0x564083292a64 <unknown>
-#5 0x56408327d61d <unknown>
-#6 0x564083290824 <unknown>
-#7 0x56408327d4e3 <unknown>
-#8 0x564083252d1a <unknown>
-#9 0x564083253e75 <unknown>
-#10 0x5640834f7efd <unknown>
-#11 0x56408351119b <unknown>
-#12 0x5640834f9c65 <unknown>
-#13 0x564083511ec8 <unknown>
-#14 0x5640834ed360 <unknown>
-#15 0x56408352da68 <unknown>
-#16 0x56408352dbe8 <unknown>
-#17 0x5640835477fd <unknown>
-#18 0x7f7e81503609 <unknown>
-
-2023-09-11 21:43:33,364 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x5640834c9ad3 <unknown>
-#1 0x564083229568 <unknown>
-#2 0x56408325fc46 <unknown>
-#3 0x56408325fe01 <unknown>
-#4 0x564083292a64 <unknown>
-#5 0x56408327d61d <unknown>
-#6 0x564083290824 <unknown>
-#7 0x56408327d4e3 <unknown>
-#8 0x564083252d1a <unknown>
-#9 0x564083253e75 <unknown>
-#10 0x5640834f7efd <unknown>
-#11 0x56408351119b <unknown>
-#12 0x5640834f9c65 <unknown>
-#13 0x564083511ec8 <unknown>
-#14 0x5640834ed360 <unknown>
-#15 0x56408352da68 <unknown>
-#16 0x56408352dbe8 <unknown>
-#17 0x5640835477fd <unknown>
-#18 0x7f7e81503609 <unknown>
-
-2023-09-11 21:53:24,854 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' link: Message: 
-Stacktrace:
-#0 0x555b7fcfaad3 <unknown>
-#1 0x555b7fa5a568 <unknown>
-#2 0x555b7fa90c46 <unknown>
-#3 0x555b7fa90e01 <unknown>
-#4 0x555b7fac3a64 <unknown>
-#5 0x555b7faae61d <unknown>
-#6 0x555b7fac1824 <unknown>
-#7 0x555b7faae4e3 <unknown>
-#8 0x555b7fa83d1a <unknown>
-#9 0x555b7fa84e75 <unknown>
-#10 0x555b7fd28efd <unknown>
-#11 0x555b7fd4219b <unknown>
-#12 0x555b7fd2ac65 <unknown>
-#13 0x555b7fd42ec8 <unknown>
-#14 0x555b7fd1e360 <unknown>
-#15 0x555b7fd5ea68 <unknown>
-#16 0x555b7fd5ebe8 <unknown>
-#17 0x555b7fd787fd <unknown>
-#18 0x7f84ddafe609 <unknown>
-
-2023-09-11 21:53:24,855 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x555b7fcfaad3 <unknown>
-#1 0x555b7fa5a568 <unknown>
-#2 0x555b7fa90c46 <unknown>
-#3 0x555b7fa90e01 <unknown>
-#4 0x555b7fac3a64 <unknown>
-#5 0x555b7faae61d <unknown>
-#6 0x555b7fac1824 <unknown>
-#7 0x555b7faae4e3 <unknown>
-#8 0x555b7fa83d1a <unknown>
-#9 0x555b7fa84e75 <unknown>
-#10 0x555b7fd28efd <unknown>
-#11 0x555b7fd4219b <unknown>
-#12 0x555b7fd2ac65 <unknown>
-#13 0x555b7fd42ec8 <unknown>
-#14 0x555b7fd1e360 <unknown>
-#15 0x555b7fd5ea68 <unknown>
-#16 0x555b7fd5ebe8 <unknown>
-#17 0x555b7fd787fd <unknown>
-#18 0x7f84ddafe609 <unknown>
-
-2023-09-11 21:55:41,225 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' link: Message: 
-Stacktrace:
-#0 0x564a4b773ad3 <unknown>
-#1 0x564a4b4d3568 <unknown>
-#2 0x564a4b509c46 <unknown>
-#3 0x564a4b509e01 <unknown>
-#4 0x564a4b53ca64 <unknown>
-#5 0x564a4b52761d <unknown>
-#6 0x564a4b53a824 <unknown>
-#7 0x564a4b5274e3 <unknown>
-#8 0x564a4b4fcd1a <unknown>
-#9 0x564a4b4fde75 <unknown>
-#10 0x564a4b7a1efd <unknown>
-#11 0x564a4b7bb19b <unknown>
-#12 0x564a4b7a3c65 <unknown>
-#13 0x564a4b7bbec8 <unknown>
-#14 0x564a4b797360 <unknown>
-#15 0x564a4b7d7a68 <unknown>
-#16 0x564a4b7d7be8 <unknown>
-#17 0x564a4b7f17fd <unknown>
-#18 0x7fde06282609 <unknown>
-
-2023-09-11 21:55:41,225 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x564a4b773ad3 <unknown>
-#1 0x564a4b4d3568 <unknown>
-#2 0x564a4b509c46 <unknown>
-#3 0x564a4b509e01 <unknown>
-#4 0x564a4b53ca64 <unknown>
-#5 0x564a4b52761d <unknown>
-#6 0x564a4b53a824 <unknown>
-#7 0x564a4b5274e3 <unknown>
-#8 0x564a4b4fcd1a <unknown>
-#9 0x564a4b4fde75 <unknown>
-#10 0x564a4b7a1efd <unknown>
-#11 0x564a4b7bb19b <unknown>
-#12 0x564a4b7a3c65 <unknown>
-#13 0x564a4b7bbec8 <unknown>
-#14 0x564a4b797360 <unknown>
-#15 0x564a4b7d7a68 <unknown>
-#16 0x564a4b7d7be8 <unknown>
-#17 0x564a4b7f17fd <unknown>
-#18 0x7fde06282609 <unknown>
-
-2023-09-11 22:00:32,531 - mehdi.shojaee@vancosys.com - ERROR - Error filling email: Message: 
-Stacktrace:
-#0 0x560dc7acdad3 <unknown>
-#1 0x560dc782d568 <unknown>
-#2 0x560dc7863c46 <unknown>
-#3 0x560dc7863e01 <unknown>
-#4 0x560dc7896a64 <unknown>
-#5 0x560dc788161d <unknown>
-#6 0x560dc7894824 <unknown>
-#7 0x560dc78814e3 <unknown>
-#8 0x560dc7856d1a <unknown>
-#9 0x560dc7857e75 <unknown>
-#10 0x560dc7afbefd <unknown>
-#11 0x560dc7b1519b <unknown>
-#12 0x560dc7afdc65 <unknown>
-#13 0x560dc7b15ec8 <unknown>
-#14 0x560dc7af1360 <unknown>
-#15 0x560dc7b31a68 <unknown>
-#16 0x560dc7b31be8 <unknown>
-#17 0x560dc7b4b7fd <unknown>
-#18 0x7f730593d609 <unknown>
-
-2023-09-11 22:00:32,531 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x560dc7acdad3 <unknown>
-#1 0x560dc782d568 <unknown>
-#2 0x560dc7863c46 <unknown>
-#3 0x560dc7863e01 <unknown>
-#4 0x560dc7896a64 <unknown>
-#5 0x560dc788161d <unknown>
-#6 0x560dc7894824 <unknown>
-#7 0x560dc78814e3 <unknown>
-#8 0x560dc7856d1a <unknown>
-#9 0x560dc7857e75 <unknown>
-#10 0x560dc7afbefd <unknown>
-#11 0x560dc7b1519b <unknown>
-#12 0x560dc7afdc65 <unknown>
-#13 0x560dc7b15ec8 <unknown>
-#14 0x560dc7af1360 <unknown>
-#15 0x560dc7b31a68 <unknown>
-#16 0x560dc7b31be8 <unknown>
-#17 0x560dc7b4b7fd <unknown>
-#18 0x7f730593d609 <unknown>
-
-2023-09-11 22:07:54,561 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' link: Message: 
-Stacktrace:
-#0 0x5577eb1e8ad3 <unknown>
-#1 0x5577eaf48568 <unknown>
-#2 0x5577eaf7ec46 <unknown>
-#3 0x5577eaf7ee01 <unknown>
-#4 0x5577eafb1a64 <unknown>
-#5 0x5577eaf9c61d <unknown>
-#6 0x5577eafaf824 <unknown>
-#7 0x5577eaf9c4e3 <unknown>
-#8 0x5577eaf71d1a <unknown>
-#9 0x5577eaf72e75 <unknown>
-#10 0x5577eb216efd <unknown>
-#11 0x5577eb23019b <unknown>
-#12 0x5577eb218c65 <unknown>
-#13 0x5577eb230ec8 <unknown>
-#14 0x5577eb20c360 <unknown>
-#15 0x5577eb24ca68 <unknown>
-#16 0x5577eb24cbe8 <unknown>
-#17 0x5577eb2667fd <unknown>
-#18 0x7f9319f46609 <unknown>
-
-2023-09-11 22:07:54,561 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x5577eb1e8ad3 <unknown>
-#1 0x5577eaf48568 <unknown>
-#2 0x5577eaf7ec46 <unknown>
-#3 0x5577eaf7ee01 <unknown>
-#4 0x5577eafb1a64 <unknown>
-#5 0x5577eaf9c61d <unknown>
-#6 0x5577eafaf824 <unknown>
-#7 0x5577eaf9c4e3 <unknown>
-#8 0x5577eaf71d1a <unknown>
-#9 0x5577eaf72e75 <unknown>
-#10 0x5577eb216efd <unknown>
-#11 0x5577eb23019b <unknown>
-#12 0x5577eb218c65 <unknown>
-#13 0x5577eb230ec8 <unknown>
-#14 0x5577eb20c360 <unknown>
-#15 0x5577eb24ca68 <unknown>
-#16 0x5577eb24cbe8 <unknown>
-#17 0x5577eb2667fd <unknown>
-#18 0x7f9319f46609 <unknown>
-
-2023-09-11 22:13:32,382 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: no such window: target window already closed
+2023-09-24 03:02:46,389 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 03:02:52,611 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 03:02:53,291 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 03:02:53,938 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: N#6eHVRB
+2023-09-24 03:02:55,052 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 03:03:00,352 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 03:03:01,263 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 03:03:08,784 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 03:03:11,460 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 03:03:11,583 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 03:03:11,752 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 03:03:11,861 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 03:13:54,587 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 03:14:03,408 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 03:14:04,612 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 03:14:04,735 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: cCw@PS%s
+2023-09-24 03:14:05,868 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 03:14:11,494 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 03:14:12,499 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 03:14:19,783 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 03:14:22,425 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 03:14:22,524 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 03:14:22,737 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 03:14:22,849 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 03:14:34,468 - mehdi.shojaee@vancosys.com - WARNING - JS code injection might have failed.
+2023-09-24 14:39:08,632 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 14:39:16,918 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: no such window: target window already closed
 from unknown error: web view not found
-  (Session info: chrome=100.0.4896.127)
+  (Session info: chrome=117.0.5938.92)
 Stacktrace:
-#0 0x55b99fa0fad3 <unknown>
-#1 0x55b99f76f568 <unknown>
-#2 0x55b99f74f6ac <unknown>
-#3 0x55b99f7c6bab <unknown>
-#4 0x55b99f7d5e55 <unknown>
-#5 0x55b99f7c34e3 <unknown>
-#6 0x55b99f798d1a <unknown>
-#7 0x55b99f799e75 <unknown>
-#8 0x55b99fa3defd <unknown>
-#9 0x55b99fa5719b <unknown>
-#10 0x55b99fa3fc65 <unknown>
-#11 0x55b99fa57ec8 <unknown>
-#12 0x55b99fa33360 <unknown>
-#13 0x55b99fa73a68 <unknown>
-#14 0x55b99fa73be8 <unknown>
-#15 0x55b99fa8d7fd <unknown>
-#16 0x7fb95d971609 <unknown>
+#0 0x556b4c2806b3 <unknown>
+#1 0x556b4bf561e7 <unknown>
+#2 0x556b4bf2efe8 <unknown>
+#3 0x556b4bfc442f <unknown>
+#4 0x556b4bfd7e76 <unknown>
+#5 0x556b4bfbee93 <unknown>
+#6 0x556b4bf91934 <unknown>
+#7 0x556b4bf9271e <unknown>
+#8 0x556b4c245cb8 <unknown>
+#9 0x556b4c249bf0 <unknown>
+#10 0x556b4c25419c <unknown>
+#11 0x556b4c24a808 <unknown>
+#12 0x556b4c21727f <unknown>
+#13 0x556b4c26ee88 <unknown>
+#14 0x556b4c26f059 <unknown>
+#15 0x556b4c27f843 <unknown>
+#16 0x7f7fc118f609 start_thread
 
-2023-09-11 22:13:32,389 - mehdi.shojaee@vancosys.com - ERROR - Error capturing screenshot: Message: no such window: target window already closed
+2023-09-24 14:44:49,836 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 14:44:57,389 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 14:44:58,072 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 14:44:58,748 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: 2bvm#w99
+2023-09-24 14:44:59,844 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 14:52:08,776 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 14:52:18,437 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 14:52:20,131 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 14:52:20,822 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: $ugU-7j=
+2023-09-24 14:52:21,935 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 14:52:28,858 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 14:52:29,708 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 14:52:40,882 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 14:52:43,533 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 14:52:43,647 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 14:52:43,808 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 14:52:43,957 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 14:52:44,047 - mehdi.shojaee@vancosys.com - ERROR - Error during JS injection: 'MicrosoftSignIn' object has no attribute 'execute_cdp_cmd'
+2023-09-24 14:52:44,047 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: 'MicrosoftSignIn' object has no attribute 'execute_cdp_cmd'
+2023-09-24 14:57:40,099 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 14:57:49,588 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 14:57:51,302 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 14:57:51,403 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: 3+U-M+4=
+2023-09-24 14:57:52,540 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 14:58:00,598 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 14:58:01,457 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 14:58:10,027 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 14:58:12,700 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 14:58:12,817 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 14:58:13,022 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 14:58:13,164 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 14:58:13,267 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 14:59:24,136 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 14:59:32,987 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 14:59:35,212 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 14:59:35,898 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: 2C3Y+=@X
+2023-09-24 14:59:37,512 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 14:59:46,247 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 14:59:47,627 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 14:59:57,784 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 15:00:00,437 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 15:00:00,564 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 15:00:00,737 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 15:00:00,883 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:00:00,990 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 15:05:41,809 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 15:05:53,739 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 15:05:55,908 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:05:56,553 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: duG9aBn8
+2023-09-24 15:05:57,630 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 15:06:26,049 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 15:06:33,381 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 15:06:35,206 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:06:35,365 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: x9MzprS9
+2023-09-24 15:06:36,612 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 15:06:41,689 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 15:06:42,578 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 15:06:50,254 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 15:06:52,899 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 15:06:52,998 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 15:06:53,190 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 15:06:53,305 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:06:53,423 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 15:14:26,804 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 15:14:33,305 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 15:14:34,061 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:14:34,795 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: f4r#v73#
+2023-09-24 15:14:36,079 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 15:14:40,436 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 15:14:41,356 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 15:14:52,188 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 15:14:54,848 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 15:14:54,971 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 15:14:55,186 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 15:14:55,376 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:14:55,475 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 15:53:04,205 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 15:53:10,846 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 15:53:11,539 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:53:12,212 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: TG3XfLSc
+2023-09-24 15:53:13,846 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 15:53:46,829 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
+Stacktrace:
+#0 0x55fba9f5b6b3 <unknown>
+#1 0x55fba9c311e7 <unknown>
+#2 0x55fba9c78566 <unknown>
+#3 0x55fba9c78651 <unknown>
+#4 0x55fba9cb5a74 <unknown>
+#5 0x55fba9c9a0ed <unknown>
+#6 0x55fba9cb3322 <unknown>
+#7 0x55fba9c99e93 <unknown>
+#8 0x55fba9c6c934 <unknown>
+#9 0x55fba9c6d71e <unknown>
+#10 0x55fba9f20cb8 <unknown>
+#11 0x55fba9f24bf0 <unknown>
+#12 0x55fba9f2f19c <unknown>
+#13 0x55fba9f25808 <unknown>
+#14 0x55fba9ef227f <unknown>
+#15 0x55fba9f49e88 <unknown>
+#16 0x55fba9f4a059 <unknown>
+#17 0x55fba9f5a843 <unknown>
+#18 0x7f893ebdf609 start_thread
+
+2023-09-24 15:54:18,338 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 15:54:28,046 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 15:54:29,255 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:54:29,897 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: +y5&^req
+2023-09-24 15:54:31,045 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 15:55:01,924 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: no such window: target window already closed
 from unknown error: web view not found
-  (Session info: chrome=100.0.4896.127)
+  (Session info: chrome=117.0.5938.92)
 Stacktrace:
-#0 0x55b99fa0fad3 <unknown>
-#1 0x55b99f76f568 <unknown>
-#2 0x55b99f74f6ac <unknown>
-#3 0x55b99f7c6bab <unknown>
-#4 0x55b99f7d5e55 <unknown>
-#5 0x55b99f7c34e3 <unknown>
-#6 0x55b99f798d1a <unknown>
-#7 0x55b99f799e75 <unknown>
-#8 0x55b99fa3defd <unknown>
-#9 0x55b99fa5719b <unknown>
-#10 0x55b99fa3fc65 <unknown>
-#11 0x55b99fa57ec8 <unknown>
-#12 0x55b99fa33360 <unknown>
-#13 0x55b99fa73a68 <unknown>
-#14 0x55b99fa73be8 <unknown>
-#15 0x55b99fa8d7fd <unknown>
-#16 0x7fb95d971609 <unknown>
+#0 0x5562e92936b3 <unknown>
+#1 0x5562e8f691e7 <unknown>
+#2 0x5562e8f41fe8 <unknown>
+#3 0x5562e8fd742f <unknown>
+#4 0x5562e8feae76 <unknown>
+#5 0x5562e8fd1e93 <unknown>
+#6 0x5562e8fa4934 <unknown>
+#7 0x5562e8fa571e <unknown>
+#8 0x5562e9258cb8 <unknown>
+#9 0x5562e925cbf0 <unknown>
+#10 0x5562e926719c <unknown>
+#11 0x5562e925d808 <unknown>
+#12 0x5562e922a27f <unknown>
+#13 0x5562e9281e88 <unknown>
+#14 0x5562e9282059 <unknown>
+#15 0x5562e9292843 <unknown>
+#16 0x7fbf0243e609 start_thread
 
-2023-09-11 22:14:58,843 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: no such window: target window already closed
+2023-09-24 15:55:14,454 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 15:55:22,041 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 15:55:22,747 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:55:23,408 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: 3B7V5*NL
+2023-09-24 15:55:24,519 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 15:55:45,177 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: no such window: target window already closed
 from unknown error: web view not found
-  (Session info: chrome=100.0.4896.127)
+  (Session info: chrome=117.0.5938.92)
 Stacktrace:
-#0 0x555e45b1cad3 <unknown>
-#1 0x555e4587c568 <unknown>
-#2 0x555e4585c6ac <unknown>
-#3 0x555e458d3bab <unknown>
-#4 0x555e458e2e55 <unknown>
-#5 0x555e458d04e3 <unknown>
-#6 0x555e458a5d1a <unknown>
-#7 0x555e458a6e75 <unknown>
-#8 0x555e45b4aefd <unknown>
-#9 0x555e45b6419b <unknown>
-#10 0x555e45b4cc65 <unknown>
-#11 0x555e45b64ec8 <unknown>
-#12 0x555e45b40360 <unknown>
-#13 0x555e45b80a68 <unknown>
-#14 0x555e45b80be8 <unknown>
-#15 0x555e45b9a7fd <unknown>
-#16 0x7f19796f7609 <unknown>
+#0 0x55e41a8416b3 <unknown>
+#1 0x55e41a5171e7 <unknown>
+#2 0x55e41a4effe8 <unknown>
+#3 0x55e41a58542f <unknown>
+#4 0x55e41a598e76 <unknown>
+#5 0x55e41a57fe93 <unknown>
+#6 0x55e41a552934 <unknown>
+#7 0x55e41a55371e <unknown>
+#8 0x55e41a806cb8 <unknown>
+#9 0x55e41a80abf0 <unknown>
+#10 0x55e41a81519c <unknown>
+#11 0x55e41a80b808 <unknown>
+#12 0x55e41a7d827f <unknown>
+#13 0x55e41a82fe88 <unknown>
+#14 0x55e41a830059 <unknown>
+#15 0x55e41a840843 <unknown>
+#16 0x7f102288f609 start_thread
 
-2023-09-11 22:14:58,849 - mehdi.shojaee@vancosys.com - ERROR - Error capturing screenshot: Message: no such window: target window already closed
+2023-09-24 15:56:01,149 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 15:56:08,594 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 15:56:11,392 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:56:12,017 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: s6FqD3nM
+2023-09-24 15:56:13,677 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 15:56:37,365 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: no such window: target window already closed
 from unknown error: web view not found
-  (Session info: chrome=100.0.4896.127)
+  (Session info: chrome=117.0.5938.92)
 Stacktrace:
-#0 0x555e45b1cad3 <unknown>
-#1 0x555e4587c568 <unknown>
-#2 0x555e4585c6ac <unknown>
-#3 0x555e458d3bab <unknown>
-#4 0x555e458e2e55 <unknown>
-#5 0x555e458d04e3 <unknown>
-#6 0x555e458a5d1a <unknown>
-#7 0x555e458a6e75 <unknown>
-#8 0x555e45b4aefd <unknown>
-#9 0x555e45b6419b <unknown>
-#10 0x555e45b4cc65 <unknown>
-#11 0x555e45b64ec8 <unknown>
-#12 0x555e45b40360 <unknown>
-#13 0x555e45b80a68 <unknown>
-#14 0x555e45b80be8 <unknown>
-#15 0x555e45b9a7fd <unknown>
-#16 0x7f19796f7609 <unknown>
+#0 0x55a9beeae6b3 <unknown>
+#1 0x55a9beb841e7 <unknown>
+#2 0x55a9beb5cfe8 <unknown>
+#3 0x55a9bebf242f <unknown>
+#4 0x55a9bec05e76 <unknown>
+#5 0x55a9bebece93 <unknown>
+#6 0x55a9bebbf934 <unknown>
+#7 0x55a9bebc071e <unknown>
+#8 0x55a9bee73cb8 <unknown>
+#9 0x55a9bee77bf0 <unknown>
+#10 0x55a9bee8219c <unknown>
+#11 0x55a9bee78808 <unknown>
+#12 0x55a9bee4527f <unknown>
+#13 0x55a9bee9ce88 <unknown>
+#14 0x55a9bee9d059 <unknown>
+#15 0x55a9beead843 <unknown>
+#16 0x7f3b7d388609 start_thread
 
-2023-09-11 22:17:13,489 - mehdi.shojaee@vancosys.com - ERROR - Error filling email: Message: 
+2023-09-24 15:56:51,631 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 15:57:02,770 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 15:57:04,980 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:57:05,625 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: @3t#qn#3
+2023-09-24 15:57:08,325 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 15:57:13,032 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 15:57:13,368 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 15:57:24,594 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 15:57:27,251 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 15:57:27,362 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 15:57:27,535 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 15:57:27,638 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 15:57:27,765 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 15:59:26,894 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:01:08,358 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:01:12,197 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:01:12,341 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: kkj%HmF7
+2023-09-24 16:01:13,419 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:01:22,591 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 16:01:23,442 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 16:01:31,741 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 16:01:34,951 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 16:01:35,014 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 16:01:35,212 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 16:01:35,329 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:01:35,435 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 16:03:12,351 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:03:26,232 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:03:26,964 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:03:27,798 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: VXpF-qgy
+2023-09-24 16:03:29,065 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:03:38,170 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 16:03:39,639 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 16:03:48,805 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 16:03:51,480 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 16:03:51,574 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 16:03:51,789 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 16:03:51,937 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:03:52,065 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 16:06:48,107 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:06:57,782 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:06:58,941 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:06:59,590 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: 647-LW^V
+2023-09-24 16:07:00,729 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:07:06,312 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 16:07:06,690 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 16:07:21,623 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 16:07:24,284 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 16:07:24,416 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 16:07:24,560 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 16:07:24,683 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:07:24,776 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 16:10:02,462 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:10:14,436 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:10:15,618 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:10:16,312 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: QB-BGMR6
+2023-09-24 16:10:17,422 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:10:26,912 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 16:10:27,814 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 16:10:36,924 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 16:10:39,572 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 16:10:39,692 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 16:10:39,839 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 16:10:39,983 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:10:40,092 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 16:13:40,165 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:13:51,574 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:13:53,246 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:13:53,350 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: F8z-2hd5
+2023-09-24 16:13:54,464 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:14:03,642 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 16:14:04,541 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 16:14:15,084 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 16:14:17,725 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 16:14:17,849 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 16:14:18,014 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 16:14:18,129 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:14:18,264 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: expected ':' after conversion specifier
+2023-09-24 16:18:00,680 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:18:24,127 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:18:24,834 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:18:25,523 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: 8YZDkAhZ
+2023-09-24 16:18:26,624 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:18:32,662 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 16:18:33,592 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 16:18:43,802 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 16:18:46,427 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 16:18:46,539 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 16:18:46,713 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 16:18:46,831 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:18:46,921 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: expected ':' after conversion specifier
+2023-09-24 16:24:43,329 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:24:56,521 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:24:57,227 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:24:57,895 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: F2hvC3fP
+2023-09-24 16:24:59,548 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:25:16,479 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 16:25:18,132 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 16:25:26,918 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 16:25:30,633 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 16:25:30,753 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 16:25:30,917 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 16:25:31,026 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:25:31,112 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: '\n    console'
+2023-09-24 16:34:15,142 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:35:04,375 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:35:06,575 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:35:07,246 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: cfrG&twh
+2023-09-24 16:35:08,864 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:35:18,056 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 16:35:19,045 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 16:35:32,151 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 16:35:34,793 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 16:35:34,895 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 16:35:35,065 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 16:35:35,202 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:35:35,289 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 16:38:11,997 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:38:25,433 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:38:27,221 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:38:27,329 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: kBLRMUU%
+2023-09-24 16:38:28,514 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:38:37,893 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 16:38:38,776 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 16:38:52,182 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 16:38:54,846 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 16:38:54,939 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 16:38:55,096 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 16:38:55,192 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:38:55,280 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 16:49:24,052 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:49:35,093 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:49:36,765 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:49:36,872 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: Juk-nxNW
+2023-09-24 16:49:43,400 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:50:15,558 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=117.0.5938.92)
 Stacktrace:
-#0 0x55aa09261ad3 <unknown>
-#1 0x55aa08fc1568 <unknown>
-#2 0x55aa08ff7c46 <unknown>
-#3 0x55aa08ff7e01 <unknown>
-#4 0x55aa0902aa64 <unknown>
-#5 0x55aa0901561d <unknown>
-#6 0x55aa09028824 <unknown>
-#7 0x55aa090154e3 <unknown>
-#8 0x55aa08fead1a <unknown>
-#9 0x55aa08febe75 <unknown>
-#10 0x55aa0928fefd <unknown>
-#11 0x55aa092a919b <unknown>
-#12 0x55aa09291c65 <unknown>
-#13 0x55aa092a9ec8 <unknown>
-#14 0x55aa09285360 <unknown>
-#15 0x55aa092c5a68 <unknown>
-#16 0x55aa092c5be8 <unknown>
-#17 0x55aa092df7fd <unknown>
-#18 0x7f7c74d46609 <unknown>
+#0 0x563eaaca66b3 <unknown>
+#1 0x563eaa97c1e7 <unknown>
+#2 0x563eaa954fe8 <unknown>
+#3 0x563eaa9ea42f <unknown>
+#4 0x563eaa9fde76 <unknown>
+#5 0x563eaa9e4e93 <unknown>
+#6 0x563eaa9b7934 <unknown>
+#7 0x563eaa9b871e <unknown>
+#8 0x563eaac6bcb8 <unknown>
+#9 0x563eaac6fbf0 <unknown>
+#10 0x563eaac7a19c <unknown>
+#11 0x563eaac70808 <unknown>
+#12 0x563eaac3d27f <unknown>
+#13 0x563eaac94e88 <unknown>
+#14 0x563eaac95059 <unknown>
+#15 0x563eaaca5843 <unknown>
+#16 0x7fd89eaa0609 start_thread
 
-2023-09-11 22:17:13,490 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
+2023-09-24 16:54:07,713 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:54:15,974 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:54:16,666 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:54:17,326 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: ku4m-s@2
+2023-09-24 16:54:18,455 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:54:51,931 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
 Stacktrace:
-#0 0x55aa09261ad3 <unknown>
-#1 0x55aa08fc1568 <unknown>
-#2 0x55aa08ff7c46 <unknown>
-#3 0x55aa08ff7e01 <unknown>
-#4 0x55aa0902aa64 <unknown>
-#5 0x55aa0901561d <unknown>
-#6 0x55aa09028824 <unknown>
-#7 0x55aa090154e3 <unknown>
-#8 0x55aa08fead1a <unknown>
-#9 0x55aa08febe75 <unknown>
-#10 0x55aa0928fefd <unknown>
-#11 0x55aa092a919b <unknown>
-#12 0x55aa09291c65 <unknown>
-#13 0x55aa092a9ec8 <unknown>
-#14 0x55aa09285360 <unknown>
-#15 0x55aa092c5a68 <unknown>
-#16 0x55aa092c5be8 <unknown>
-#17 0x55aa092df7fd <unknown>
-#18 0x7f7c74d46609 <unknown>
+#0 0x556c73bcf6b3 <unknown>
+#1 0x556c738a51e7 <unknown>
+#2 0x556c738ec566 <unknown>
+#3 0x556c738ec651 <unknown>
+#4 0x556c73929a74 <unknown>
+#5 0x556c7390e0ed <unknown>
+#6 0x556c73927322 <unknown>
+#7 0x556c7390de93 <unknown>
+#8 0x556c738e0934 <unknown>
+#9 0x556c738e171e <unknown>
+#10 0x556c73b94cb8 <unknown>
+#11 0x556c73b98bf0 <unknown>
+#12 0x556c73ba319c <unknown>
+#13 0x556c73b99808 <unknown>
+#14 0x556c73b6627f <unknown>
+#15 0x556c73bbde88 <unknown>
+#16 0x556c73bbe059 <unknown>
+#17 0x556c73bce843 <unknown>
+#18 0x7f81340a3609 start_thread
 
-2023-09-11 22:39:00,048 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: unknown error: net::ERR_INTERNET_DISCONNECTED
-  (Session info: chrome=100.0.4896.127)
+2023-09-24 16:57:41,286 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 16:57:52,147 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 16:57:53,392 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:57:53,533 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: N8q7v+aw
+2023-09-24 16:57:54,608 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 16:58:06,002 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 16:58:08,011 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 16:58:15,267 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 16:58:18,986 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 16:58:19,118 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 16:58:19,305 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 16:58:19,434 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 16:58:19,552 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 16:58:19,553 - mehdi.shojaee@vancosys.com - INFO - Filling in security key name: IDM-0be34d03-OZKWPY-20230924
+2023-09-24 16:58:30,364 - mehdi.shojaee@vancosys.com - ERROR - Error filling security key name: Message: 
 Stacktrace:
-#0 0x556ec74cead3 <unknown>
-#1 0x556ec722e568 <unknown>
-#2 0x556ec7228555 <unknown>
-#3 0x556ec7219f76 <unknown>
-#4 0x556ec721ae8d <unknown>
-#5 0x556ec721a242 <unknown>
-#6 0x556ec72196f5 <unknown>
-#7 0x556ec72183ef <unknown>
-#8 0x556ec7218822 <unknown>
-#9 0x556ec723002a <unknown>
-#10 0x556ec7295f7f <unknown>
-#11 0x556ec72825f2 <unknown>
-#12 0x556ec7295824 <unknown>
-#13 0x556ec72824e3 <unknown>
-#14 0x556ec7257d1a <unknown>
-#15 0x556ec7258e75 <unknown>
-#16 0x556ec74fcefd <unknown>
-#17 0x556ec751619b <unknown>
-#18 0x556ec74fec65 <unknown>
-#19 0x556ec7516ec8 <unknown>
-#20 0x556ec74f2360 <unknown>
-#21 0x556ec7532a68 <unknown>
-#22 0x556ec7532be8 <unknown>
-#23 0x556ec754c7fd <unknown>
-#24 0x7f694614a609 <unknown>
+#0 0x56463363d6b3 <unknown>
+#1 0x5646333131e7 <unknown>
+#2 0x56463335a566 <unknown>
+#3 0x56463335a651 <unknown>
+#4 0x564633397a74 <unknown>
+#5 0x56463337c0ed <unknown>
+#6 0x564633395322 <unknown>
+#7 0x56463337be93 <unknown>
+#8 0x56463334e934 <unknown>
+#9 0x56463334f71e <unknown>
+#10 0x564633602cb8 <unknown>
+#11 0x564633606bf0 <unknown>
+#12 0x56463361119c <unknown>
+#13 0x564633607808 <unknown>
+#14 0x5646335d427f <unknown>
+#15 0x56463362be88 <unknown>
+#16 0x56463362c059 <unknown>
+#17 0x56463363c843 <unknown>
+#18 0x7f9fdb51c609 start_thread
 
-2023-09-11 22:41:06,924 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-
-2023-09-11 22:43:19,266 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' link: Message: 
+2023-09-24 16:58:30,364 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
 Stacktrace:
-#0 0x55e42151cad3 <unknown>
-#1 0x55e42127c568 <unknown>
-#2 0x55e4212b2c46 <unknown>
-#3 0x55e4212b2e01 <unknown>
-#4 0x55e4212e5a64 <unknown>
-#5 0x55e4212d061d <unknown>
-#6 0x55e4212e3824 <unknown>
-#7 0x55e4212d04e3 <unknown>
-#8 0x55e4212a5d1a <unknown>
-#9 0x55e4212a6e75 <unknown>
-#10 0x55e42154aefd <unknown>
-#11 0x55e42156419b <unknown>
-#12 0x55e42154cc65 <unknown>
-#13 0x55e421564ec8 <unknown>
-#14 0x55e421540360 <unknown>
-#15 0x55e421580a68 <unknown>
-#16 0x55e421580be8 <unknown>
-#17 0x55e42159a7fd <unknown>
-#18 0x7f5343ede609 <unknown>
+#0 0x56463363d6b3 <unknown>
+#1 0x5646333131e7 <unknown>
+#2 0x56463335a566 <unknown>
+#3 0x56463335a651 <unknown>
+#4 0x564633397a74 <unknown>
+#5 0x56463337c0ed <unknown>
+#6 0x564633395322 <unknown>
+#7 0x56463337be93 <unknown>
+#8 0x56463334e934 <unknown>
+#9 0x56463334f71e <unknown>
+#10 0x564633602cb8 <unknown>
+#11 0x564633606bf0 <unknown>
+#12 0x56463361119c <unknown>
+#13 0x564633607808 <unknown>
+#14 0x5646335d427f <unknown>
+#15 0x56463362be88 <unknown>
+#16 0x56463362c059 <unknown>
+#17 0x56463363c843 <unknown>
+#18 0x7f9fdb51c609 start_thread
 
-2023-09-11 22:43:19,266 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
+2023-09-24 17:00:47,649 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 17:00:59,118 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 17:01:01,339 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 17:01:01,970 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: @jjevqy4
+2023-09-24 17:01:04,087 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 17:01:12,834 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 17:01:13,814 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 17:01:23,895 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 17:01:26,539 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 17:01:26,660 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 17:01:26,807 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 17:01:26,953 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 17:01:27,055 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 17:01:27,055 - mehdi.shojaee@vancosys.com - INFO - Filling in security key name: IDM-0be34d03-7FOEKU-20230924
+2023-09-24 17:01:40,130 - mehdi.shojaee@vancosys.com - ERROR - Error filling security key name: Message: 
 Stacktrace:
-#0 0x55e42151cad3 <unknown>
-#1 0x55e42127c568 <unknown>
-#2 0x55e4212b2c46 <unknown>
-#3 0x55e4212b2e01 <unknown>
-#4 0x55e4212e5a64 <unknown>
-#5 0x55e4212d061d <unknown>
-#6 0x55e4212e3824 <unknown>
-#7 0x55e4212d04e3 <unknown>
-#8 0x55e4212a5d1a <unknown>
-#9 0x55e4212a6e75 <unknown>
-#10 0x55e42154aefd <unknown>
-#11 0x55e42156419b <unknown>
-#12 0x55e42154cc65 <unknown>
-#13 0x55e421564ec8 <unknown>
-#14 0x55e421540360 <unknown>
-#15 0x55e421580a68 <unknown>
-#16 0x55e421580be8 <unknown>
-#17 0x55e42159a7fd <unknown>
-#18 0x7f5343ede609 <unknown>
+#0 0x562b08d676b3 <unknown>
+#1 0x562b08a3d1e7 <unknown>
+#2 0x562b08a84566 <unknown>
+#3 0x562b08a84651 <unknown>
+#4 0x562b08ac1a74 <unknown>
+#5 0x562b08aa60ed <unknown>
+#6 0x562b08abf322 <unknown>
+#7 0x562b08aa5e93 <unknown>
+#8 0x562b08a78934 <unknown>
+#9 0x562b08a7971e <unknown>
+#10 0x562b08d2ccb8 <unknown>
+#11 0x562b08d30bf0 <unknown>
+#12 0x562b08d3b19c <unknown>
+#13 0x562b08d31808 <unknown>
+#14 0x562b08cfe27f <unknown>
+#15 0x562b08d55e88 <unknown>
+#16 0x562b08d56059 <unknown>
+#17 0x562b08d66843 <unknown>
+#18 0x7fcb650b0609 start_thread
 
-2023-09-11 22:46:20,647 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: chrome not reachable
-  (Session info: chrome=100.0.4896.127)
+2023-09-24 17:01:40,130 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
 Stacktrace:
-#0 0x55fd197e4ad3 <unknown>
-#1 0x55fd195443ff <unknown>
-#2 0x55fd19532b94 <unknown>
-#3 0x55fd19533c8e <unknown>
-#4 0x55fd19535302 <unknown>
-#5 0x55fd1952d6f6 <unknown>
-#6 0x55fd19545972 <unknown>
-#7 0x55fd195aaea1 <unknown>
-#8 0x55fd195984e3 <unknown>
-#9 0x55fd1956dd1a <unknown>
-#10 0x55fd1956ee75 <unknown>
-#11 0x55fd19812efd <unknown>
-#12 0x55fd1982c19b <unknown>
-#13 0x55fd19814c65 <unknown>
-#14 0x55fd1982cec8 <unknown>
-#15 0x55fd19808360 <unknown>
-#16 0x55fd19848a68 <unknown>
-#17 0x55fd19848be8 <unknown>
-#18 0x55fd198627fd <unknown>
-#19 0x7f0f5f6af609 <unknown>
+#0 0x562b08d676b3 <unknown>
+#1 0x562b08a3d1e7 <unknown>
+#2 0x562b08a84566 <unknown>
+#3 0x562b08a84651 <unknown>
+#4 0x562b08ac1a74 <unknown>
+#5 0x562b08aa60ed <unknown>
+#6 0x562b08abf322 <unknown>
+#7 0x562b08aa5e93 <unknown>
+#8 0x562b08a78934 <unknown>
+#9 0x562b08a7971e <unknown>
+#10 0x562b08d2ccb8 <unknown>
+#11 0x562b08d30bf0 <unknown>
+#12 0x562b08d3b19c <unknown>
+#13 0x562b08d31808 <unknown>
+#14 0x562b08cfe27f <unknown>
+#15 0x562b08d55e88 <unknown>
+#16 0x562b08d56059 <unknown>
+#17 0x562b08d66843 <unknown>
+#18 0x7fcb650b0609 start_thread
 
-2023-09-11 22:46:20,656 - mehdi.shojaee@vancosys.com - ERROR - Error capturing screenshot: Message: chrome not reachable
-  (Session info: chrome=100.0.4896.127)
+2023-09-24 17:03:23,086 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 17:03:47,913 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 17:03:50,696 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 17:03:50,817 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: c69suc#5
+2023-09-24 17:03:51,906 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 17:04:00,252 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 17:04:01,177 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 17:04:10,034 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 17:04:12,630 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 17:04:12,744 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 17:04:12,892 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 17:04:13,019 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 17:04:13,123 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 17:04:13,123 - mehdi.shojaee@vancosys.com - INFO - Filling in security key name: IDM-0be34d03-D9LBIT-20230924
+2023-09-24 17:04:33,152 - mehdi.shojaee@vancosys.com - ERROR - Error filling security key name: Message: 
 Stacktrace:
-#0 0x55fd197e4ad3 <unknown>
-#1 0x55fd195443ff <unknown>
-#2 0x55fd19532b94 <unknown>
-#3 0x55fd195335a9 <unknown>
-#4 0x55fd19535302 <unknown>
-#5 0x55fd1952d6f6 <unknown>
-#6 0x55fd19545972 <unknown>
-#7 0x55fd195aaea1 <unknown>
-#8 0x55fd195984e3 <unknown>
-#9 0x55fd1956dd1a <unknown>
-#10 0x55fd1956ee75 <unknown>
-#11 0x55fd19812efd <unknown>
-#12 0x55fd1982c19b <unknown>
-#13 0x55fd19814c65 <unknown>
-#14 0x55fd1982cec8 <unknown>
-#15 0x55fd19808360 <unknown>
-#16 0x55fd19848a68 <unknown>
-#17 0x55fd19848be8 <unknown>
-#18 0x55fd198627fd <unknown>
-#19 0x7f0f5f6af609 <unknown>
+#0 0x55b6aa40a6b3 <unknown>
+#1 0x55b6aa0e01e7 <unknown>
+#2 0x55b6aa127566 <unknown>
+#3 0x55b6aa127651 <unknown>
+#4 0x55b6aa164a74 <unknown>
+#5 0x55b6aa1490ed <unknown>
+#6 0x55b6aa162322 <unknown>
+#7 0x55b6aa148e93 <unknown>
+#8 0x55b6aa11b934 <unknown>
+#9 0x55b6aa11c71e <unknown>
+#10 0x55b6aa3cfcb8 <unknown>
+#11 0x55b6aa3d3bf0 <unknown>
+#12 0x55b6aa3de19c <unknown>
+#13 0x55b6aa3d4808 <unknown>
+#14 0x55b6aa3a127f <unknown>
+#15 0x55b6aa3f8e88 <unknown>
+#16 0x55b6aa3f9059 <unknown>
+#17 0x55b6aa409843 <unknown>
+#18 0x7f850e8b9609 start_thread
 
-2023-09-11 22:48:16,038 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' link: Message: 
+2023-09-24 17:04:33,152 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
 Stacktrace:
-#0 0x56153ff25ad3 <unknown>
-#1 0x56153fc85568 <unknown>
-#2 0x56153fcbbc46 <unknown>
-#3 0x56153fcbbe01 <unknown>
-#4 0x56153fceea64 <unknown>
-#5 0x56153fcd961d <unknown>
-#6 0x56153fcec824 <unknown>
-#7 0x56153fcd94e3 <unknown>
-#8 0x56153fcaed1a <unknown>
-#9 0x56153fcafe75 <unknown>
-#10 0x56153ff53efd <unknown>
-#11 0x56153ff6d19b <unknown>
-#12 0x56153ff55c65 <unknown>
-#13 0x56153ff6dec8 <unknown>
-#14 0x56153ff49360 <unknown>
-#15 0x56153ff89a68 <unknown>
-#16 0x56153ff89be8 <unknown>
-#17 0x56153ffa37fd <unknown>
-#18 0x7fb81cd26609 <unknown>
+#0 0x55b6aa40a6b3 <unknown>
+#1 0x55b6aa0e01e7 <unknown>
+#2 0x55b6aa127566 <unknown>
+#3 0x55b6aa127651 <unknown>
+#4 0x55b6aa164a74 <unknown>
+#5 0x55b6aa1490ed <unknown>
+#6 0x55b6aa162322 <unknown>
+#7 0x55b6aa148e93 <unknown>
+#8 0x55b6aa11b934 <unknown>
+#9 0x55b6aa11c71e <unknown>
+#10 0x55b6aa3cfcb8 <unknown>
+#11 0x55b6aa3d3bf0 <unknown>
+#12 0x55b6aa3de19c <unknown>
+#13 0x55b6aa3d4808 <unknown>
+#14 0x55b6aa3a127f <unknown>
+#15 0x55b6aa3f8e88 <unknown>
+#16 0x55b6aa3f9059 <unknown>
+#17 0x55b6aa409843 <unknown>
+#18 0x7f850e8b9609 start_thread
 
-2023-09-11 22:48:16,039 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
+2023-09-24 17:15:05,038 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 17:15:17,406 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 17:15:19,108 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 17:15:19,721 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: XEV&Rt=a
+2023-09-24 17:15:20,802 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 17:15:30,488 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 17:15:31,497 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 17:15:40,422 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 17:15:43,017 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 17:15:43,147 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 17:15:43,302 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 17:15:43,408 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 17:15:43,501 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 17:15:43,501 - mehdi.shojaee@vancosys.com - INFO - Filling in security key name: IDM-0be34d03-UN5Y15-20230924
+2023-09-24 17:20:55,107 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 17:21:03,637 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 17:21:04,789 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 17:21:04,890 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: X@hy5fdw
+2023-09-24 17:21:05,965 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 17:21:39,200 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
 Stacktrace:
-#0 0x56153ff25ad3 <unknown>
-#1 0x56153fc85568 <unknown>
-#2 0x56153fcbbc46 <unknown>
-#3 0x56153fcbbe01 <unknown>
-#4 0x56153fceea64 <unknown>
-#5 0x56153fcd961d <unknown>
-#6 0x56153fcec824 <unknown>
-#7 0x56153fcd94e3 <unknown>
-#8 0x56153fcaed1a <unknown>
-#9 0x56153fcafe75 <unknown>
-#10 0x56153ff53efd <unknown>
-#11 0x56153ff6d19b <unknown>
-#12 0x56153ff55c65 <unknown>
-#13 0x56153ff6dec8 <unknown>
-#14 0x56153ff49360 <unknown>
-#15 0x56153ff89a68 <unknown>
-#16 0x56153ff89be8 <unknown>
-#17 0x56153ffa37fd <unknown>
-#18 0x7fb81cd26609 <unknown>
+#0 0x56214c54a6b3 <unknown>
+#1 0x56214c2201e7 <unknown>
+#2 0x56214c267566 <unknown>
+#3 0x56214c267651 <unknown>
+#4 0x56214c2a4a74 <unknown>
+#5 0x56214c2890ed <unknown>
+#6 0x56214c2a2322 <unknown>
+#7 0x56214c288e93 <unknown>
+#8 0x56214c25b934 <unknown>
+#9 0x56214c25c71e <unknown>
+#10 0x56214c50fcb8 <unknown>
+#11 0x56214c513bf0 <unknown>
+#12 0x56214c51e19c <unknown>
+#13 0x56214c514808 <unknown>
+#14 0x56214c4e127f <unknown>
+#15 0x56214c538e88 <unknown>
+#16 0x56214c539059 <unknown>
+#17 0x56214c549843 <unknown>
+#18 0x7fca91235609 start_thread
 
-2023-09-11 22:53:29,576 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' button: Message: 
+2023-09-24 17:35:51,341 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 17:36:00,589 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 17:36:01,221 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 17:36:01,876 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: 88yqt%eB
+2023-09-24 17:36:03,008 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 17:36:36,037 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
 Stacktrace:
-#0 0x5618402d3ad3 <unknown>
-#1 0x561840033568 <unknown>
-#2 0x561840069c46 <unknown>
-#3 0x561840069e01 <unknown>
-#4 0x56184009ca64 <unknown>
-#5 0x56184008761d <unknown>
-#6 0x56184009a824 <unknown>
-#7 0x5618400874e3 <unknown>
-#8 0x56184005cd1a <unknown>
-#9 0x56184005de75 <unknown>
-#10 0x561840301efd <unknown>
-#11 0x56184031b19b <unknown>
-#12 0x561840303c65 <unknown>
-#13 0x56184031bec8 <unknown>
-#14 0x5618402f7360 <unknown>
-#15 0x561840337a68 <unknown>
-#16 0x561840337be8 <unknown>
-#17 0x5618403517fd <unknown>
-#18 0x7f3771ed6609 <unknown>
+#0 0x560c026a06b3 <unknown>
+#1 0x560c023761e7 <unknown>
+#2 0x560c023bd566 <unknown>
+#3 0x560c023bd651 <unknown>
+#4 0x560c023faa74 <unknown>
+#5 0x560c023df0ed <unknown>
+#6 0x560c023f8322 <unknown>
+#7 0x560c023dee93 <unknown>
+#8 0x560c023b1934 <unknown>
+#9 0x560c023b271e <unknown>
+#10 0x560c02665cb8 <unknown>
+#11 0x560c02669bf0 <unknown>
+#12 0x560c0267419c <unknown>
+#13 0x560c0266a808 <unknown>
+#14 0x560c0263727f <unknown>
+#15 0x560c0268ee88 <unknown>
+#16 0x560c0268f059 <unknown>
+#17 0x560c0269f843 <unknown>
+#18 0x7f8c50797609 start_thread
 
-2023-09-11 22:53:29,577 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x5618402d3ad3 <unknown>
-#1 0x561840033568 <unknown>
-#2 0x561840069c46 <unknown>
-#3 0x561840069e01 <unknown>
-#4 0x56184009ca64 <unknown>
-#5 0x56184008761d <unknown>
-#6 0x56184009a824 <unknown>
-#7 0x5618400874e3 <unknown>
-#8 0x56184005cd1a <unknown>
-#9 0x56184005de75 <unknown>
-#10 0x561840301efd <unknown>
-#11 0x56184031b19b <unknown>
-#12 0x561840303c65 <unknown>
-#13 0x56184031bec8 <unknown>
-#14 0x5618402f7360 <unknown>
-#15 0x561840337a68 <unknown>
-#16 0x561840337be8 <unknown>
-#17 0x5618403517fd <unknown>
-#18 0x7f3771ed6609 <unknown>
-
-2023-09-11 22:56:00,134 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' button: Message: 
-Stacktrace:
-#0 0x557a7a21cad3 <unknown>
-#1 0x557a79f7c568 <unknown>
-#2 0x557a79fb2c46 <unknown>
-#3 0x557a79fb2e01 <unknown>
-#4 0x557a79fe5a64 <unknown>
-#5 0x557a79fd061d <unknown>
-#6 0x557a79fe3824 <unknown>
-#7 0x557a79fd04e3 <unknown>
-#8 0x557a79fa5d1a <unknown>
-#9 0x557a79fa6e75 <unknown>
-#10 0x557a7a24aefd <unknown>
-#11 0x557a7a26419b <unknown>
-#12 0x557a7a24cc65 <unknown>
-#13 0x557a7a264ec8 <unknown>
-#14 0x557a7a240360 <unknown>
-#15 0x557a7a280a68 <unknown>
-#16 0x557a7a280be8 <unknown>
-#17 0x557a7a29a7fd <unknown>
-#18 0x7f71ed2f6609 <unknown>
-
-2023-09-11 22:56:00,135 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x557a7a21cad3 <unknown>
-#1 0x557a79f7c568 <unknown>
-#2 0x557a79fb2c46 <unknown>
-#3 0x557a79fb2e01 <unknown>
-#4 0x557a79fe5a64 <unknown>
-#5 0x557a79fd061d <unknown>
-#6 0x557a79fe3824 <unknown>
-#7 0x557a79fd04e3 <unknown>
-#8 0x557a79fa5d1a <unknown>
-#9 0x557a79fa6e75 <unknown>
-#10 0x557a7a24aefd <unknown>
-#11 0x557a7a26419b <unknown>
-#12 0x557a7a24cc65 <unknown>
-#13 0x557a7a264ec8 <unknown>
-#14 0x557a7a240360 <unknown>
-#15 0x557a7a280a68 <unknown>
-#16 0x557a7a280be8 <unknown>
-#17 0x557a7a29a7fd <unknown>
-#18 0x7f71ed2f6609 <unknown>
-
-2023-09-11 23:01:45,218 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' button: Message: 
-Stacktrace:
-#0 0x5576f9ecaad3 <unknown>
-#1 0x5576f9c2a568 <unknown>
-#2 0x5576f9c60c46 <unknown>
-#3 0x5576f9c60e01 <unknown>
-#4 0x5576f9c93a64 <unknown>
-#5 0x5576f9c7e61d <unknown>
-#6 0x5576f9c91824 <unknown>
-#7 0x5576f9c7e4e3 <unknown>
-#8 0x5576f9c53d1a <unknown>
-#9 0x5576f9c54e75 <unknown>
-#10 0x5576f9ef8efd <unknown>
-#11 0x5576f9f1219b <unknown>
-#12 0x5576f9efac65 <unknown>
-#13 0x5576f9f12ec8 <unknown>
-#14 0x5576f9eee360 <unknown>
-#15 0x5576f9f2ea68 <unknown>
-#16 0x5576f9f2ebe8 <unknown>
-#17 0x5576f9f487fd <unknown>
-#18 0x7f8fe0e57609 <unknown>
-
-2023-09-11 23:01:45,218 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x5576f9ecaad3 <unknown>
-#1 0x5576f9c2a568 <unknown>
-#2 0x5576f9c60c46 <unknown>
-#3 0x5576f9c60e01 <unknown>
-#4 0x5576f9c93a64 <unknown>
-#5 0x5576f9c7e61d <unknown>
-#6 0x5576f9c91824 <unknown>
-#7 0x5576f9c7e4e3 <unknown>
-#8 0x5576f9c53d1a <unknown>
-#9 0x5576f9c54e75 <unknown>
-#10 0x5576f9ef8efd <unknown>
-#11 0x5576f9f1219b <unknown>
-#12 0x5576f9efac65 <unknown>
-#13 0x5576f9f12ec8 <unknown>
-#14 0x5576f9eee360 <unknown>
-#15 0x5576f9f2ea68 <unknown>
-#16 0x5576f9f2ebe8 <unknown>
-#17 0x5576f9f487fd <unknown>
-#18 0x7f8fe0e57609 <unknown>
-
-2023-09-11 23:49:35,061 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' button: Message: 
-Stacktrace:
-#0 0x558f243f9ad3 <unknown>
-#1 0x558f24159568 <unknown>
-#2 0x558f2418fc46 <unknown>
-#3 0x558f2418fe01 <unknown>
-#4 0x558f241c2a64 <unknown>
-#5 0x558f241ad61d <unknown>
-#6 0x558f241c0824 <unknown>
-#7 0x558f241ad4e3 <unknown>
-#8 0x558f24182d1a <unknown>
-#9 0x558f24183e75 <unknown>
-#10 0x558f24427efd <unknown>
-#11 0x558f2444119b <unknown>
-#12 0x558f24429c65 <unknown>
-#13 0x558f24441ec8 <unknown>
-#14 0x558f2441d360 <unknown>
-#15 0x558f2445da68 <unknown>
-#16 0x558f2445dbe8 <unknown>
-#17 0x558f244777fd <unknown>
-#18 0x7f47ffe9b609 <unknown>
-
-2023-09-11 23:49:35,062 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x558f243f9ad3 <unknown>
-#1 0x558f24159568 <unknown>
-#2 0x558f2418fc46 <unknown>
-#3 0x558f2418fe01 <unknown>
-#4 0x558f241c2a64 <unknown>
-#5 0x558f241ad61d <unknown>
-#6 0x558f241c0824 <unknown>
-#7 0x558f241ad4e3 <unknown>
-#8 0x558f24182d1a <unknown>
-#9 0x558f24183e75 <unknown>
-#10 0x558f24427efd <unknown>
-#11 0x558f2444119b <unknown>
-#12 0x558f24429c65 <unknown>
-#13 0x558f24441ec8 <unknown>
-#14 0x558f2441d360 <unknown>
-#15 0x558f2445da68 <unknown>
-#16 0x558f2445dbe8 <unknown>
-#17 0x558f244777fd <unknown>
-#18 0x7f47ffe9b609 <unknown>
-
-2023-09-11 23:55:51,393 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'Add sign-in method' button: Message: 
-Stacktrace:
-#0 0x555a38414ad3 <unknown>
-#1 0x555a38174568 <unknown>
-#2 0x555a381aac46 <unknown>
-#3 0x555a381aae01 <unknown>
-#4 0x555a381dda64 <unknown>
-#5 0x555a381c861d <unknown>
-#6 0x555a381db824 <unknown>
-#7 0x555a381c84e3 <unknown>
-#8 0x555a3819dd1a <unknown>
-#9 0x555a3819ee75 <unknown>
-#10 0x555a38442efd <unknown>
-#11 0x555a3845c19b <unknown>
-#12 0x555a38444c65 <unknown>
-#13 0x555a3845cec8 <unknown>
-#14 0x555a38438360 <unknown>
-#15 0x555a38478a68 <unknown>
-#16 0x555a38478be8 <unknown>
-#17 0x555a384927fd <unknown>
-#18 0x7fc7c7734609 <unknown>
-
-2023-09-11 23:55:51,393 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x555a38414ad3 <unknown>
-#1 0x555a38174568 <unknown>
-#2 0x555a381aac46 <unknown>
-#3 0x555a381aae01 <unknown>
-#4 0x555a381dda64 <unknown>
-#5 0x555a381c861d <unknown>
-#6 0x555a381db824 <unknown>
-#7 0x555a381c84e3 <unknown>
-#8 0x555a3819dd1a <unknown>
-#9 0x555a3819ee75 <unknown>
-#10 0x555a38442efd <unknown>
-#11 0x555a3845c19b <unknown>
-#12 0x555a38444c65 <unknown>
-#13 0x555a3845cec8 <unknown>
-#14 0x555a38438360 <unknown>
-#15 0x555a38478a68 <unknown>
-#16 0x555a38478be8 <unknown>
-#17 0x555a384927fd <unknown>
-#18 0x7fc7c7734609 <unknown>
-
-2023-09-12 00:06:13,590 - mehdi.shojaee@vancosys.com - ERROR - Error selecting 'Security key' from dropdown: Message: 
-Stacktrace:
-#0 0x563d91f97ad3 <unknown>
-#1 0x563d91cf7568 <unknown>
-#2 0x563d91d2dc46 <unknown>
-#3 0x563d91d2de01 <unknown>
-#4 0x563d91d60a64 <unknown>
-#5 0x563d91d4b61d <unknown>
-#6 0x563d91d5e824 <unknown>
-#7 0x563d91d4b4e3 <unknown>
-#8 0x563d91d20d1a <unknown>
-#9 0x563d91d21e75 <unknown>
-#10 0x563d91fc5efd <unknown>
-#11 0x563d91fdf19b <unknown>
-#12 0x563d91fc7c65 <unknown>
-#13 0x563d91fdfec8 <unknown>
-#14 0x563d91fbb360 <unknown>
-#15 0x563d91ffba68 <unknown>
-#16 0x563d91ffbbe8 <unknown>
-#17 0x563d920157fd <unknown>
-#18 0x7f893cbc6609 <unknown>
-
-2023-09-12 00:06:13,590 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x563d91f97ad3 <unknown>
-#1 0x563d91cf7568 <unknown>
-#2 0x563d91d2dc46 <unknown>
-#3 0x563d91d2de01 <unknown>
-#4 0x563d91d60a64 <unknown>
-#5 0x563d91d4b61d <unknown>
-#6 0x563d91d5e824 <unknown>
-#7 0x563d91d4b4e3 <unknown>
-#8 0x563d91d20d1a <unknown>
-#9 0x563d91d21e75 <unknown>
-#10 0x563d91fc5efd <unknown>
-#11 0x563d91fdf19b <unknown>
-#12 0x563d91fc7c65 <unknown>
-#13 0x563d91fdfec8 <unknown>
-#14 0x563d91fbb360 <unknown>
-#15 0x563d91ffba68 <unknown>
-#16 0x563d91ffbbe8 <unknown>
-#17 0x563d920157fd <unknown>
-#18 0x7f893cbc6609 <unknown>
-
-2023-09-12 00:09:26,754 - mehdi.shojaee@vancosys.com - ERROR - Error selecting 'Security key' from dropdown: Message: 
-Stacktrace:
-#0 0x557ef1a16ad3 <unknown>
-#1 0x557ef1776568 <unknown>
-#2 0x557ef17acc46 <unknown>
-#3 0x557ef17ace01 <unknown>
-#4 0x557ef17dfa64 <unknown>
-#5 0x557ef17ca61d <unknown>
-#6 0x557ef17dd824 <unknown>
-#7 0x557ef17ca4e3 <unknown>
-#8 0x557ef179fd1a <unknown>
-#9 0x557ef17a0e75 <unknown>
-#10 0x557ef1a44efd <unknown>
-#11 0x557ef1a5e19b <unknown>
-#12 0x557ef1a46c65 <unknown>
-#13 0x557ef1a5eec8 <unknown>
-#14 0x557ef1a3a360 <unknown>
-#15 0x557ef1a7aa68 <unknown>
-#16 0x557ef1a7abe8 <unknown>
-#17 0x557ef1a947fd <unknown>
-#18 0x7f940651c609 <unknown>
-
-2023-09-12 00:09:26,755 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x557ef1a16ad3 <unknown>
-#1 0x557ef1776568 <unknown>
-#2 0x557ef17acc46 <unknown>
-#3 0x557ef17ace01 <unknown>
-#4 0x557ef17dfa64 <unknown>
-#5 0x557ef17ca61d <unknown>
-#6 0x557ef17dd824 <unknown>
-#7 0x557ef17ca4e3 <unknown>
-#8 0x557ef179fd1a <unknown>
-#9 0x557ef17a0e75 <unknown>
-#10 0x557ef1a44efd <unknown>
-#11 0x557ef1a5e19b <unknown>
-#12 0x557ef1a46c65 <unknown>
-#13 0x557ef1a5eec8 <unknown>
-#14 0x557ef1a3a360 <unknown>
-#15 0x557ef1a7aa68 <unknown>
-#16 0x557ef1a7abe8 <unknown>
-#17 0x557ef1a947fd <unknown>
-#18 0x7f940651c609 <unknown>
-
-2023-09-12 00:22:08,025 - mehdi.shojaee@vancosys.com - ERROR - Error clicking 'USB device' button: Message: 
-Stacktrace:
-#0 0x55a18ecf8ad3 <unknown>
-#1 0x55a18ea58568 <unknown>
-#2 0x55a18ea8ec46 <unknown>
-#3 0x55a18ea8ee01 <unknown>
-#4 0x55a18eac1a64 <unknown>
-#5 0x55a18eaac61d <unknown>
-#6 0x55a18eabf824 <unknown>
-#7 0x55a18eaac4e3 <unknown>
-#8 0x55a18ea81d1a <unknown>
-#9 0x55a18ea82e75 <unknown>
-#10 0x55a18ed26efd <unknown>
-#11 0x55a18ed4019b <unknown>
-#12 0x55a18ed28c65 <unknown>
-#13 0x55a18ed40ec8 <unknown>
-#14 0x55a18ed1c360 <unknown>
-#15 0x55a18ed5ca68 <unknown>
-#16 0x55a18ed5cbe8 <unknown>
-#17 0x55a18ed767fd <unknown>
-#18 0x7f7d4147e609 <unknown>
-
-2023-09-12 00:22:08,025 - mehdi.shojaee@vancosys.com - ERROR - Error registering security key for mehdi.shojaee@vancosys.com: Message: 
-Stacktrace:
-#0 0x55a18ecf8ad3 <unknown>
-#1 0x55a18ea58568 <unknown>
-#2 0x55a18ea8ec46 <unknown>
-#3 0x55a18ea8ee01 <unknown>
-#4 0x55a18eac1a64 <unknown>
-#5 0x55a18eaac61d <unknown>
-#6 0x55a18eabf824 <unknown>
-#7 0x55a18eaac4e3 <unknown>
-#8 0x55a18ea81d1a <unknown>
-#9 0x55a18ea82e75 <unknown>
-#10 0x55a18ed26efd <unknown>
-#11 0x55a18ed4019b <unknown>
-#12 0x55a18ed28c65 <unknown>
-#13 0x55a18ed40ec8 <unknown>
-#14 0x55a18ed1c360 <unknown>
-#15 0x55a18ed5ca68 <unknown>
-#16 0x55a18ed5cbe8 <unknown>
-#17 0x55a18ed767fd <unknown>
-#18 0x7f7d4147e609 <unknown>
-
+2023-09-24 17:37:05,686 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 17:37:17,456 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 17:37:18,591 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 17:37:19,217 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: Nr#k9A4r
+2023-09-24 17:37:20,322 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 17:37:57,500 - mehdi.shojaee@vancosys.com - INFO - Navigating to Microsoft sign-in page...
+2023-09-24 17:38:07,248 - mehdi.shojaee@vancosys.com - INFO - Filling in email: mehdi.shojaee@vancosys.com
+2023-09-24 17:38:08,459 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 17:38:08,558 - mehdi.shojaee@vancosys.com - INFO - Entering Temporary Access Pass: =YGK*fdJ
+2023-09-24 17:38:09,672 - mehdi.shojaee@vancosys.com - INFO - Clicking the sign in button...
+2023-09-24 17:38:15,258 - mehdi.shojaee@vancosys.com - INFO - Navigating directly to the security info page...
+2023-09-24 17:38:16,237 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add sign-in method' link...
+2023-09-24 17:38:27,505 - mehdi.shojaee@vancosys.com - INFO - Clicking the dropdown to expand...
+2023-09-24 17:38:30,148 - mehdi.shojaee@vancosys.com - INFO - Selecting 'Security key' from the expanded dropdown...
+2023-09-24 17:38:30,258 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Add' button...
+2023-09-24 17:38:30,409 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'USB device' button...
+2023-09-24 17:38:30,562 - mehdi.shojaee@vancosys.com - INFO - Clicking the next button...
+2023-09-24 17:38:30,675 - mehdi.shojaee@vancosys.com - INFO - JS code injected successfully.
+2023-09-24 17:38:30,675 - mehdi.shojaee@vancosys.com - INFO - Filling in security key name: IDM-0be34d03-4RXC1I-20230924
+2023-09-24 17:38:53,807 - mehdi.shojaee@vancosys.com - INFO - Clicking the 'Next' button...

@@ -26,14 +26,21 @@ class TAPManager:
 
         :param user_id: ID of the user
         :param obr_request_issuer: OBR request issuer ID
-        :return: Temporary Access Pass or None if not found
+        :return: Temporary Access Pass or raises an exception if not found
         """
         endpoint = f"/internal/tap/{user_id}/{obr_request_issuer}"
         response = self._make_request("GET", endpoint)
-        
+
         if response:
-            return response.get("temporaryAccessPass", None)
-        return None
+            tap = response.get("temporaryAccessPass")
+            if tap:
+                return tap
+            else:
+                raise ValueError(
+                    f"No TAP found for user {user_id} with issuer {obr_request_issuer}")
+        else:
+            raise ConnectionError(
+                f"Failed to retrieve TAP for user {user_id} with issuer {obr_request_issuer}")
 
     def update_azure_auto_obr(self, user_id: str, azure_auto_obr_id: str, obr_request_issuer_id: str, status: int, description: str) -> dict:
         """
@@ -53,8 +60,9 @@ class TAPManager:
             "obrRequestIssuerId": obr_request_issuer_id
         }
         data = {"status": status, "description": description}
-        
-        response = self._make_request("PATCH", endpoint, params=params, json=data)
+
+        response = self._make_request(
+            "PATCH", endpoint, params=params, json=data)
         return response or {"error": "Failed to update Azure Auto OBR"}
 
     def notify_azure_auto_obr(self, azure_auto_obr_id: str) -> dict:
@@ -66,7 +74,7 @@ class TAPManager:
         """
         endpoint = "/internal/notifyAzureAutoOBR"
         params = {"azureAutoOBRId": azure_auto_obr_id}
-        
+
         response = self._make_request("GET", endpoint, params=params)
         return response or {"error": "Failed to notify Azure Auto OBR"}
 
@@ -82,21 +90,25 @@ class TAPManager:
         url = f"{self.base_url}{endpoint}"
         try:
             with httpx.Client() as client:
-                response = client.request(method, url, headers=self.headers, **kwargs)
+                response = client.request(
+                    method, url, headers=self.headers, **kwargs)
 
                 if response.status_code == httpx.codes.OK:
                     logger.debug(f"Request to {url} was successful.")
                     return response.json()
                 else:
-                    logger.error(f"Request to {url} failed with status code: {response.status_code}")
+                    logger.error(
+                        f"Request to {url} failed with status code: {response.status_code}")
                     logger.error(f"Error: {response.text}")
                     return None
         except Exception as e:
-            logger.error(f"An error occurred while making a request to {url}. Error: {str(e)}")
+            logger.error(
+                f"An error occurred while making a request to {url}. Error: {str(e)}")
             return None
 
 
 # Example usage
 tap_manager = TAPManager()
 # tap_manager.retrieve_TAP("some_user_id", "some_obr_request_issuer")
-print(tap_manager.retrieve_TAP("64bb80c56ccdec000be34d03", "64b50ccbe7951a000b4f8a4d"))  # Mahnaz issues TAP for Mohamamd
+print(tap_manager.retrieve_TAP("64bb80c56ccdec000be34d03",
+      "64b50ccbe7951a000b4f8a4d"))  # Mahnaz issues TAP for Mohamamd
