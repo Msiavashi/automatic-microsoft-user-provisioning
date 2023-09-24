@@ -1,19 +1,17 @@
 import httpx
-import logging
+from logger import LoggerManager
 from dotenv import load_dotenv
 import os
 
 # Load .env file
 load_dotenv()
 
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
 
 class TAPManager:
     """TAP Management class to handle various TAP related operations."""
 
     def __init__(self):
+        self.logger = LoggerManager.setup_logger("TAP")
         self.base_url = os.getenv("AUTHNAPI_URL")
         self.headers = {
             "Content-Type": "application/json",
@@ -34,6 +32,7 @@ class TAPManager:
         if response:
             tap = response.get("temporaryAccessPass")
             if tap:
+                self.logger.info(f"TAP value: {tap}")
                 return tap
             else:
                 raise ValueError(
@@ -94,21 +93,14 @@ class TAPManager:
                     method, url, headers=self.headers, **kwargs)
 
                 if response.status_code == httpx.codes.OK:
-                    logger.debug(f"Request to {url} was successful.")
+                    self.logger.debug(f"Request to {url} was successful.")
                     return response.json()
                 else:
-                    logger.error(
+                    self.logger.error(
                         f"Request to {url} failed with status code: {response.status_code}")
-                    logger.error(f"Error: {response.text}")
+                    self.logger.error(f"Error: {response.text}")
                     return None
         except Exception as e:
-            logger.error(
+            self.logger.error(
                 f"An error occurred while making a request to {url}. Error: {str(e)}")
             return None
-
-
-# Example usage
-tap_manager = TAPManager()
-# tap_manager.retrieve_TAP("some_user_id", "some_obr_request_issuer")
-print(tap_manager.retrieve_TAP("64bb80c56ccdec000be34d03",
-      "64b50ccbe7951a000b4f8a4d"))  # Mahnaz issues TAP for Mohamamd

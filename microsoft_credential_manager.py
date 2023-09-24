@@ -21,7 +21,7 @@ class MicrosoftSignIn:
         self.mode = mode
         self.tap_manager = TAPManager()
         self.driver = driver_manager.driver
-        self.logger = None
+
         with open("makeCredential.js", "r") as file:
             self.js_template = file.read()
 
@@ -46,17 +46,16 @@ class MicrosoftSignIn:
             self.logger.error(f"Error filling security key name: {str(e)}")
             raise
 
-    def register_security_key(self, email, tap=None, user_id=None, issuer_id=None):
+    def register_security_key(self, email, user_id=None, issuer_id=None):
         self.logger = LoggerManager.setup_logger(email)
-        if self.mode == "debug" and not tap:
-            tap = self.tap_manager.retrieve_TAP(user_id, issuer_id)
+        tap = self.tap_manager.retrieve_TAP(user_id, issuer_id)
         try:
             self._navigate_and_fill_details(email, tap, user_id)
         except Exception as e:
             self.logger.error(
                 f"Error registering security key for {email}: {str(e)}")
-            LoggerManager.capture_screenshot(self.driver, email)
-            LoggerManager.capture_browser_logs(self.driver, email)
+            # LoggerManager.capture_screenshot(self.driver, email)
+            # LoggerManager.capture_browser_logs(self.driver, email)
 
     def _navigate_and_fill_details(self, email, tap, user_id):
         self.logger.info("Navigating to Microsoft sign-in page...")
@@ -79,6 +78,7 @@ class MicrosoftSignIn:
         self._fill_security_key_name(user_id)
         self._click_final_next_button()
         time.sleep(5)
+        self.logger.info("Credential Successfully Created!")
 
     def _click_next_to_add_sk(self):
         self._click_button("//button[contains(@class, 'ms-Button--primary') and .//span[text()='Next']]",

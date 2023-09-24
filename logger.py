@@ -11,10 +11,15 @@ LOG_COLORS = {
     'RESET': '\033[0m'
 }
 
+
 class ColoredFormatter(logging.Formatter):
     def format(self, record):
         log_message = super().format(record)
         return f"{LOG_COLORS.get(record.levelname, LOG_COLORS['RESET'])}{log_message}{LOG_COLORS['RESET']}"
+
+
+class LogConfig:
+    LOG_LEVEL = logging.INFO  # Set the desired log level here
 
 
 class LoggerManager:
@@ -23,28 +28,29 @@ class LoggerManager:
     @staticmethod
     def setup_console_logging():
         console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.DEBUG)
-        formatter = ColoredFormatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        console_handler.setLevel(LogConfig.LOG_LEVEL)
+        formatter = ColoredFormatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         console_handler.setFormatter(formatter)
         logging.getLogger().addHandler(console_handler)
-        logging.getLogger().setLevel(logging.DEBUG)
+        logging.getLogger().setLevel(LogConfig.LOG_LEVEL)
 
     @staticmethod
     def setup_logger(email):
         if not os.path.exists('logs'):
             os.makedirs('logs')
         logger = logging.getLogger(email)
-        logger.setLevel(logging.DEBUG)
+        logger.setLevel(LogConfig.LOG_LEVEL)
         fh = logging.FileHandler(f'logs/{email}.log')
-        fh.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        fh.setLevel(LogConfig.LOG_LEVEL)
+        formatter = logging.Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         fh.setFormatter(formatter)
         logger.addHandler(fh)
         return logger
 
     @staticmethod
     def capture_screenshot(driver, email):
-        return
         """Capture a screenshot."""
         try:
             timestamp = time.strftime("%Y%m%d-%H%M%S")
@@ -54,7 +60,6 @@ class LoggerManager:
 
     @staticmethod
     def capture_browser_logs(driver, email):
-        return
         """Capture browser logs."""
         try:
             browser_logs = driver.get_log('browser')

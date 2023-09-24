@@ -1,4 +1,4 @@
-import time
+import logging
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 
@@ -12,13 +12,11 @@ class DriverManager:
 
     def setup_driver(self):
         options = webdriver.ChromeOptions()
-        
         if self.mode == "production":
             options.add_argument("--headless")
         options.page_load_strategy = 'eager'
         driver = webdriver.Chrome(service=ChromeService(
             executable_path="./chromedriver"), options=options)
-
         return driver
 
     def close(self):
