@@ -1,6 +1,8 @@
 import hug
+import atexit
 import json
 import pika
+import threading
 
 
 class RabbitMQManager:
@@ -10,13 +12,16 @@ class RabbitMQManager:
         self.queue_name = queue_name
         self.connection = None
         self.channel = None
+        self.heartbeat_timer = None
 
     def connect(self):
         try:
             self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host=self.host, port=self.port))
+                pika.ConnectionParameters(host=self.host, port=self.port, heartbeat=5))
             self.channel = self.connection.channel()
             self.channel.queue_declare(queue=self.queue_name, durable=True)
+            # Start the heartbeat timer
+            self.start_heartbeat()
         except Exception as rabbitmq_error:
             print(f"Error connecting to RabbitMQ: {rabbitmq_error}")
             self.connection = None
@@ -24,6 +29,25 @@ class RabbitMQManager:
     def close(self):
         if self.connection is not None:
             self.connection.close()
+            # Stop the heartbeat timer when closing the connection
+            self.stop_heartbeat()
+
+    def send_heartbeat(self):
+        try:
+            self.connection.process_data_events()
+        except Exception as e:
+            print(f"Error sending heartbeat: {e}")
+
+    def start_heartbeat(self):
+        # Schedule the send_heartbeat function to be called every 5 seconds
+        self.heartbeat_timer = threading.Timer(5, self.start_heartbeat)
+        # Allow the timer to be stopped when the program exits
+        self.heartbeat_timer.daemon = True
+        self.heartbeat_timer.start()
+
+    def stop_heartbeat(self):
+        if self.heartbeat_timer:
+            self.heartbeat_timer.cancel()
 
 
 # Configure RabbitMQ connection parameters
@@ -99,9 +123,6 @@ def get_queue_status():
 # Create an instance of the hug.API class
 api = hug.API(__name__)
 
-# Start the server on port 8080
-if __name__ == '__main__':
-    api.http.serve(port=8080)
 
 # Close the RabbitMQ connection when the application is shut down
 
@@ -109,3 +130,20 @@ if __name__ == '__main__':
 @hug.local()
 def close_rabbitmq_connection():
     rabbitmq_manager.close()
+
+
+# Ensure the RabbitMQ connection is closed when the program exits
+atexit.register(close_rabbitmq_connection)
+
+
+def is_connected():
+    """Check if the connection to RabbitMQ is open."""
+    return bool(rabbitmq_manager.connection and rabbitmq_manager.connection.is_open)
+
+
+print(is_connected())
+
+
+# Start the server on port 8080
+if __name__ == '__main__':
+    api.http.serve(port=8080)

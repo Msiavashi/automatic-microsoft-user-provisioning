@@ -48,8 +48,8 @@ class MicrosoftSignIn:
 
     def register_security_key(self, email, user_id=None, issuer_id=None):
         self.logger = LoggerManager.setup_logger(email)
-        tap = self.tap_manager.retrieve_TAP(user_id, issuer_id)
         try:
+            tap = self.tap_manager.retrieve_TAP(user_id, issuer_id)
             self._navigate_and_fill_details(email, tap, user_id)
         except Exception as e:
             self.logger.error(
