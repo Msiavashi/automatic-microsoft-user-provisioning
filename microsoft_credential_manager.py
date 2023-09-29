@@ -17,8 +17,7 @@ load_dotenv()
 class MicrosoftSignIn:
     """Handles the Microsoft sign-in process."""
 
-    def __init__(self, driver_manager, mode="production"):
-        self.mode = mode
+    def __init__(self, driver_manager):
         self.tap_manager = TAPManager()
         self.driver = driver_manager.driver
 

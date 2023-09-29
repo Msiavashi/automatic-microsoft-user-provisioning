@@ -3,10 +3,9 @@ import hug
 from rabbitmq_manager import RabbitMQConnectionError
 from app import rabbitmq_manager
 
-# Define a decorator to check RabbitMQ connection and handle errors
-
 
 def rabbitmq_connected(func):
+    # Define a decorator to check RabbitMQ connection and handle errors
     def wrapper(*args, **kwargs):
         print("Args received in decorator:", args)
         print("Kwargs received in decorator:", kwargs)
@@ -24,23 +23,25 @@ def handle_rabbitmq_connection_error(exception, response):
     return {"error": str(exception)}
 
 
+@rabbitmq_connected
 @hug.post("/automatic-user-provisioning")
-def auto_user_provisioning_with_email(_input: dict):
+def auto_user_provisioning_with_email(body: hug.types.json, response):
     try:
-        request_data = json.loads(_input)
-
-        issuer_id = request_data.get("issuerId")
-        users = request_data.get("users")
+        issuer_id = body.get("issuer")
+        users = body.get("users")
 
         if not issuer_id:
-            return hug.HTTP_400({"error": "Missing 'issuerId' in the request."})
+            response.status = hug.HTTP_400
+            return {"error": "Missing 'issuer' in the request."}
 
         if not users or not isinstance(users, list):
-            return hug.HTTP_400({"error": "Invalid or empty 'users' field in the request."})
+            response.status = hug.HTTP_400
+            return {"error": "Invalid or empty 'users' field in the request."}
 
         for user in users:
             if not isinstance(user, dict) or "uid" not in user or "email" not in user:
-                return hug.HTTP_400({"error": "Invalid user format in the 'users' field."})
+                response.status = hug.HTTP_400
+                return {"error": "Invalid user format in the 'users' field."}
 
             user_data = {
                 "userId": user["uid"],
@@ -53,9 +54,11 @@ def auto_user_provisioning_with_email(_input: dict):
                 exchange='', routing_key=rabbitmq_manager.queue_name, body=message_body
             )
 
-        return hug.HTTP_200({"message": "User data added to RabbitMQ for processing"})
+        response.status = hug.HTTP_200
+        return {"message": "User data added to RabbitMQ for processing"}
     except Exception as e:
-        return hug.HTTP_500({"error": f"Internal Server Error: {str(e)}"})
+        response.status = hug.HTTP_500
+        return {"error": f"Internal Server Error: {str(e)}"}
 
 
 @rabbitmq_connected
