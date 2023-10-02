@@ -27,12 +27,24 @@ class LoggerManager:
 
     @staticmethod
     def setup_console_logging():
+        # Setting up console logging
         console_handler = logging.StreamHandler()
         console_handler.setLevel(LogConfig.LOG_LEVEL)
         formatter = ColoredFormatter(
             '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         console_handler.setFormatter(formatter)
         logging.getLogger().addHandler(console_handler)
+
+        # Setting up file logging for console logs
+        if not os.path.exists('logs/console_logs'):
+            os.makedirs('logs/console_logs')
+        console_file_handler = logging.FileHandler(
+            f'logs/console_logs/console.log')
+        console_file_handler.setLevel(LogConfig.LOG_LEVEL)
+        console_file_handler.setFormatter(formatter)
+        logging.getLogger().addHandler(console_file_handler)
+
+        # Setting the log level
         logging.getLogger().setLevel(LogConfig.LOG_LEVEL)
 
     @staticmethod

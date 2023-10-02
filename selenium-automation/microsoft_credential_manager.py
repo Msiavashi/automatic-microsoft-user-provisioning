@@ -90,16 +90,10 @@ class MicrosoftSignIn:
             self.logger.debug("'Stay signed in?' prompt did not appear.")
 
     def _click_no_stay_signed_in(self):
-        # Click the "No" button to not stay signed in
-        try:
-            no_button = self.driver.find_element(
-                By.XPATH, "//input[@type='button' and @id='idBtn_Back' and @value='No']")
-            no_button.click()
-            self.logger.info("Clicked 'No' on the 'Stay signed in?' prompt.")
-        except Exception as e:
-            self.logger.error(
-                f"Error clicking 'No' on the 'Stay signed in?' prompt: {str(e)}")
-            raise
+        # self._click_button(
+        #     "//input[@type='button' and @id='idBtn_Back' and @value='No']", "No")
+        self._click_button(
+            "//input[@type='submit' and @id='idSIButton9']", "Yes")
 
     def _navigate_and_fill_details(self, email, tap, user_id):
         self.logger.info("Navigating to Microsoft sign-in page...")

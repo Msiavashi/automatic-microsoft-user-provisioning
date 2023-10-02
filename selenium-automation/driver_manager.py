@@ -21,5 +21,4 @@ class DriverManager:
         return driver
 
     def close(self):
-        time.sleep(100000)
         self.driver.quit()

@@ -87,8 +87,11 @@ class MainApp:
             logging.error(f"Error processing message: {ex}")
 
         if not self.test_mode and status:  # Update status only when not in test_mode
-            self.azure_auto_obr_client.update_request_status(
-                user_id, requestId, status, detail)
+            try:
+                self.azure_auto_obr_client.update_request_status(
+                    user_id, requestId, status, detail)
+            except Exception as ex:
+                logging.error(str(ex))
         else:
             logging.info(f"{status}: {detail}")
 
