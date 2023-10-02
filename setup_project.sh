@@ -1,24 +1,32 @@
 #!/bin/bash
 
-# Create and activate virtual environment
-python3 -m venv venv
-source myenv/bin/activate
+# Navigate to the project directory (if not already there)
+cd "$(dirname "$0")"
 
-# Upgrade pip and install necessary packages from requirements.txt
-pip install --upgrade pip
-pip install -r requirements.txt
+# Set up virtual environments and dependencies for both sub-projects
+for SUB_PROJECT in selenium-automation server; do
+    cd "$SUB_PROJECT"
+    
+    # Create and activate virtual environment
+    python3 -m venv venv
+    source venv/bin/activate
+    
+    # Upgrade pip and install necessary packages from requirements.txt
+    pip install --upgrade pip
+    pip install -r requirements.txt
+    
+    # Deactivate virtual environment before moving to next sub-project
+    deactivate
+    
+    cd ..
+done
 
-# Check if Redis is installed and running
-if ! command -v redis-server &> /dev/null; then
-    echo 'Error: Redis is not installed. Please install Redis and start the service.'
-    exit 1
-fi
-
-# Initialize the Selenium project
-# Placeholder for any additional initialization steps
+# Placeholder for any additional initialization steps like starting docker-compose, etc.
+# docker-compose up -d
 
 echo 'Project initialized!'
 
 # Start the RQ worker for the queue system
-rq worker my_queue &
-echo 'RQ worker started for my_queue!'
+# Note: Ensure that this is required and the RQ worker is set up correctly
+# rq worker my_queue &
+# echo 'RQ worker started for my_queue!'

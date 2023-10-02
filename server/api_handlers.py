@@ -85,6 +85,7 @@ def get_queue_status(response):
 @rabbitmq_connected
 @hug.patch("/azureAutoOBR")
 def update_request_status_api(body: hug.types.json, response):
+    # This is only implemented for internal test environment and should not be used in production.
     try:
         # Extract data from the request JSON body
         user_id = body.get("userId")
@@ -101,17 +102,3 @@ def update_request_status_api(body: hug.types.json, response):
     except Exception as e:
         response.status = hug.HTTP_500
         return {"error": f"Internal Server Error: {str(e)}"}
-    
-@rabbitmq_connected
-@hug.get("/dead-letter-queue-status")
-def get_dead_letter_queue_status(response):
-    try:
-        queue_info = rabbitmq_manager.channel.queue_declare(
-            queue=rabbitmq_manager.dead_letter_queue_name, durable=True
-        )
-        message_count = queue_info.method.message_count
-
-        return {"queue_status": "OK", "message_count": message_count}
-    except Exception as e:
-        response.status = hug.HTTP_500
-        return {"queue_status": "Error", "error_message": str(e)}

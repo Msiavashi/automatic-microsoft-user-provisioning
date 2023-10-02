@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    env_file:
+      - ./server/.env
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -20,8 +22,6 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
-      - NETWORK=rabbitmq
-
     networks:
       - app-network
     healthcheck:
@@ -29,6 +29,18 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+
+  selenium-automation:
+    build:
+      context: ./selenium-automation/
+      dockerfile: Dockerfile
+    env_file:
+      - ./selenium-automation/.env
+    depends_on:
+      - hug-api
+      - rabbitmq
+    networks:
+      - app-network
 
 networks:
   app-network:

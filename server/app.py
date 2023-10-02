@@ -6,7 +6,7 @@ from rabbitmq_manager import RabbitMQManager, RabbitMQConnectionError
 
 
 # Read the HOSTNAME environment variable to get the hostname
-hostname = os.environ.get('HOSTNAME', 'localhost')
+hostname = os.environ.get('RABBITMQ_HOSTNAME', 'localhost')
 
 rabbitmq_manager = RabbitMQManager(hostname, 5672, 'obr')
 
