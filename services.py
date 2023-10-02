@@ -50,7 +50,7 @@ class AzureAutoOBRClient:
 
         # Define the data to be sent in the request body
         data = {"status": status, "description": description}
-
+        print(data)
         try:
             # Send the PATCH request and handle the response
             response = self._send_request(

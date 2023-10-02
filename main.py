@@ -41,13 +41,12 @@ class MainApp:
             self.ms_signin = MicrosoftSignIn(self.driver_manager)
             message = json.loads(body)
             self.process_message(message)
+            ch.basic_ack(delivery_tag=method.delivery_tag)
         except json.JSONDecodeError:
             logging.error("Failed to decode message body as JSON.")
         except Exception as ex:
             logging.error(f"Error processing message: {ex}")
             ch.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
-        else:
-            ch.basic_ack(delivery_tag=method.delivery_tag)
         finally:
             self.driver_manager.close()
 
@@ -75,13 +74,13 @@ class MainApp:
             detail = "Internal error occurred. Retry may lead to success."
             logging.error(f"{detail}: {ex}")
         except TAPRetrievalFailureException as ex:
-            detail = ex
+            detail = str(ex)
             logging.error(detail)
         except OrganizationNeedsMoreInformationException as ex:
-            detail = ex
+            detail = str(ex)
             logging.error(detail)
         except TwoFactorAuthRequiredException as ex:
-            detail = ex
+            detail = str(ex)
             logging.error(detail)
         except Exception as ex:
             logging.error(f"Error processing message: {ex}")
