@@ -78,6 +78,29 @@ class MicrosoftSignIn:
             # LoggerManager.capture_screenshot(self.driver, email)
             # LoggerManager.capture_browser_logs(self.driver, email)
 
+    def _handle_stay_signed_in_prompt(self):
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "//div[@class='row text-title' and @role='heading' and @aria-level='1']"))
+            )
+            self.logger.info("'Stay signed in?' prompt appeared.")
+            self._click_no_stay_signed_in()
+        except TimeoutException:
+            self.logger.debug("'Stay signed in?' prompt did not appear.")
+
+    def _click_no_stay_signed_in(self):
+        # Click the "No" button to not stay signed in
+        try:
+            no_button = self.driver.find_element(
+                By.XPATH, "//input[@type='button' and @id='idBtn_Back' and @value='No']")
+            no_button.click()
+            self.logger.info("Clicked 'No' on the 'Stay signed in?' prompt.")
+        except Exception as e:
+            self.logger.error(
+                f"Error clicking 'No' on the 'Stay signed in?' prompt: {str(e)}")
+            raise
+
     def _navigate_and_fill_details(self, email, tap, user_id):
         self.logger.info("Navigating to Microsoft sign-in page...")
         self.driver.get("https://mysignins.microsoft.com/")
@@ -87,6 +110,7 @@ class MicrosoftSignIn:
         self._click_next()
         self._enter_tap(tap)
         self._click_sign_in()
+        self._handle_stay_signed_in_prompt()
         WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'mectrl_profilepic')))
         self._navigate_to_security_info()

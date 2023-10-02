@@ -6,7 +6,7 @@ from typing import Dict
 class AzureAutoOBRClient:
     def __init__(self):
         self.api_key = os.environ.get('PASSKEY_OBR_API_KEY')
-        self.base_url = os.environ.get('AUTHENAPI_URL')
+        self.base_url = os.environ.get('AUTHNAPI_URL')
         self.headers = {
             "Content-Type": "application/json",
             "x-api-key": self.api_key,
@@ -14,6 +14,7 @@ class AzureAutoOBRClient:
 
     def _send_request(self, method: str, url: str, params: Dict = None, data: Dict = None):
         with httpx.Client() as client:
+            print(url)
             response = client.request(
                 method, url, params=params, headers=self.headers, json=data
             )
@@ -50,7 +51,6 @@ class AzureAutoOBRClient:
 
         # Define the data to be sent in the request body
         data = {"status": status, "description": description}
-        print(data)
         try:
             # Send the PATCH request and handle the response
             response = self._send_request(

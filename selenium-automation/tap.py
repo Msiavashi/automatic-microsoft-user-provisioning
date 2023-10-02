@@ -51,41 +51,6 @@ class TAPManager:
         except Exception as e:
             raise TAPRetrievalFailureException(e)
 
-    def update_azure_auto_obr(self, user_id: str, azure_auto_obr_id: str, obr_request_issuer_id: str, status: int, description: str) -> dict:
-        """
-        Update Azure Auto OBR with provided details.
-
-        :param user_id: ID of the user
-        :param azure_auto_obr_id: Azure Auto OBR ID
-        :param obr_request_issuer_id: OBR request issuer ID
-        :param status: Status code
-        :param description: Description text
-        :return: Response data or error message
-        """
-        endpoint = "/internal/azureAutoOBR"
-        params = {
-            "azureAutoOBRId": azure_auto_obr_id,
-            "userId": user_id,
-            "obrRequestIssuerId": obr_request_issuer_id
-        }
-        data = {"status": status, "description": description}
-
-        response = self._make_request(
-            "PATCH", endpoint, params=params, json=data)
-        return response or {"error": "Failed to update Azure Auto OBR"}
-
-    def notify_azure_auto_obr(self, azure_auto_obr_id: str) -> dict:
-        """
-        Notify Azure Auto OBR with the provided OBR ID.
-
-        :param azure_auto_obr_id: Azure Auto OBR ID
-        :return: Response data or error message
-        """
-        endpoint = "/internal/notifyAzureAutoOBR"
-        params = {"azureAutoOBRId": azure_auto_obr_id}
-
-        response = self._make_request("GET", endpoint, params=params)
-        return response or {"error": "Failed to notify Azure Auto OBR"}
 
     def _make_request(self, method: str, endpoint: str, **kwargs) -> dict:
         """
