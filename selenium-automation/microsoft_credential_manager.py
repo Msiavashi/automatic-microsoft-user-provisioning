@@ -268,6 +268,7 @@ class MicrosoftSignIn:
                          tap, "Temporary Access Pass")
 
     def _click_button(self, xpath, button_name):
+        time.sleep(2)
         try:
             self.logger.info(f"Clicking the {button_name} button...")
             button = WebDriverWait(self.driver, 15).until(

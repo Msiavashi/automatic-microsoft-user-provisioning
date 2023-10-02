@@ -113,7 +113,7 @@ class MainApp:
     def start_heartbeat(self):
         if self.heartbeat_timer:
             self.heartbeat_timer.cancel()
-        self.heartbeat_timer = threading.Timer(10, self.send_heartbeat)
+        self.heartbeat_timer = threading.Timer(5, self.send_heartbeat)
         self.heartbeat_timer.daemon = True
         self.heartbeat_timer.start()
 

@@ -32,7 +32,7 @@ class RabbitMQManager:
     def connect(self):
         try:
             self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host=self.host, port=self.port, heartbeat=30))
+                pika.ConnectionParameters(host=self.host, port=self.port, heartbeat=360))
             self.channel = self.connection.channel()
             self.channel.queue_declare(queue=self.queue_name, durable=True)
             self.start_heartbeat()
