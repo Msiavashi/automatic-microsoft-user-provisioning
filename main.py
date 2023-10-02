@@ -1,11 +1,15 @@
 import argparse
+import json
 import logging
 import threading
 import atexit
 from logger import LoggerManager
 from driver_manager import DriverManager
-from microsoft_credential_manager import MicrosoftSignIn
+from microsoft_credential_manager import MicrosoftSignIn, SecurityKeysLimitException, TwoFactorAuthRequiredException, OrganizationNeedsMoreInformationException
 from rabbitmq_manager import RabbitMQManager
+from services import AzureAutoOBRClient
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException
+from tap import TAPRetrievalFailureException
 
 
 class MainApp:
@@ -14,10 +18,13 @@ class MainApp:
     def __init__(self):
         LoggerManager.setup_console_logging()
         logging.info("Starting the automation script...")
+        self.azure_auto_obr_client = AzureAutoOBRClient()
         self.ms_signin = None
         self.test_mode = False
         self.rabbitmq_manager = None
         self.heartbeat_timer = None
+        self.driver_manager = None
+        self.mode = None
         # Define an event to handle termination
         self.terminate_event = threading.Event()
 
@@ -29,9 +36,61 @@ class MainApp:
             self.start_heartbeat()
 
     def queue_consumer(self, ch, method, properties, body):
-        print(f"[[+++]] Received: {body}")
-        # Acknowledge message processing
-        ch.basic_ack(delivery_tag=method.delivery_tag)
+        try:
+            self.driver_manager = DriverManager(mode=self.mode)
+            self.ms_signin = MicrosoftSignIn(self.driver_manager)
+            message = json.loads(body)
+            self.process_message(message)
+        except json.JSONDecodeError:
+            logging.error("Failed to decode message body as JSON.")
+        except Exception as ex:
+            logging.error(f"Error processing message: {ex}")
+            ch.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
+        else:
+            ch.basic_ack(delivery_tag=method.delivery_tag)
+        finally:
+            self.driver_manager.close()
+
+    def process_message(self, message):
+        status, detail = "failed", "An unknown error occurred during processing."
+        try:
+            email = message.get("email")
+            user_id = message.get("userId")
+            issuer_id = message.get("issuerId")
+            requestId = message.get("requestId")
+
+            self.ms_signin.register_security_key(
+                email=email, user_id=user_id, issuer_id=issuer_id)
+            status, detail = "done", "Credential successfully created."
+        except TimeoutException as ex:
+            detail = "Timeout while interacting with Microsoft."
+            logging.error(f"{detail}: {ex}")
+        except NoSuchElementException as ex:
+            detail = "Element not found."
+            logging.error(f"{detail}: {ex}")
+        except SecurityKeysLimitException as ex:
+            detail = "You have reached the limit of 10 security keys on https://mysignins.microsoft.com/"
+            logging.error(detail)
+        except WebDriverException as ex:
+            detail = "Internal error occurred. Retry may lead to success."
+            logging.error(f"{detail}: {ex}")
+        except TAPRetrievalFailureException as ex:
+            detail = ex
+            logging.error(detail)
+        except OrganizationNeedsMoreInformationException as ex:
+            detail = ex
+            logging.error(detail)
+        except TwoFactorAuthRequiredException as ex:
+            detail = ex
+            logging.error(detail)
+        except Exception as ex:
+            logging.error(f"Error processing message: {ex}")
+
+        if not self.test_mode and status:  # Update status only when not in test_mode
+            self.azure_auto_obr_client.update_request_status(
+                user_id, requestId, status, detail)
+        else:
+            logging.info(f"{status}: {detail}")
 
     def start_rabbitmq_consumer(self):
         self.consumer_thread = threading.Thread(
@@ -43,8 +102,7 @@ class MainApp:
 
     def send_heartbeat(self):
         try:
-            logging.info("Sending heartbeat...")
-            # Implement your heartbeat logic here
+            # logging.info("Sending heartbeat...")
             self.start_heartbeat()  # Reschedule the next heartbeat
         except Exception as e:
             logging.error(f"Error sending heartbeat: {e}")
@@ -77,15 +135,19 @@ class MainApp:
 
         self.test_mode = args.test
 
-        driver_manager = DriverManager(mode=args.mode)
-        self.ms_signin = MicrosoftSignIn(driver_manager)
+        self.mode = args.mode
         if (self.test_mode):
-            self.ms_signin.register_security_key(
-                email=args.email, user_id=args.userId, issuer_id=args.issuerId)
-        self.initialize_resources()
-        driver_manager.close()
-
-        self.terminate_event.wait()
+            self.driver_manager = DriverManager(mode=self.mode)
+            self.ms_signin = MicrosoftSignIn(self.driver_manager)
+            self.process_message({
+                "email": args.email,
+                "userId": args.userId,
+                "issuerId": args.issuerId
+            })
+            self.driver_manager.close()
+        else:
+            self.initialize_resources()
+            self.terminate_event.wait()
         logging.info("Automation script finished.")
 
     def close_resources(self):
@@ -93,6 +155,7 @@ class MainApp:
             self.stop_heartbeat()
             self.rabbitmq_manager.stop()
             self.terminate_event.set()  # Set the termination event to release the main thread
+            self.driver_manager.close()
 
 
 if __name__ == "__main__":

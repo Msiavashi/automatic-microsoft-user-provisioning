@@ -7,6 +7,11 @@ import os
 load_dotenv()
 
 
+class TAPRetrievalFailureException(Exception):
+    """Exception raised for TAP retrieval failures."""
+    pass
+
+
 class TAPManager:
     """TAP Management class to handle various TAP related operations."""
 
@@ -26,20 +31,25 @@ class TAPManager:
         :param obr_request_issuer: OBR request issuer ID
         :return: Temporary Access Pass or raises an exception if not found
         """
-        endpoint = f"/internal/tap/{user_id}/{obr_request_issuer}"
-        response = self._make_request("GET", endpoint)
-
-        if response:
-            tap = response.get("temporaryAccessPass")
-            if tap:
-                self.logger.info(f"TAP value: {tap}")
-                return tap
+        try:
+            endpoint = f"/internal/tap/{user_id}/{obr_request_issuer}"
+            response = self._make_request("GET", endpoint)
+            self.logger.debug(f"TAP API response: {response}")
+            if response:
+                tap = response.get("temporaryAccessPass")
+                if tap:
+                    self.logger.info(f"TAP value: {tap}")
+                    return tap
+                else:
+                    raise ValueError(
+                        f"No TAP found for user {user_id} with issuer {obr_request_issuer}")
             else:
-                raise ValueError(
-                    f"No TAP found for user {user_id} with issuer {obr_request_issuer}")
-        else:
-            raise ConnectionError(
-                f"Failed to retrieve TAP for user {user_id} with issuer {obr_request_issuer}")
+                self.logger.debug(
+                    f"Failed to retrieve TAP for user {user_id} with issuer {obr_request_issuer}")
+                raise TAPRetrievalFailureException(
+                    f"Failed to retrieve TAP")
+        except Exception as e:
+            raise TAPRetrievalFailureException(e)
 
     def update_azure_auto_obr(self, user_id: str, azure_auto_obr_id: str, obr_request_issuer_id: str, status: int, description: str) -> dict:
         """
@@ -99,8 +109,11 @@ class TAPManager:
                     self.logger.error(
                         f"Request to {url} failed with status code: {response.status_code}")
                     self.logger.error(f"Error: {response.text}")
-                    return None
+                    if (response.json().get("message", None)):
+                        raise TAPRetrievalFailureException(
+                            response.json().get("message"))
+                    else:
+                        raise TAPRetrievalFailureException(
+                            "Failed to retrieve TAP due to error from Microsoft.")
         except Exception as e:
-            self.logger.error(
-                f"An error occurred while making a request to {url}. Error: {str(e)}")
-            return None
+            raise

@@ -29,6 +29,11 @@ def auto_user_provisioning_with_email(body: hug.types.json, response):
     try:
         issuer_id = body.get("issuer")
         users = body.get("users")
+        request_id = body.get("requestId")
+
+        if not issuer_id:
+            response.status = hug.HTTP_400
+            return {"error": "Missing 'requestId' in the request."}
 
         if not issuer_id:
             response.status = hug.HTTP_400
@@ -44,6 +49,7 @@ def auto_user_provisioning_with_email(body: hug.types.json, response):
                 return {"error": "Invalid user format in the 'users' field."}
 
             user_data = {
+                "requestId": request_id,
                 "userId": user["uid"],
                 "email": user["email"],
                 "issuerId": issuer_id
@@ -67,6 +73,41 @@ def get_queue_status(response):
     try:
         queue_info = rabbitmq_manager.channel.queue_declare(
             queue=rabbitmq_manager.queue_name, durable=True
+        )
+        message_count = queue_info.method.message_count
+
+        return {"queue_status": "OK", "message_count": message_count}
+    except Exception as e:
+        response.status = hug.HTTP_500
+        return {"queue_status": "Error", "error_message": str(e)}
+
+
+@rabbitmq_connected
+@hug.patch("/azureAutoOBR")
+def update_request_status_api(body: hug.types.json, response):
+    try:
+        # Extract data from the request JSON body
+        user_id = body.get("userId")
+        requestId = body.get("requestId")
+        status: str = body.get("status")
+        description = body.get("description")
+
+        # Your logic to update the request status here
+        if status.lower() == "failed":
+            response.status = hug.HTTP_400
+        else:
+            response.status = hug.HTTP_200
+        return {"message": description}
+    except Exception as e:
+        response.status = hug.HTTP_500
+        return {"error": f"Internal Server Error: {str(e)}"}
+    
+@rabbitmq_connected
+@hug.get("/dead-letter-queue-status")
+def get_dead_letter_queue_status(response):
+    try:
+        queue_info = rabbitmq_manager.channel.queue_declare(
+            queue=rabbitmq_manager.dead_letter_queue_name, durable=True
         )
         message_count = queue_info.method.message_count
 

@@ -1,4 +1,4 @@
-import logging
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 
@@ -12,6 +12,7 @@ class DriverManager:
 
     def setup_driver(self):
         options = webdriver.ChromeOptions()
+        options.add_argument("--incognito")
         if self.mode == "headless":
             options.add_argument("--headless")
         options.page_load_strategy = 'eager'
