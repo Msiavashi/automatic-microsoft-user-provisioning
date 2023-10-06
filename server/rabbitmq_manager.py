@@ -1,5 +1,7 @@
 import pika
 import threading
+import logging
+import os
 
 
 class RabbitMQConnectionError(Exception):
@@ -8,69 +10,56 @@ class RabbitMQConnectionError(Exception):
 
 class RabbitMQManager:
     _instances = {}
+    _lock = threading.Lock()  # Lock for thread-safe singleton instance creation
 
     def __new__(cls, host, port, queue_name):
-        if (host, port, queue_name) in cls._instances:
-            return cls._instances[(host, port, queue_name)]
+        with cls._lock:
+            if (host, port, queue_name) in cls._instances:
+                return cls._instances[(host, port, queue_name)]
 
-        instance = super(RabbitMQManager, cls).__new__(cls)
-        cls._instances[(host, port, queue_name)] = instance
-        return instance
+            instance = super(RabbitMQManager, cls).__new__(cls)
+            cls._instances[(host, port, queue_name)] = instance
+            return instance
 
     def __init__(self, host, port, queue_name):
-        if hasattr(self, 'initialized') and self.initialized:
-            return
+        with self._lock:
+            if hasattr(self, 'initialized') and self.initialized:
+                return
 
-        self.host = host
-        self.port = port
-        self.queue_name = queue_name
-        self.connection = None
-        self.channel = None
-        self.heartbeat_timer = None
-        self.initialized = True
+            self.host = host
+            self.port = port
+            self.queue_name = queue_name
+            self.connection = None
+            self.channel = None
+            self.initialized = True
 
     def connect(self):
-        try:
-            self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host=self.host, port=self.port, heartbeat=360))
-            self.channel = self.connection.channel()
-            self.channel.queue_declare(queue=self.queue_name, durable=True)
-            self.start_heartbeat()
-        except Exception as rabbitmq_error:
-            raise RabbitMQConnectionError(
-                f"Error connecting to RabbitMQ: {rabbitmq_error}")
+        with self._lock:
+            try:
+                self.connection = pika.BlockingConnection(
+                    pika.ConnectionParameters(host=self.host, port=self.port, heartbeat=580))
+                self.channel = self.connection.channel()
+                self.channel.queue_declare(queue=self.queue_name, durable=True)
+            except pika.exceptions.AMQPConnectionError as rabbitmq_error:
+                logging.exception(
+                    f"Error connecting to RabbitMQ: {rabbitmq_error}")
+                raise RabbitMQConnectionError(
+                    f"Error connecting to RabbitMQ: {rabbitmq_error}")
 
     def close(self):
-        if self.connection:
-            self.connection.close()
-            self.stop_heartbeat()
-
-    def send_heartbeat(self):
-        try:
-            self.connection.process_data_events()
-        except Exception as e:
-            print(f"Error sending heartbeat: {e}")
+        with self._lock:
+            try:
+                if self.connection:
+                    self.connection.close()
+            except pika.exceptions.AMQPConnectionError as e:
+                logging.exception(f"Error closing RabbitMQ connection: {e}")
 
     def is_connected(self):
-        """Check if the connection to RabbitMQ is open."""
-        return bool(self.connection and self.connection.is_open)
+        with self._lock:
+            return bool(self.connection and self.connection.is_open)
 
-    def send_heartbeat(self):
-        try:
-            if self.connection and self.connection.is_open:  # Check if the connection is open before sending heartbeat
-                self.connection.process_data_events()
-                self.start_heartbeat()  # Reschedule the next heartbeat
-        except Exception as e:
-            print(f"Error sending heartbeat: {e}")
-            self.close()  # Close the connection on error, if needed
 
-    def start_heartbeat(self):
-        if self.heartbeat_timer:
-            self.heartbeat_timer.cancel()
-        self.heartbeat_timer = threading.Timer(10, self.send_heartbeat)
-        self.heartbeat_timer.daemon = True
-        self.heartbeat_timer.start()
-
-    def stop_heartbeat(self):
-        if self.heartbeat_timer:
-            self.heartbeat_timer.cancel()
+# Usage
+rabbitmq_manager = RabbitMQManager(
+    host=os.environ.get("RABBITMQ_HOSTNAME", "localhost"), port=5672, queue_name='obr'
+)

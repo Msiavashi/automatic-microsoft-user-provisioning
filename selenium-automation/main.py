@@ -14,11 +14,6 @@ from tap import TAPRetrievalFailureException
 import time
 import functools
 
-
-import time
-import functools
-
-
 def retry(exceptions, tries=3, delay=5, backoff=2):
     """
     Decorator for retrying a function if exception occurs.
@@ -36,8 +31,8 @@ def retry(exceptions, tries=3, delay=5, backoff=2):
                 try:
                     return func(*args, **kwargs)
                 except exceptions as e:
-                    msg = f"{str(e)}, Retrying in {mdelay} seconds..."
-                    print(msg)  # or use logging
+                    msg = f"Retrying in {mdelay} seconds..."
+                    logging.info(msg)  # or use logging
                     time.sleep(mdelay)
                     mtries -= 1
                     mdelay *= backoff
@@ -56,7 +51,6 @@ class MainApp:
         self.ms_signin = None
         self.test_mode = False
         self.rabbitmq_manager = None
-        self.heartbeat_timer = None
         self.driver_manager = None
         self.mode = None
         # Define an event to handle termination
@@ -67,12 +61,13 @@ class MainApp:
             self.rabbitmq_manager = RabbitMQManager(
                 host=os.environ.get("RABBITMQ_HOSTNAME", "localhost"), port=5672, queue_name='obr', consumer_callback=self.queue_consumer)
             self.rabbitmq_manager.start()
-            self.start_heartbeat()
+            # self.start_heartbeat()
 
     def queue_consumer(self, ch, method, properties, body):
         try:
             message = json.loads(body)
             self.process_message(message)
+            self.rabbitmq_manager.connection._heartbeat_checker._send_heartbeat()
             ch.basic_ack(delivery_tag=method.delivery_tag)
         except json.JSONDecodeError:
             logging.error("Failed to decode message body as JSON.")
@@ -131,32 +126,6 @@ class MainApp:
         else:
             logging.info(f"{status}: {detail}")
 
-    def start_rabbitmq_consumer(self):
-        self.consumer_thread = threading.Thread(
-            target=self.rabbitmq_manager.consume,
-            args=(self.queue_consumer,))
-        self.consumer_thread.daemon = True  # Daemonize thread
-        self.consumer_thread.start()
-        logging.info("RabbitMQ consumer thread started.")
-
-    def send_heartbeat(self):
-        try:
-            # logging.info("Sending heartbeat...")
-            self.start_heartbeat()  # Reschedule the next heartbeat
-        except Exception as e:
-            logging.error(f"Error sending heartbeat: {e}")
-
-    def start_heartbeat(self):
-        if self.heartbeat_timer:
-            self.heartbeat_timer.cancel()
-        self.heartbeat_timer = threading.Timer(5, self.send_heartbeat)
-        self.heartbeat_timer.daemon = True
-        self.heartbeat_timer.start()
-
-    def stop_heartbeat(self):
-        if self.heartbeat_timer:
-            self.heartbeat_timer.cancel()
-
     def run(self):
         parser = argparse.ArgumentParser(
             description="Automate Microsoft Sign-In to register a security key.")
@@ -188,7 +157,7 @@ class MainApp:
 
     def close_resources(self):
         if not self.test_mode:
-            self.stop_heartbeat()
+            # self.stop_heartbeat()
             self.rabbitmq_manager.stop()
             self.terminate_event.set()  # Set the termination event to release the main thread
             self.driver_manager.close()
