@@ -14,6 +14,7 @@ from tap import TAPRetrievalFailureException
 import time
 import functools
 
+
 def retry(exceptions, tries=3, delay=5, backoff=2):
     """
     Decorator for retrying a function if exception occurs.
@@ -116,15 +117,14 @@ class MainApp:
             logging.error(f"Error processing message: {ex}")
         finally:
             self.driver_manager.close()
-
-        if not self.test_mode and status:  # Update status only when not in test_mode
-            try:
-                self.azure_auto_obr_client.update_request_status(
-                    user_id, requestId, status, detail)
-            except Exception as ex:
-                logging.error(str(ex))
-        else:
-            logging.info(f"{status}: {detail}")
+            if not self.test_mode and status:  # Update status only when not in test_mode
+                try:
+                    self.azure_auto_obr_client.update_request_status(
+                        user_id, requestId, status, detail)
+                except Exception as ex:
+                    logging.error(str(ex))
+            else:
+                logging.info(f"{status}: {detail}")
 
     def run(self):
         parser = argparse.ArgumentParser(
