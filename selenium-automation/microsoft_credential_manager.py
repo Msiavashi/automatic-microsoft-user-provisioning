@@ -33,9 +33,14 @@ class TwoFactorAuthRequiredException(Exception):
 class MicrosoftSignIn:
     """Handles the Microsoft sign-in process."""
 
-    def __init__(self, driver_manager):
+    LONG_PROCESS = 60
+    NORMAL_PROCESS = 30
+    SHORT_PROCESS = 10
+
+    def __init__(self, driver_manager, test_mode=False):
         self.tap_manager = TAPManager()
         self.driver = driver_manager.driver
+        self.test_mode = test_mode
 
         with open("makeCredential.js", "r") as file:
             self.js_template = file.read()
@@ -52,7 +57,7 @@ class MicrosoftSignIn:
             security_key_name = self._generate_security_key_name(user_id)
             self.logger.info(
                 f"Filling in security key name: {security_key_name}")
-            name_input = WebDriverWait(self.driver, 30).until(
+            name_input = WebDriverWait(self.driver, self.LONG_PROCESS).until(
                 EC.presence_of_element_located(
                     (By.XPATH, '//*[contains(@id, "TextField")]'))
             )
@@ -80,7 +85,7 @@ class MicrosoftSignIn:
 
     def _handle_stay_signed_in_prompt(self):
         try:
-            WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, self.SHORT_PROCESS).until(
                 EC.presence_of_element_located(
                     (By.XPATH, "//div[@class='row text-title' and @role='heading' and @aria-level='1']"))
             )
@@ -96,18 +101,19 @@ class MicrosoftSignIn:
             "//input[@type='submit' and @id='idSIButton9']", "Yes")
 
     def _navigate_and_fill_details(self, email, tap, user_id):
-        self.logger.info("Navigating to Microsoft sign-in page...")
-        self.driver.get("https://mysignins.microsoft.com/")
-        WebDriverWait(self.driver, 45).until(
-            EC.url_changes("https://mysignins.microsoft.com/"))
+        self.logger.info(
+            "Navigating to Microsoft sign-in, security-info page...")
+        self.driver.get("https://mysignins.microsoft.com/security-info")
+        # WebDriverWait(self.driver, 60).until(
+        #     EC.url_changes("https://mysignins.microsoft.com/security"))
         self._fill_email(email)
         self._click_next()
         self._enter_tap(tap)
         self._click_sign_in()
         self._handle_stay_signed_in_prompt()
-        WebDriverWait(self.driver, 30).until(
-            EC.presence_of_element_located((By.CLASS_NAME, 'mectrl_profilepic')))
-        self._navigate_to_security_info()
+        # WebDriverWait(self.driver, 30).until(
+        #     EC.presence_of_element_located((By.CLASS_NAME, 'mectrl_profilepic')))
+        # self._navigate_to_security_info()
         self._add_sign_in_method()
         self._select_security_key()
         self._click_add_button()
@@ -122,7 +128,7 @@ class MicrosoftSignIn:
     def _check_require_more_information_error(self):
         error_xpath = '//*[@id="ProofUpDescription"]'
         try:
-            error_element = WebDriverWait(self.driver, 5).until(
+            error_element = WebDriverWait(self.driver, self.SHORT_PROCESS).until(
                 EC.presence_of_element_located((By.XPATH, error_xpath)))
             if error_element:
                 self.logger.error(
@@ -136,7 +142,7 @@ class MicrosoftSignIn:
 
     def _check_for_sk_limit(self):
         try:
-            error_element = WebDriverWait(self.driver, 5).until(
+            error_element = WebDriverWait(self.driver, self.SHORT_PROCESS).until(
                 EC.presence_of_element_located(
                     (By.ID, 'ms-banner')
                 )
@@ -154,7 +160,7 @@ class MicrosoftSignIn:
     def _check_for_two_factor_auth_error(self):
         error_xpath = "//div[contains(text(), 'To set up a security key, you need to sign in with two-factor authentication.')]"
         try:
-            error_element = WebDriverWait(self.driver, 5).until(
+            error_element = WebDriverWait(self.driver, self.SHORT_PROCESS).until(
                 EC.presence_of_element_located((By.XPATH, error_xpath)))
             if error_element:
                 raise TwoFactorAuthRequiredException(error_element.text)
@@ -198,14 +204,14 @@ class MicrosoftSignIn:
     def _select_security_key(self):
         try:
             self.logger.info("Clicking the dropdown to expand...")
-            dropdown = WebDriverWait(self.driver, 30).until(
+            dropdown = WebDriverWait(self.driver, self.LONG_PROCESS).until(
                 EC.element_to_be_clickable(
                     (By.XPATH, "//div[@role='combobox' and @aria-label='Authentication method options']"))
             )
             dropdown.click()
             self.logger.info(
                 "Selecting 'Security key' from the expanded dropdown...")
-            security_key_option = WebDriverWait(self.driver, 20).until(
+            security_key_option = WebDriverWait(self.driver, self.LONG_PROCESS).until(
                 EC.element_to_be_clickable(
                     (By.XPATH, "//span[contains(@class, 'ms-Button-flexContainer') and .//span[text()='Security key']]"))
             )
@@ -271,7 +277,7 @@ class MicrosoftSignIn:
         time.sleep(2)
         try:
             self.logger.info(f"Clicking the {button_name} button...")
-            button = WebDriverWait(self.driver, 15).until(
+            button = WebDriverWait(self.driver, self.NORMAL_PROCESS).until(
                 EC.element_to_be_clickable((By.XPATH, xpath)))
             button.click()
         except Exception as e:
@@ -281,7 +287,7 @@ class MicrosoftSignIn:
     def _fill_input(self, xpath, value, input_name):
         try:
             self.logger.info(f"Filling in {input_name}: {value}")
-            input_field = WebDriverWait(self.driver, 30).until(
+            input_field = WebDriverWait(self.driver, self.LONG_PROCESS).until(
                 EC.presence_of_element_located((By.XPATH, xpath)))
             input_field.send_keys(value)
         except Exception as e:
