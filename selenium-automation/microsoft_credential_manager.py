@@ -35,7 +35,7 @@ class MicrosoftSignIn:
 
     LONG_PROCESS = 60
     NORMAL_PROCESS = 30
-    SHORT_PROCESS = 10
+    SHORT_PROCESS = 5
 
     def __init__(self, driver_manager, test_mode=False):
         self.tap_manager = TAPManager()
@@ -104,16 +104,12 @@ class MicrosoftSignIn:
         self.logger.info(
             "Navigating to Microsoft sign-in, security-info page...")
         self.driver.get("https://mysignins.microsoft.com/security-info")
-        # WebDriverWait(self.driver, 60).until(
-        #     EC.url_changes("https://mysignins.microsoft.com/security"))
         self._fill_email(email)
         self._click_next()
         self._enter_tap(tap)
         self._click_sign_in()
         self._handle_stay_signed_in_prompt()
-        # WebDriverWait(self.driver, 30).until(
-        #     EC.presence_of_element_located((By.CLASS_NAME, 'mectrl_profilepic')))
-        # self._navigate_to_security_info()
+        self._check_require_more_information_error()
         self._add_sign_in_method()
         self._select_security_key()
         self._click_add_button()
@@ -131,14 +127,11 @@ class MicrosoftSignIn:
             error_element = WebDriverWait(self.driver, self.SHORT_PROCESS).until(
                 EC.presence_of_element_located((By.XPATH, error_xpath)))
             if error_element:
-                self.logger.error(
-                    "Your organization needs more information to keep your account secure on https://mysignins.microsoft.com/. You are receiving it because your organization has enabled security defaults in Microsoft Office 365.")
                 raise OrganizationNeedsMoreInformationException(
                     "Your organization needs more information to keep your account secure on https://mysignins.microsoft.com/. You are receiving it because your organization has enabled security defaults in Microsoft Office 365.")
         except TimeoutException:
             self.logger.debug(
                 "The element related to 'Your organization needs more information' not found")
-            raise
 
     def _check_for_sk_limit(self):
         try:
@@ -237,20 +230,20 @@ class MicrosoftSignIn:
         self._click_button(
             "//span[text()='Add sign-in method']", "Add sign-in method")
 
-    def _navigate_to_security_info(self):
-        try:
-            self.logger.info(
-                "Navigating directly to the security info page...")
-            self.driver.get("https://mysignins.microsoft.com/security-info")
-        except Exception as e:
-            try:
-                self._check_require_more_information_error()
-            except OrganizationNeedsMoreInformationException as e:
-                raise e
-            else:
-                self.logger.error(
-                    f"Error navigating to security info page: {str(e)}")
-                raise e
+    # def _navigate_to_security_info(self):
+    #     try:
+    #         self.logger.info(
+    #             "Navigating directly to the security info page...")
+    #         self.driver.get("https://mysignins.microsoft.com/security-info")
+    #     except Exception as e:
+    #         try:
+    #             self._check_require_more_information_error()
+    #         except OrganizationNeedsMoreInformationException as e:
+    #             raise e
+    #         else:
+    #             self.logger.error(
+    #                 f"Error navigating to security info page: {str(e)}")
+    #             raise e
 
     def _click_sign_in(self):
         self._click_button("//input[@type='submit' and @value='Sign in' and contains(@class, 'button_primary')]",
