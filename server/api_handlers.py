@@ -31,7 +31,7 @@ def auto_user_provisioning_with_email(body: hug.types.json, response):
         users = body.get("users")
         request_id = body.get("requestId")
 
-        if not issuer_id:
+        if not request_id:
             response.status = hug.HTTP_400
             return {"error": "Missing 'requestId' in the request."}
 
