@@ -68,7 +68,6 @@ class MainApp:
         try:
             message = json.loads(body)
             self.process_message(message)
-            self.rabbitmq_manager.connection._heartbeat_checker._send_heartbeat()
             ch.basic_ack(delivery_tag=method.delivery_tag)
         except json.JSONDecodeError:
             logging.error("Failed to decode message body as JSON.")
