@@ -24,7 +24,7 @@ def init():
     delay = 5
     for attempt in range(1, max_retries + 1):
         try:
-            rabbitmq_manager.connect()
+            rabbitmq_manager.start()
             print("Connected to RabbitMQ")
             break
         except RabbitMQConnectionError as e:
