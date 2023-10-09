@@ -91,7 +91,7 @@ class MainApp:
             status, detail = "done", "Credential successfully created."
             retries_exhausted = True
         except TimeoutException as ex:
-            detail = "Timeout while interacting with Microsoft."
+            detail = "Timeout while interacting with Microsoft. This is usually related to Microsoft response time. Retry may lead to sucess."
             logging.error(f"{detail}: {ex}")
             raise
         except NoSuchElementException as ex:

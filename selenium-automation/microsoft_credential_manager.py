@@ -122,6 +122,7 @@ class MicrosoftSignIn:
         self.logger.info("Credential Successfully Created!")
 
     def _check_require_more_information_error(self):
+        self.logger.info("Checking your organization requires more information...")
         error_xpath = '//*[@id="ProofUpDescription"]'
         try:
             error_element = WebDriverWait(self.driver, self.SHORT_PROCESS).until(
@@ -130,8 +131,8 @@ class MicrosoftSignIn:
                 raise OrganizationNeedsMoreInformationException(
                     "Your organization needs more information to keep your account secure on https://mysignins.microsoft.com/. You are receiving it because your organization has enabled security defaults in Microsoft Office 365.")
         except TimeoutException:
-            self.logger.debug(
-                "The element related to 'Your organization needs more information' not found")
+            self.logger.info(
+                "Organization needs more information... error did not happen")
 
     def _check_for_sk_limit(self):
         try:
@@ -228,22 +229,7 @@ class MicrosoftSignIn:
 
     def _add_sign_in_method(self):
         self._click_button(
-            "//span[text()='Add sign-in method']", "Add sign-in method")
-
-    # def _navigate_to_security_info(self):
-    #     try:
-    #         self.logger.info(
-    #             "Navigating directly to the security info page...")
-    #         self.driver.get("https://mysignins.microsoft.com/security-info")
-    #     except Exception as e:
-    #         try:
-    #             self._check_require_more_information_error()
-    #         except OrganizationNeedsMoreInformationException as e:
-    #             raise e
-    #         else:
-    #             self.logger.error(
-    #                 f"Error navigating to security info page: {str(e)}")
-    #             raise e
+            "//span[text()='Add sign-in method']", "Add sign-in method", self.NORMAL_PROCESS)
 
     def _click_sign_in(self):
         self._click_button("//input[@type='submit' and @value='Sign in' and contains(@class, 'button_primary')]",
@@ -266,11 +252,11 @@ class MicrosoftSignIn:
         self._fill_input("//input[@name='accesspass']",
                          tap, "Temporary Access Pass")
 
-    def _click_button(self, xpath, button_name):
+    def _click_button(self, xpath, button_name, extra_delay=0):
         time.sleep(2)
         try:
             self.logger.info(f"Clicking the {button_name} button...")
-            button = WebDriverWait(self.driver, self.NORMAL_PROCESS).until(
+            button = WebDriverWait(self.driver, self.NORMAL_PROCESS + extra_delay).until(
                 EC.element_to_be_clickable((By.XPATH, xpath)))
             button.click()
         except Exception as e:
