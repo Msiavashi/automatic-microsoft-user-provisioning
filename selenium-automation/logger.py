@@ -83,3 +83,22 @@ class LoggerManager:
                     f.write(str(entry))
         except Exception as e:
             logging.error(f"Error capturing browser logs: {str(e)}")
+
+    @staticmethod
+    def capture_screenshot_for_debug(driver, email, filename):
+        """Capture a screenshot for debug mode and overwrite if exists."""
+        try:
+            # Append a default file format (e.g., ".png") if not present
+            if not filename.endswith('.png'):
+                filename += '.png'
+
+            # Construct the full path for the screenshot based on the user's email
+            screenshot_dir = os.path.join('screenshots', 'debug', email)
+            # Create directory if it doesn't exist
+            os.makedirs(screenshot_dir, exist_ok=True)
+            screenshot_path = os.path.join(screenshot_dir, filename)
+
+            # Capture the screenshot and overwrite if it exists
+            driver.save_screenshot(screenshot_path)
+        except Exception as e:
+            logging.error(f"Error capturing screenshot for debug: {str(e)}")
