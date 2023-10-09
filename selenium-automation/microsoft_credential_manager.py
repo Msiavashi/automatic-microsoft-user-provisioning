@@ -231,6 +231,7 @@ class MicrosoftSignIn:
     def _add_sign_in_method(self):
         try:
             # Wait for the "Add method" button to be clickable for up to 15 seconds
+            self.logger.info("Clicking on 'Add sign-in method' button")
             add_method_button = WebDriverWait(self.driver, self.NORMAL_PROCESS).until(
                 EC.element_to_be_clickable((By.NAME, "Add method"))
             )
