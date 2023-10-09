@@ -91,8 +91,6 @@ class MainApp:
             status, detail = "done", "Credential successfully created."
             retries_exhausted = True
         except TimeoutException as ex:
-            LoggerManager.capture_screenshot(self.driver_manager.driver, email)
-            LoggerManager.capture_browser_logs(self.driver_manager.driver, email)
             detail = "Timeout while interacting with Microsoft. This is usually related to Microsoft response time. Retry may lead to success."
             logging.error(f"{detail}: {ex}")
             raise
@@ -124,6 +122,11 @@ class MainApp:
             logging.error(f"Error processing message: {ex}")
             retries_exhausted = True
         finally:
+            if status == "failed":
+                LoggerManager.capture_screenshot(
+                    self.driver_manager.driver, email)
+                LoggerManager.capture_browser_logs(
+                    self.driver_manager.driver, email)
             self.driver_manager.close()
             if retries_exhausted:
                 if not self.test_mode and status:  # Update status only when not in test_mode
