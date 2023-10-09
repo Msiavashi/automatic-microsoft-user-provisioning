@@ -122,7 +122,8 @@ class MicrosoftSignIn:
         self.logger.info("Credential Successfully Created!")
 
     def _check_require_more_information_error(self):
-        self.logger.info("Checking your organization requires more information...")
+        self.logger.info(
+            "Checking your organization requires more information...")
         error_xpath = '//*[@id="ProofUpDescription"]'
         try:
             error_element = WebDriverWait(self.driver, self.SHORT_PROCESS).until(
@@ -228,8 +229,23 @@ class MicrosoftSignIn:
             raise e
 
     def _add_sign_in_method(self):
-        self._click_button(
-            "//span[text()='Add sign-in method']", "Add sign-in method", self.NORMAL_PROCESS)
+        try:
+            # Wait for the "Add method" button to be clickable for up to 15 seconds
+            add_method_button = WebDriverWait(self.driver, self.NORMAL_PROCESS).until(
+                EC.element_to_be_clickable((By.NAME, "Add method"))
+            )
+
+            # Once the button is clickable, click on it
+            add_method_button.click()
+
+            # Add additional actions here if needed
+
+        except TimeoutError as e:
+            self.logger.info(
+                f"Timeout while waiting for Add sign-in method button: {e}")
+            raise
+        # self._click_button(
+        #     "//span[text()='Add sign-in method']", "Add sign-in method", self.NORMAL_PROCESS)
 
     def _click_sign_in(self):
         self._click_button("//input[@type='submit' and @value='Sign in' and contains(@class, 'button_primary')]",
