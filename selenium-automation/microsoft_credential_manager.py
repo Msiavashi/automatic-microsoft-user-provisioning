@@ -80,8 +80,6 @@ class MicrosoftSignIn:
             self.logger.error(
                 f"Error registering security key for {email}: {str(e)}")
             raise
-            # LoggerManager.capture_screenshot(self.driver, email)
-            # LoggerManager.capture_browser_logs(self.driver, email)
 
     def _handle_stay_signed_in_prompt(self):
         try:
@@ -235,6 +233,8 @@ class MicrosoftSignIn:
             add_method_button = WebDriverWait(self.driver, self.NORMAL_PROCESS).until(
                 EC.element_to_be_clickable((By.NAME, "Add method"))
             )
+            
+            time.sleep(2)
 
             # Once the button is clickable, click on it
             add_method_button.click()

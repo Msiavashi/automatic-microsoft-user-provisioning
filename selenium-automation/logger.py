@@ -66,6 +66,9 @@ class LoggerManager:
         """Capture a screenshot."""
         try:
             timestamp = time.strftime("%Y%m%d-%H%M%S")
+            # Create the "screenshots" directory if it doesn't exist
+            if not os.path.exists('screenshots'):
+                os.makedirs('screenshots')
             driver.save_screenshot(f'screenshots/{email}_{timestamp}.png')
         except Exception as e:
             logging.error(f"Error capturing screenshot: {str(e)}")
