@@ -15,6 +15,7 @@ class DriverManager:
         options.add_argument("--incognito")
         if self.mode == "headless":
             options.add_argument("--headless")
+            options.add_argument('--window-size=1920x1080')
         options.page_load_strategy = 'eager'
         driver = webdriver.Chrome(service=ChromeService(
             executable_path="./chromedriver"), options=options)
