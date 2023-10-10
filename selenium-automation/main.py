@@ -6,11 +6,12 @@ import threading
 import atexit
 from logger import LoggerManager
 from driver_manager import DriverManager
-from microsoft_credential_manager import MicrosoftSignIn, SecurityKeysLimitException, TwoFactorAuthRequiredException, OrganizationNeedsMoreInformationException
+from microsoft_credential_manager import MicrosoftSignIn, SecurityKeysLimitException, TwoFactorAuthRequiredException, OrganizationNeedsMoreInformationException, AlreadySignedInException
 from rabbitmq_manager import RabbitMQManager
 from services import AzureAutoOBRClient
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException
-from tap import TAPRetrievalFailureException
+from tap import TAPManager, TAPRetrievalFailureException
+from LoginEvent import LoginEvent
 import time
 import functools
 
@@ -49,6 +50,7 @@ class MainApp:
         LoggerManager.setup_console_logging()
         logging.info("Starting the automation script...")
         self.azure_auto_obr_client = AzureAutoOBRClient()
+        self.tap_manager = TAPManager()
         self.ms_signin = None
         self.test_mode = False
         self.rabbitmq_manager = None
@@ -77,66 +79,88 @@ class MainApp:
 
     @retry((TimeoutException, TAPRetrievalFailureException), tries=1, delay=0, backoff=2)
     def process_message(self, message, retries_exhausted=False):
-        self.driver_manager = DriverManager(mode=self.mode)
-        self.ms_signin = MicrosoftSignIn(self.driver_manager)
+        email = message.get("email")
+        user_id = message.get("userId")
+        issuer_id = message.get("issuerId")
+        requestId = message.get("requestId")
         status, detail = "failed", "An unknown error occurred during processing."
-        try:
-            email = message.get("email")
-            user_id = message.get("userId")
-            issuer_id = message.get("issuerId")
-            requestId = message.get("requestId")
 
-            self.ms_signin.register_security_key(
-                email=email, user_id=user_id, issuer_id=issuer_id)
+        try:
+            tap = self._retrieve_tap(email, user_id, issuer_id)
+            self._register_security_keys_in_threads(email, user_id, tap)
             status, detail = "done", "Credential successfully created."
             retries_exhausted = True
-        except TimeoutException as ex:
-            detail = "Timeout while interacting with Microsoft. This is usually related to Microsoft response time. Retry may lead to success."
-            logging.error(f"{detail}: {ex}")
-            raise
-        except NoSuchElementException as ex:
-            detail = "Element not found."
-            logging.error(f"{detail}: {ex}")
-            retries_exhausted = True
-        except SecurityKeysLimitException as ex:
-            detail = "You have reached the limit of 10 security keys on https://mysignins.microsoft.com/"
-            logging.error(detail)
-            retries_exhausted = True
-        except WebDriverException as ex:
-            detail = "Internal error occurred. Retry may lead to success."
-            logging.error(f"{detail}: {ex}")
-            retries_exhausted = True
-        except TAPRetrievalFailureException as ex:
-            detail = str(ex)
-            logging.error(detail)
-            raise
-        except OrganizationNeedsMoreInformationException as ex:
-            detail = str(ex)
-            logging.error(detail)
-            retries_exhausted = True
-        except TwoFactorAuthRequiredException as ex:
-            detail = str(ex)
-            logging.error(detail)
+        except (TimeoutException, NoSuchElementException, SecurityKeysLimitException,
+                TAPRetrievalFailureException, OrganizationNeedsMoreInformationException,
+                TwoFactorAuthRequiredException, WebDriverException) as ex:
+            detail = self._get_error_detail(ex)
+            if isinstance(ex, (TimeoutException, TAPRetrievalFailureException)):
+                raise
             retries_exhausted = True
         except Exception as ex:
             logging.error(f"Error processing message: {ex}")
             retries_exhausted = True
         finally:
-            if status == "failed":
+            self._handle_final_actions(
+                status, detail, email, user_id, requestId, retries_exhausted)
+
+    def _retrieve_tap(self, email, user_id, issuer_id):
+        logging.info(f"{email}: Retrieving TAP ...")
+        return self.tap_manager.retrieve_TAP(user_id, issuer_id)
+
+    def _register_security_keys_in_threads(self, email, user_id, tap):
+        login_event = LoginEvent()
+
+        def _thread_target(email, user_id, tap, login_event):
+            driver_manager = DriverManager(mode=self.mode)
+            ms_signin = MicrosoftSignIn(driver_manager)
+            try:
+                ms_signin.register_security_key(
+                    email, user_id, tap, login_event)
+            except AlreadySignedInException:
+                pass
+            except Exception as ex:
+                logging.error(f"Error in thread: {ex}")
                 LoggerManager.capture_screenshot(
-                    self.driver_manager.driver, email)
+                    driver_manager.driver, email, login_event)
                 LoggerManager.capture_browser_logs(
-                    self.driver_manager.driver, email)
-            self.driver_manager.close()
-            if retries_exhausted:
-                if not self.test_mode and status:  # Update status only when not in test_mode
-                    try:
-                        self.azure_auto_obr_client.update_request_status(
-                            user_id, requestId, status, detail)
-                    except Exception as ex:
-                        logging.error(str(ex))
-                else:
-                    logging.info(f"{status}: {detail}")
+                    driver_manager.driver, email)
+            finally:
+                driver_manager.close()
+
+        threads = [threading.Thread(target=_thread_target, args=(
+            email, user_id, tap, login_event)) for _ in range(3)]
+
+        for thread in threads:
+            thread.start()
+
+        for thread in threads:
+            thread.join()
+
+    def _get_error_detail(self, ex):
+        error_mapping = {
+            TimeoutException: "Timeout while interacting with Microsoft. This is usually related to Microsoft response time. Retry may lead to success.",
+            NoSuchElementException: "Element not found.",
+            SecurityKeysLimitException: "You have reached the limit of 10 security keys on https://mysignins.microsoft.com/",
+            WebDriverException: "Internal error occurred. Retry may lead to success.",
+            TAPRetrievalFailureException: f"Failed to retrieve TAP: {ex}",
+            OrganizationNeedsMoreInformationException: str(ex),
+            TwoFactorAuthRequiredException: str(ex)
+        }
+        detail = error_mapping.get(type(ex), "An unknown error occurred.")
+        logging.error(f"{detail}: {ex}")
+        return detail
+
+    def _handle_final_actions(self, status, detail, email, user_id, requestId, retries_exhausted):
+        if retries_exhausted:
+            if not self.test_mode and status:
+                try:
+                    self.azure_auto_obr_client.update_request_status(
+                        user_id, requestId, status, detail)
+                except Exception as ex:
+                    logging.error(str(ex))
+            else:
+                logging.info(f"{status}: {detail}")
 
     def run(self):
         parser = argparse.ArgumentParser(

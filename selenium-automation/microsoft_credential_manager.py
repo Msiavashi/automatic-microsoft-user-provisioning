@@ -1,9 +1,9 @@
 from selenium.webdriver.support.ui import WebDriverWait
+import threading
 from selenium.common.exceptions import TimeoutException
 import random
 import string
 import datetime
-from tap import TAPManager, TAPRetrievalFailureException
 import time
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -17,6 +17,11 @@ load_dotenv()
 
 class OrganizationNeedsMoreInformationException(Exception):
     "Occures when user needs to take action on their account to be able to login"
+    pass
+
+
+class AlreadySignedInException(Exception):
+    "Occures when the thread failes to login because another thread already signed in"
     pass
 
 
@@ -38,7 +43,6 @@ class MicrosoftSignIn:
     SHORT_PROCESS = 5
 
     def __init__(self, driver_manager, test_mode=False):
-        self.tap_manager = TAPManager()
         self.driver = driver_manager.driver
         self.test_mode = test_mode
 
@@ -66,15 +70,12 @@ class MicrosoftSignIn:
             self.logger.error(f"Error filling security key name: {str(e)}")
             raise
 
-    def register_security_key(self, email, user_id=None, issuer_id=None):
+    def register_security_key(self, email, user_id, tap, login_event):
         self.logger = LoggerManager.setup_logger(email)
+        self.login_event = login_event
         try:
-            self.logger.info("Retrieving TAP ...")
-            tap = self.tap_manager.retrieve_TAP(user_id, issuer_id)
             self._navigate_and_fill_details(email, tap, user_id)
-        except TAPRetrievalFailureException as e:
-            self.logger.error(
-                f"Failed to retrieve tap: {str(e)}")
+        except AlreadySignedInException:
             raise
         except Exception as e:
             self.logger.error(
@@ -99,32 +100,46 @@ class MicrosoftSignIn:
             "//input[@type='submit' and @id='idSIButton9']", "Yes")
 
     def _navigate_and_fill_details(self, email, tap, user_id):
-        self.logger.info(
-            "Navigating to Microsoft sign-in, security-info page...")
-        self.driver.get("https://mysignins.microsoft.com/security-info")
-        self._fill_email(email)
-        self._click_next()
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "click_next")
-        self._enter_tap(tap)
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "enter_tap")
-        self._click_sign_in()
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "click_sign_in")
-        self._handle_stay_signed_in_prompt()
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "handle_stay_signed_in_promp")
-        self._check_require_more_information_error()
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "check_require_more_information_error")
-        self._add_sign_in_method()
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "add_sign_in_method")
-        self._select_security_key()
-        self._click_add_button()
-        self._click_usb_device_button()
-        self._click_next_to_add_sk()
-        self._inject_js_into_page(user_id)
-        self._fill_security_key_name(user_id)
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "fill_security_key_name")
-        self._click_final_next_button()
-        time.sleep(5)
-        self.logger.info("Credential Successfully Created!")
+        try:
+            self.logger.info(
+                "Navigating to Microsoft sign-in, security-info page...")
+            self.driver.get("https://mysignins.microsoft.com/security-info")
+            self._fill_email(email)
+            self._click_next()
+            LoggerManager.capture_screenshot_for_debug(
+                self.driver, email, "click_next")
+            self._enter_tap(tap)
+            LoggerManager.capture_screenshot_for_debug(
+                self.driver, email, "enter_tap")
+            self._click_sign_in()
+            LoggerManager.capture_screenshot_for_debug(
+                self.driver, email, "click_sign_in")
+            self._handle_stay_signed_in_prompt()
+            LoggerManager.capture_screenshot_for_debug(
+                self.driver, email, "handle_stay_signed_in_promp")
+            self._check_require_more_information_error()
+            LoggerManager.capture_screenshot_for_debug(
+                self.driver, email, "check_require_more_information_error")
+            self._add_sign_in_method()
+            self.login_event.set(threading.get_ident())
+            LoggerManager.capture_screenshot_for_debug(
+                self.driver, email, "add_sign_in_method")
+            self._select_security_key()
+            self._click_add_button()
+            self._click_usb_device_button()
+            self._click_next_to_add_sk()
+            self._inject_js_into_page(user_id)
+            self._fill_security_key_name(user_id)
+            LoggerManager.capture_screenshot_for_debug(
+                self.driver, email, "fill_security_key_name")
+            self._click_final_next_button()
+            time.sleep(5)
+            self.logger.info("Credential Successfully Created!")
+        except:
+            if self.login_event.is_set() and not self.login_event.is_set_by_this_thread():
+                raise AlreadySignedInException()
+            else:
+                raise
 
     def _check_require_more_information_error(self):
         self.logger.info(
@@ -240,7 +255,7 @@ class MicrosoftSignIn:
             add_method_button = WebDriverWait(self.driver, self.NORMAL_PROCESS).until(
                 EC.element_to_be_clickable((By.NAME, "Add method"))
             )
-            
+
             time.sleep(2)
 
             # Once the button is clickable, click on it
@@ -278,6 +293,8 @@ class MicrosoftSignIn:
 
     def _click_button(self, xpath, button_name, extra_delay=0):
         time.sleep(2)
+        if self.login_event.is_set() and not self.login_event.is_set_by_this_thread():
+            raise AlreadySignedInException()
         try:
             self.logger.info(f"Clicking the {button_name} button...")
             button = WebDriverWait(self.driver, self.NORMAL_PROCESS + extra_delay).until(

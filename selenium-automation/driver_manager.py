@@ -14,7 +14,12 @@ class DriverManager:
         options = webdriver.ChromeOptions()
         options.add_argument("--incognito")
         if self.mode == "headless":
-            options.add_argument("--headless")
+            options.add_argument("start-maximized")
+            options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            options.add_experimental_option('excludeSwitches', ['enable-logging'])
+            options.add_experimental_option('useAutomationExtension', False)
+            options.add_argument('--disable-blink-features=AutomationControlled')
+            options.add_argument("--headless=new")
             options.add_argument('--window-size=1920x1080')
         options.page_load_strategy = 'eager'
         driver = webdriver.Chrome(service=ChromeService(
