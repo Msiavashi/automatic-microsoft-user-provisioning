@@ -16,6 +16,12 @@ class DriverManager:
         if self.mode == "headless":
             options.add_argument("--headless")
             options.add_argument('--window-size=1920x1080')
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-gpu")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--disable-extensions")
+
+
         options.page_load_strategy = 'eager'
         driver = webdriver.Chrome(service=ChromeService(
             executable_path="./chromedriver"), options=options)

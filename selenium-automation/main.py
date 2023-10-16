@@ -123,10 +123,12 @@ class MainApp:
             retries_exhausted = True
         finally:
             if status == "failed":
-                LoggerManager.capture_screenshot(
-                    self.driver_manager.driver, email)
-                LoggerManager.capture_browser_logs(
-                    self.driver_manager.driver, email)
+                pass
+                # TODO: Capturing screenshots are ignore due to memory restriction.
+                # LoggerManager.capture_screenshot(
+                #     self.driver_manager.driver, email)
+                # LoggerManager.capture_browser_logs(
+                #     self.driver_manager.driver, email)
             self.driver_manager.close()
             if retries_exhausted:
                 if not self.test_mode and status:  # Update status only when not in test_mode

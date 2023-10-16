@@ -3,6 +3,9 @@
 # Navigate to the project directory (if not already there)
 cd "$(dirname "$0")"
 
+sudo apt-get update
+sudo apt-get install python3-venv
+
 # Set up virtual environments and dependencies for both sub-projects
 for SUB_PROJECT in selenium-automation server; do
     cd "$SUB_PROJECT"
@@ -21,12 +24,7 @@ for SUB_PROJECT in selenium-automation server; do
     cd ..
 done
 
-# Placeholder for any additional initialization steps like starting docker-compose, etc.
-# docker-compose up -d
-
 echo 'Project initialized!'
 
-# Start the RQ worker for the queue system
-# Note: Ensure that this is required and the RQ worker is set up correctly
-# rq worker my_queue &
-# echo 'RQ worker started for my_queue!'
+sudo apt-get install -y libnss3
+sudo ./selenium-automation/install_chrome.sh
