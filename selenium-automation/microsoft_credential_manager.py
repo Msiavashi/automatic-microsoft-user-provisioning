@@ -1,4 +1,5 @@
 from selenium.webdriver.support.ui import WebDriverWait
+import threading
 from selenium.common.exceptions import TimeoutException
 import random
 import string
@@ -13,6 +14,11 @@ from dotenv import load_dotenv
 import json
 
 load_dotenv()
+
+
+class MicrosoftAccessPassValidationException(Exception):
+    """Occurs when an access pass validation error is found in the console."""
+    pass
 
 
 class OrganizationNeedsMoreInformationException(Exception):
@@ -44,6 +50,13 @@ class MicrosoftSignIn:
 
         with open("makeCredential.js", "r") as file:
             self.js_template = file.read()
+
+    def _check_logs_for_errors(self):
+        logs = self.driver.get_log('browser')
+        for log in logs:
+            if "message" in log and "an access pass could not be found or verified for the user" in log["message"].lower():
+                raise MicrosoftAccessPassValidationException(
+                    "Access pass validation error detected.")
 
     def _generate_security_key_name(self, user_id):
         shortened_customer_id = user_id[-8:]
@@ -102,26 +115,36 @@ class MicrosoftSignIn:
         self.logger.info(
             "Navigating to Microsoft sign-in, security-info page...")
         self.driver.get("https://mysignins.microsoft.com/security-info")
+        self.logger.info(
+            "Log listener enabled...")
         self._fill_email(email)
         self._click_next()
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "click_next")
+        LoggerManager.capture_screenshot_for_debug(
+            self.driver, email, "click_next")
         self._enter_tap(tap)
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "enter_tap")
+        LoggerManager.capture_screenshot_for_debug(
+            self.driver, email, "enter_tap")
         self._click_sign_in()
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "click_sign_in")
+        LoggerManager.capture_screenshot_for_debug(
+            self.driver, email, "click_sign_in")
         self._handle_stay_signed_in_prompt()
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "handle_stay_signed_in_promp")
+        LoggerManager.capture_screenshot_for_debug(
+            self.driver, email, "handle_stay_signed_in_promp")
         self._check_require_more_information_error()
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "check_require_more_information_error")
+        self._check_logs_for_errors()
+        LoggerManager.capture_screenshot_for_debug(
+            self.driver, email, "check_require_more_information_error")
         self._add_sign_in_method()
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "add_sign_in_method")
+        LoggerManager.capture_screenshot_for_debug(
+            self.driver, email, "add_sign_in_method")
         self._select_security_key()
         self._click_add_button()
         self._click_usb_device_button()
         self._click_next_to_add_sk()
         self._inject_js_into_page(user_id)
         self._fill_security_key_name(user_id)
-        LoggerManager.capture_screenshot_for_debug(self.driver, email, "fill_security_key_name")
+        LoggerManager.capture_screenshot_for_debug(
+            self.driver, email, "fill_security_key_name")
         self._click_final_next_button()
         time.sleep(5)
         self.logger.info("Credential Successfully Created!")
@@ -240,7 +263,7 @@ class MicrosoftSignIn:
             add_method_button = WebDriverWait(self.driver, self.NORMAL_PROCESS).until(
                 EC.element_to_be_clickable((By.NAME, "Add method"))
             )
-            
+
             time.sleep(2)
 
             # Once the button is clickable, click on it

@@ -6,7 +6,7 @@ import threading
 import atexit
 from logger import LoggerManager
 from driver_manager import DriverManager
-from microsoft_credential_manager import MicrosoftSignIn, SecurityKeysLimitException, TwoFactorAuthRequiredException, OrganizationNeedsMoreInformationException
+from microsoft_credential_manager import MicrosoftSignIn, SecurityKeysLimitException, TwoFactorAuthRequiredException, OrganizationNeedsMoreInformationException, MicrosoftAccessPassValidationException
 from rabbitmq_manager import RabbitMQManager
 from services import AzureAutoOBRClient
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException
@@ -32,6 +32,8 @@ def retry(exceptions, tries=3, delay=5, backoff=2):
                 try:
                     return func(*args, **kwargs, retries_exhausted=False)
                 except exceptions as e:
+                    if isinstance(e, MicrosoftAccessPassValidationException):
+                        mtries += 2
                     msg = f"Retrying in {mdelay} seconds..."
                     logging.info(msg)  # or use logging
                     time.sleep(mdelay)
@@ -90,6 +92,10 @@ class MainApp:
                 email=email, user_id=user_id, issuer_id=issuer_id)
             status, detail = "done", "Credential successfully created."
             retries_exhausted = True
+        except MicrosoftAccessPassValidationException as ex:
+            detail = "Microsoft raised an error: an access pass could not be found or verified for the user. This occurs despite the successful retrieval of the access pass."
+            logging.error(f"{detail}: {ex}")
+            raise
         except TimeoutException as ex:
             detail = "Timeout while interacting with Microsoft. This is usually related to Microsoft response time. Retry may lead to success."
             logging.error(f"{detail}: {ex}")
