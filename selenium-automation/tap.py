@@ -2,21 +2,18 @@ import httpx
 from logger import LoggerManager
 from dotenv import load_dotenv
 import os
+from custom_exceptions import TAPRetrievalFailureException
+from config import Config
 
 # Load .env file
-load_dotenv()
-
-
-class TAPRetrievalFailureException(Exception):
-    """Exception raised for TAP retrieval failures."""
-    pass
+load_dotenv(dotenv_path=Config.get_env_path())
 
 
 class TAPManager:
     """TAP Management class to handle various TAP related operations."""
 
     def __init__(self):
-        self.logger = LoggerManager.setup_logger("TAP")
+        self.logger = LoggerManager.setup_logging("TAP")
         self.base_url = os.getenv("AUTHNAPI_URL")
         self.headers = {
             "Content-Type": "application/json",
@@ -51,7 +48,6 @@ class TAPManager:
         except Exception as e:
             raise TAPRetrievalFailureException(e)
 
-
     def _make_request(self, method: str, endpoint: str, **kwargs) -> dict:
         """
         Private helper method to make HTTP requests and handle common response patterns.
@@ -63,7 +59,7 @@ class TAPManager:
         """
         url = f"{self.base_url}{endpoint}"
         try:
-            with httpx.Client() as client:
+            with httpx.Client(timeout=10) as client:
                 response = client.request(
                     method, url, headers=self.headers, **kwargs)
 
@@ -74,7 +70,7 @@ class TAPManager:
                     self.logger.error(
                         f"Request to {url} failed with status code: {response.status_code}")
                     self.logger.error(f"Error: {response.text}")
-                    if (response.json().get("message", None)):
+                    if response.json().get("message", None):
                         raise TAPRetrievalFailureException(
                             response.json().get("message"))
                     else:
