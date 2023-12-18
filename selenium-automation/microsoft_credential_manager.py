@@ -22,6 +22,7 @@ load_dotenv(dotenv_path=Config.get_env_path())
 class MicrosoftSignIn:
     """Handles the Microsoft sign-in process."""
 
+    VERY_LONG_PROCESS = 90
     LONG_PROCESS = 60
     NORMAL_PROCESS = 30
     SHORT_PROCESS = 5
@@ -32,7 +33,7 @@ class MicrosoftSignIn:
         self.driver = driver_manager.driver
         self.logger = LoggerManager.setup_logging(email)
         self.email = email
-        self.driver.set_page_load_timeout(MicrosoftSignIn.LONG_PROCESS)
+        self.driver.set_page_load_timeout(MicrosoftSignIn.VERY_LONG_PROCESS)
 
         with open(Config.get_make_credential_path(), "r") as file:
             self.js_template = file.read()
@@ -120,6 +121,20 @@ class MicrosoftSignIn:
         self._click_final_next_button()
         time.sleep(5)
         self.logger.info("Credential Successfully Created!")
+
+    def _check_require_more_information_error(self):
+        self.logger.info(
+            "Checking your organization requires more information...")
+        error_xpath = '//*[@id="ProofUpDescription"]'
+        try:
+            error_element = WebDriverWait(self.driver, self.SHORT_PROCESS).until(
+                EC.presence_of_element_located((By.XPATH, error_xpath)))
+            if error_element:
+                raise OrganizationNeedsMoreInformationException(
+                    "Your organization needs more information to keep your account secure on https://mysignins.microsoft.com/. You are receiving it because your organization has enabled security defaults in Microsoft Office 365.")
+        except TimeoutException:
+            self.logger.info(
+                "Organization needs more information... error did not happen")
 
     def _check_require_more_information_error(self):
         self.logger.info(
