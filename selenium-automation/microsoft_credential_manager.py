@@ -32,6 +32,7 @@ class MicrosoftSignIn:
         self.driver = driver_manager.driver
         self.logger = LoggerManager.setup_logging(email)
         self.email = email
+        self.driver.set_page_load_timeout(MicrosoftSignIn.LONG_PROCESS)
 
         with open(Config.get_make_credential_path(), "r") as file:
             self.js_template = file.read()
