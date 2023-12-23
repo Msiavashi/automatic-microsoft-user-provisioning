@@ -33,7 +33,7 @@ class MicrosoftSignIn:
         self.driver = driver_manager.driver
         self.logger = LoggerManager.setup_logging(email)
         self.email = email
-        self.driver.set_page_load_timeout(MicrosoftSignIn.VERY_LONG_PROCESS)
+        # self.driver.set_page_load_timeout(MicrosoftSignIn.VERY_LONG_PROCESS)
 
         with open(Config.get_make_credential_path(), "r") as file:
             self.js_template = file.read()
@@ -85,20 +85,37 @@ class MicrosoftSignIn:
 
     def _handle_stay_signed_in_prompt(self):
         try:
-            WebDriverWait(self.driver, self.SHORT_PROCESS).until(
+            WebDriverWait(self.driver, 0).until(
                 EC.presence_of_element_located(
                     (By.XPATH, "//div[@class='row text-title' and @role='heading' and @aria-level='1']"))
             )
             self.logger.info("'Stay signed in?' prompt appeared.")
-            self._click_no_stay_signed_in()
+            self._click_yes_stay_signed_in()
         except TimeoutException:
             self.logger.debug("'Stay signed in?' prompt did not appear.")
 
-    def _click_no_stay_signed_in(self):
+    def _click_yes_stay_signed_in(self):
         # self._click_button(
         #     "//input[@type='button' and @id='idBtn_Back' and @value='No']", "No")
         self._click_button(
             "//input[@type='submit' and @id='idSIButton9']", "Yes")
+
+    def _is_element_present(self, element_locator, query_type):
+        locator = (getattr(By, query_type), element_locator)
+        try:
+            WebDriverWait(self.driver, 0).until(EC.presence_of_element_located(locator))
+            return True
+        except Exception:
+            return False
+
+    def get_first_loaded_element(self, elements: list[tuple], timeout: int) -> str:
+        end_time = time.time() + timeout
+        while time.time() < end_time:
+            for element_locator, query_type, represented_by in elements:
+                if self._is_element_present(element_locator, query_type):
+                    return represented_by
+            time.sleep(0.1)
+        return None
 
     def _navigate_and_fill_details(self, email, tap, user_id):
         self.logger.info(
@@ -106,15 +123,55 @@ class MicrosoftSignIn:
         self.driver.get(self.SIGN_IN_URL)
         self._fill_email(email)
         self._click_next()
-        self._enter_tap(tap)
-        self._click_sign_in()
-        self._handle_stay_signed_in_prompt()
-        self._check_require_more_information_error()
-        self._check_logs_for_errors()
-        self._add_sign_in_method()
-        self._select_security_key()
-        self._click_add_button()
-        self._click_usb_device_button()
+
+        loaded_page = self.get_first_loaded_element([("// div[text() = 'Enter password']", "XPATH", "password_prompt"),
+                                                     ("//input[@name='accesspass']", "XPATH", "tap_prompt"), ],
+                                                    self.NORMAL_PROCESS)
+
+        if loaded_page == "tap_prompt":
+            self._enter_tap(tap)
+        elif loaded_page == "password_prompt":
+            raise RedirectedToPasswordPageException(
+                "Microsoft redirected to password page instead of requesting TAP.")
+        else:
+            raise TimeoutException("Timeout while waiting for expected page to load.")
+
+        loaded_page = self.get_first_loaded_element(
+            [("//div[@class='row text-title' and @role='heading' and @aria-level='1']", "XPATH", "stay signed in"),
+             ('//*[@id="ProofUpDescription"]', "XPATH", "organization needs more information"),
+             ("Add method", "NAME", "add method")],
+            self.NORMAL_PROCESS)
+
+        print(loaded_page)
+
+        if loaded_page == "add method":
+            self._add_sign_in_method()
+            self._select_security_key()
+            self._click_add_button()
+        elif loaded_page == "stay signed in":
+            self._handle_stay_signed_in_prompt()
+        elif loaded_page == "organization needs more information":
+            self._check_require_more_information_error()
+        else:
+            self._check_logs_for_errors()
+
+        loaded_page = self.get_first_loaded_element(
+            [("ms-banner", "ID", "sk_limit_reached"),
+             ("//button[@type='button' and .//span[text()='USB device']]", "XPATH", "drop down opened"), (
+                 "//div[contains(text(), 'To set up a security key, you need to sign in with two-factor "
+                 "authentication.')]",
+                 "XPATH", "two_factor_error")],
+            self.NORMAL_PROCESS)
+
+        if loaded_page == "sk_limit_reached":
+            self._check_for_sk_limit()
+        elif loaded_page == "two_factor_error":
+            self._check_for_two_factor_auth_error()
+        elif loaded_page == "drop down opened":
+            self._click_usb_device_button()
+        else:
+            raise TimeoutException("Timeout while waiting for expected page to load.")
+
         self._click_next_to_add_sk()
         self._inject_js_into_page(user_id)
         self._fill_security_key_name(user_id)
@@ -122,33 +179,35 @@ class MicrosoftSignIn:
         time.sleep(5)
         self.logger.info("Credential Successfully Created!")
 
-    def _check_require_more_information_error(self):
+    def _check_redirect_to_password_page(self):
         self.logger.info(
-            "Checking your organization requires more information...")
-        error_xpath = '//*[@id="ProofUpDescription"]'
+            "Checking if redirected to password page...")
+        error_xpath = "// div[text() = 'Enter password']"
         try:
             error_element = WebDriverWait(self.driver, self.SHORT_PROCESS).until(
                 EC.presence_of_element_located((By.XPATH, error_xpath)))
             if error_element:
-                raise OrganizationNeedsMoreInformationException(
-                    "Your organization needs more information to keep your account secure on https://mysignins.microsoft.com/. You are receiving it because your organization has enabled security defaults in Microsoft Office 365.")
+                raise RedirectedToPasswordPageException(
+                    "Microsoft redirected to password page instead of requesting TAP.")
         except TimeoutException:
-            self.logger.info(
-                "Organization needs more information... error did not happen")
+            self.logger.debug(
+                "Did not redirect to password page.")
+            raise
 
     def _check_require_more_information_error(self):
         self.logger.info(
-            "Checking your organization requires more information...")
+            "Checking if your organization requires more information to login...")
         error_xpath = '//*[@id="ProofUpDescription"]'
         try:
-            error_element = WebDriverWait(self.driver, self.SHORT_PROCESS).until(
+            error_element = WebDriverWait(self.driver, 0).until(
                 EC.presence_of_element_located((By.XPATH, error_xpath)))
             if error_element:
                 raise OrganizationNeedsMoreInformationException(
                     "Your organization needs more information to keep your account secure on https://mysignins.microsoft.com/. You are receiving it because your organization has enabled security defaults in Microsoft Office 365.")
         except TimeoutException:
-            self.logger.info(
+            self.logger.debug(
                 "Organization needs more information... error did not happen")
+            raise
 
     def _check_for_sk_limit(self):
         try:
@@ -164,7 +223,7 @@ class MicrosoftSignIn:
                 raise SecurityKeysLimitException(error_message)
         except TimeoutException:
             self.logger.debug(
-                "'ms-banner' element indicating 10 security keys limit did not appear. Proceed without error...")
+                "'ms-banner' element indicating 10 security keys limit did not appear. Expecting unpredicted error.")
             raise
 
     def _check_for_two_factor_auth_error(self):
@@ -175,6 +234,8 @@ class MicrosoftSignIn:
             if error_element:
                 raise TwoFactorAuthRequiredException(error_element.text)
         except TimeoutException:
+            self.logger.debug(
+                'Expecting error \'To set up a security key, you need to sign in with two-factor authentication.\' but another unpredicted error happened.')
             raise
 
     def _click_next_to_add_sk(self):
@@ -238,16 +299,10 @@ class MicrosoftSignIn:
             self._click_button(
                 "//button[@type='button' and .//span[text()='USB device']]", "USB device")
         except TimeoutException as e:
-            try:
-                self._check_for_sk_limit()
-                self._check_for_two_factor_auth_error()
-            except (SecurityKeysLimitException, TwoFactorAuthRequiredException) as e:
-                raise e
             raise e
 
     def _add_sign_in_method(self):
         try:
-            self.logger.info("Clicking on 'Add sign-in method' button")
             self._click_button("Add method", "Add sign-in method", by=By.NAME)
 
         except TimeoutError as e:
@@ -274,11 +329,11 @@ class MicrosoftSignIn:
     def _enter_tap(self, tap):
         self._fill_input("//input[@name='accesspass']",
                          tap, "Temporary Access Pass")
+        self._click_sign_in()
 
     def _click_button(self, locator, button_name, extra_delay=0, by=None, attributes=None):
         by = by or By.XPATH
         attributes = attributes or {}
-        time.sleep(2)
         try:
             self.logger.info(f"Clicking the {button_name} button...")
             button = WebDriverWait(self.driver, self.NORMAL_PROCESS + extra_delay).until(
