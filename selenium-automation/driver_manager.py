@@ -16,7 +16,8 @@ class DriverManager:
 
     def setup_driver(self):
         options = webdriver.ChromeOptions()
-        options.add_argument("--incognito")
+        # options.add_argument("--incognito")
+        options.add_argument("--disk-cache=yes")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-gpu")
         options.add_argument("--disable-dev-shm-usage")

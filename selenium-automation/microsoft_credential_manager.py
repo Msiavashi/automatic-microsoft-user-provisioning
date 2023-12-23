@@ -33,7 +33,7 @@ class MicrosoftSignIn:
         self.driver = driver_manager.driver
         self.logger = LoggerManager.setup_logging(email)
         self.email = email
-        # self.driver.set_page_load_timeout(MicrosoftSignIn.VERY_LONG_PROCESS)
+        self.driver.set_page_load_timeout(MicrosoftSignIn.VERY_LONG_PROCESS)
 
         with open(Config.get_make_credential_path(), "r") as file:
             self.js_template = file.read()
@@ -117,67 +117,76 @@ class MicrosoftSignIn:
             time.sleep(0.1)
         return None
 
-    def _navigate_and_fill_details(self, email, tap, user_id):
-        self.logger.info(
-            "Navigating to Microsoft sign-in, security-info page...")
+    def _sign_in(self, email):
+        self.logger.info("Navigating to Microsoft sign-in, security-info page...")
         self.driver.get(self.SIGN_IN_URL)
         self._fill_email(email)
         self._click_next()
 
-        loaded_page = self.get_first_loaded_element([("// div[text() = 'Enter password']", "XPATH", "password_prompt"),
-                                                     ("//input[@name='accesspass']", "XPATH", "tap_prompt"), ],
-                                                    self.NORMAL_PROCESS)
-
-        if loaded_page == "tap_prompt":
+    def _handle_sign_in_prompt(self, prompt_type, tap):
+        if prompt_type == "tap_prompt":
             self._enter_tap(tap)
-        elif loaded_page == "password_prompt":
+        elif prompt_type == "password_prompt":
             raise RedirectedToPasswordPageException(
                 "Microsoft redirected to password page instead of requesting TAP.")
         else:
             raise TimeoutException("Timeout while waiting for expected page to load.")
 
-        loaded_page = self.get_first_loaded_element(
-            [("//div[@class='row text-title' and @role='heading' and @aria-level='1']", "XPATH", "stay signed in"),
-             ('//*[@id="ProofUpDescription"]', "XPATH", "organization needs more information"),
-             ("Add method", "NAME", "add method")],
-            self.NORMAL_PROCESS)
-
-        print(loaded_page)
-
-        if loaded_page == "add method":
+    def _handle_add_security_method_prompt(self, prompt_type):
+        if prompt_type == "add_method":
             self._add_sign_in_method()
             self._select_security_key()
             self._click_add_button()
-        elif loaded_page == "stay signed in":
+        elif prompt_type == "stay_signed_in":
             self._handle_stay_signed_in_prompt()
-        elif loaded_page == "organization needs more information":
+        elif prompt_type == "organization_needs_more_info":
             self._check_require_more_information_error()
         else:
             self._check_logs_for_errors()
 
-        loaded_page = self.get_first_loaded_element(
-            [("ms-banner", "ID", "sk_limit_reached"),
-             ("//button[@type='button' and .//span[text()='USB device']]", "XPATH", "drop down opened"), (
-                 "//div[contains(text(), 'To set up a security key, you need to sign in with two-factor "
-                 "authentication.')]",
-                 "XPATH", "two_factor_error")],
-            self.NORMAL_PROCESS)
-
-        if loaded_page == "sk_limit_reached":
+    def _handle_add_security_key_prompt(self, prompt_type):
+        if prompt_type == "sk_limit_reached":
             self._check_for_sk_limit()
-        elif loaded_page == "two_factor_error":
+        elif prompt_type == "two_factor_error":
             self._check_for_two_factor_auth_error()
-        elif loaded_page == "drop down opened":
+        elif prompt_type == "usb_device_dropdown":
             self._click_usb_device_button()
         else:
             raise TimeoutException("Timeout while waiting for expected page to load.")
 
+    def _fill_and_submit_security_key_details(self, user_id):
         self._click_next_to_add_sk()
         self._inject_js_into_page(user_id)
         self._fill_security_key_name(user_id)
         self._click_final_next_button()
         time.sleep(5)
         self.logger.info("Credential Successfully Created!")
+
+    def _navigate_and_fill_details(self, email, tap, user_id):
+        self._sign_in(email)
+
+        sign_in_prompt = self.get_first_loaded_element([("//div[text()='Enter password']", "XPATH", "password_prompt"),
+                                                              ("//input[@name='accesspass']", "XPATH", "tap_prompt"), ],
+                                                             self.NORMAL_PROCESS)
+        self._handle_sign_in_prompt(sign_in_prompt, tap)
+
+        add_security_method_prompt = self.get_first_loaded_element(
+            [("//div[@class='row text-title' and @role='heading' and @aria-level='1']", "XPATH", "stay_signed_in"),
+             ('//*[@id="ProofUpDescription"]', "XPATH", "organization_needs_more_info"),
+             ("Add method", "NAME", "add_method")],
+            self.NORMAL_PROCESS)
+        self._handle_add_security_method_prompt(add_security_method_prompt)
+
+        add_security_key_prompt = self.get_first_loaded_element(
+            [("ms-banner", "ID", "sk_limit_reached"),
+             ("//button[@type='button' and .//span[text()='USB device']]", "XPATH", "usb_device_dropdown"), (
+                 "//div[contains(text(), 'To set up a security key, you need to sign in with two-factor "
+                 "authentication.')]",
+                 "XPATH", "two_factor_error")],
+            self.NORMAL_PROCESS)
+        self._handle_add_security_key_prompt(add_security_key_prompt)
+
+        self._fill_and_submit_security_key_details(user_id)
 
     def _check_redirect_to_password_page(self):
         self.logger.info(

@@ -64,13 +64,14 @@ class MainApp:
         exception_mapping = {
             MicrosoftAccessPassValidationException: "Microsoft raised an error: an access pass could not be found or "
                                                     "verified for the user.",
-            TimeoutException: "Timeout while interacting with Microsoft.",
+            TimeoutException: "Timeout while interacting with Microsoft. Page or element not loaded.",
             NoSuchElementException: "Element not found.",
             SecurityKeysLimitException: "You have reached the limit of 10 security keys.",
             WebDriverException: "Internal error occurred.",
             TAPRetrievalFailureException: str(exception),
             OrganizationNeedsMoreInformationException: str(exception),
             TwoFactorAuthRequiredException: str(exception),
+            RedirectedToPasswordPageException: str(exception),
             Exception: f"Error processing message: {exception}"
         }
         detail = exception_mapping.get(type(exception), "An unexpected error occurred.")
@@ -81,6 +82,7 @@ class MainApp:
         try:
             if status == STATUS_FAILED:
                 self.report_failure(email, detail)
+
             self.driver_manager.close()
             if retries_exhausted:
                 self.update_request_status(message, status, detail)
