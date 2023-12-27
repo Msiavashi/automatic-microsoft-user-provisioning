@@ -3,7 +3,6 @@ import argparse
 import logging
 
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException
-from retry_decorator import retry
 from csv_loader import load_csv_to_queue
 from logger import LoggerManager
 from driver_manager import DriverManager
@@ -18,7 +17,7 @@ MODE_HEADFUL = "headful"
 DEFAULT_CSV_PATH = ""
 STATUS_FAILED = "failed"
 STATUS_DONE = "done"
-
+MAX_RETRIES = 1
 
 class MainApp:
     """Orchestrates the entire process."""
@@ -31,25 +30,6 @@ class MainApp:
         self.driver_manager = None
         self.mode = mode  # Store the mode as an instance variable
 
-    @retry((TimeoutException, TAPRetrievalFailureException), tries=1, delay=0, backoff=2)
-    def process_message(self, message, retries_exhausted=False):
-        email = message.get("email")
-        self.setup_driver_and_signin(email)
-        status, detail = STATUS_FAILED, "An unknown error occurred during processing."
-        try:
-            LoggerManager.TUI.start_loading(f'Registering security key for {email}')
-            self.register_security_key(message)
-            status, detail = STATUS_DONE, "Credential successfully created."
-            LoggerManager.TUI.stop_loading()
-            LoggerManager.TUI.success(f'Security key successfully created for {email}')
-        except Exception as ex:
-            detail = self.handle_exception(ex, email)
-            if not isinstance(ex, (
-            TimeoutException, NoSuchElementException, WebDriverException, TAPRetrievalFailureException)):
-                retries_exhausted = True
-        finally:
-            LoggerManager.TUI.stop_loading()
-            self.finalize_process(status, detail, email, message, retries_exhausted)
 
     def setup_driver_and_signin(self, email):
         self.driver_manager = DriverManager(mode=self.mode)  # Pass the mode to DriverManager
@@ -78,14 +58,13 @@ class MainApp:
         logging.error(f"{detail}: {exception}")
         return detail
 
-    def finalize_process(self, status, detail, email, message, retries_exhausted):
+    def finalize_process(self, status, detail, email, message):
         try:
             if status == STATUS_FAILED:
                 self.report_failure(email, detail)
 
             self.driver_manager.close()
-            if retries_exhausted:
-                self.update_request_status(message, status, detail)
+            self.update_request_status(message, status, detail)
         except KeyboardInterrupt:
             logging.info("Program interrupted by user. Exiting gracefully.")
             sys.exit(0)
@@ -104,14 +83,42 @@ class MainApp:
         except Exception as ex:
             logging.error(str(ex))
 
+    def process_message(self, message):
+        email = message.get("email")
+        retries = message.get("retries")
+        self.setup_driver_and_signin(email)
+        status, detail = STATUS_FAILED, "An unknown error occurred during processing."
+        try:
+            if retries <= 1:
+                LoggerManager.TUI.start_loading(f"{'Retrying ' if retries == 1 else ''}Registering security key for {email}")
+                self.register_security_key(message)
+                status, detail = STATUS_DONE, "Credential successfully created."
+                LoggerManager.TUI.stop_loading()
+                LoggerManager.TUI.success(f'Security key successfully created for {email}')
+        except Exception as ex:
+            detail = self.handle_exception(ex, email)
+            raise
+        finally:
+            LoggerManager.TUI.stop_loading()
+            self.finalize_process(status, detail, email, message)
+
     def consume_csv(self, csv_path):
         queue = load_csv_to_queue(csv_path or DEFAULT_CSV_PATH)
         while not queue.empty():
             user = queue.get()
+            user.setdefault("retries", 0)
             try:
                 self.process_message(user)
-            except Exception as e:
-                logging.error(f"Error processing message: {e}")
+            except (TimeoutException, NoSuchElementException, WebDriverException, TAPRetrievalFailureException) as ex:
+                if user["retries"] < MAX_RETRIES:
+                    print(user)
+                    user["retries"] += 1
+                    queue.put(user)
+                    logging.error(f"Error processing message (Retry {user['retries']} of {MAX_RETRIES}): {ex}")
+                else:
+                    logging.error(f"Max retry count reached for message: {ex}")
+            except Exception as ex:
+                logging.error(f"Error processing message: {ex}")
 
     def run(self):
         args = self.parse_arguments()
