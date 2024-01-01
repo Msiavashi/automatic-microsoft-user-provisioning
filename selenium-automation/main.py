@@ -1,6 +1,7 @@
 import sys
 import argparse
 import logging
+import os
 
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException
 from csv_loader import load_csv_to_queue
@@ -9,12 +10,13 @@ from driver_manager import DriverManager
 from custom_exceptions import *
 from microsoft_credential_manager import MicrosoftSignIn
 from services import AzureAutoOBRClient
-import os
+from login import Login
+
 
 # Constants
 MODE_HEADLESS = "headless"
 MODE_HEADFUL = "headful"
-DEFAULT_CSV_PATH = ""
+DEFAULT_CSV_PATH = "users.csv"
 STATUS_FAILED = "failed"
 STATUS_DONE = "done"
 MAX_RETRIES = 1
@@ -103,7 +105,7 @@ class MainApp:
             self.finalize_process(status, detail, email, message)
 
     def consume_csv(self, csv_path):
-        queue = load_csv_to_queue(csv_path or DEFAULT_CSV_PATH)
+        queue = load_csv_to_queue(csv_path)
         while not queue.empty():
             user = queue.get()
             user.setdefault("retries", 0)
@@ -111,7 +113,6 @@ class MainApp:
                 self.process_message(user)
             except (TimeoutException, NoSuchElementException, WebDriverException, TAPRetrievalFailureException) as ex:
                 if user["retries"] < MAX_RETRIES:
-                    print(user)
                     user["retries"] += 1
                     queue.put(user)
                     logging.error(f"Error processing message (Retry {user['retries']} of {MAX_RETRIES}): {ex}")
@@ -132,17 +133,29 @@ class MainApp:
                             help="Mode in which to run the script. Default is headless.",
                             choices=[MODE_HEADLESS, MODE_HEADFUL])
         parser.add_argument("--csv", type=str, help="Path to the CSV file", required=False, default=DEFAULT_CSV_PATH)
-        parser.add_argument("--verbose", type=bool, help="Path to the CSV file", required=False, default=False)
+        parser.add_argument("--verbose", type=bool, help="Path to the CSV file", required=False, default=False, action=argparse.BooleanOptionalAction)
         parser.add_argument("--version", action="store_true", help="Print the script version")
+        parser.add_argument("--login", type=bool, help="Login and get updated session", required=False, action=argparse.BooleanOptionalAction)
         return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = MainApp.parse_arguments()  # Parse command-line arguments
+
+    if args.login:
+        Login.start()
+        sys.exit(0)
+
+    credentials = Login.load_credentials()
+    if not Login.validate_api_key(credentials):
+        print("Your session has expired or does not exist. Please use the --login flag to login before proceeding.")
+        sys.exit(1)
+
     if args.version:
         version = os.environ.get("VERSION", "Unknown")
         print(f"Script Version: {version}")
         sys.exit(0)
+
     try:
         LoggerManager.verbose = args.verbose
         app = MainApp(args.mode)  # Pass the mode from command line to MainApp constructor

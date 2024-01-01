@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 from custom_exceptions import TAPRetrievalFailureException
 from config import Config
+from login import Login
 
 # Load .env file
 load_dotenv(dotenv_path=Config.get_env_path())
@@ -13,11 +14,15 @@ class TAPManager:
     """TAP Management class to handle various TAP related operations."""
 
     def __init__(self):
+        self.credentials = Login.load_credentials()
         self.logger = LoggerManager.setup_logging("TAP")
         self.base_url = os.getenv("AUTHNAPI_URL")
+        self.azure_id = self.credentials.get("AzureId", None)
+        self.api_key = self.credentials.get("APIKey", None)
         self.headers = {
             "Content-Type": "application/json",
-            "x-api-key": os.getenv("PASSKEY_OBR_API_KEY", ""),
+            "Authorization": self.api_key,
+            "userId": self.azure_id
         }
 
     def retrieve_TAP(self, user_id: str, obr_request_issuer: str) -> str:
@@ -29,7 +34,7 @@ class TAPManager:
         :return: Temporary Access Pass or raises an exception if not found
         """
         try:
-            endpoint = f"/internal/tap/{user_id}/{obr_request_issuer}"
+            endpoint = f"/administrator/aad/tap/{user_id}"
             response = self._make_request("GET", endpoint)
             self.logger.debug(f"TAP API response: {response}")
             if response:
